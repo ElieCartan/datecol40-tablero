@@ -1,0 +1,76 @@
+{
+  "proyecto": {
+    "nombre": "DATECOL 4.0",
+    "codigo": "BPIN091 · OCAD 61",
+    "titulo": "Fortalecimiento de capacidades en investigación de frontera en ciencias básicas a través de la red para el desarrollo descentralizado y la adopción de tecnologías 4.0 — DATECOL 4.0 — como estrategia para generar soluciones en salud y energías sostenibles en las regiones a nivel nacional.",
+    "institucion": "Corporación Universitaria Minuto de Dios — UNIMINUTO (sede Chocó, grupo de investigación I² — Innovación e Ingeniería)",
+    "fuente": "Doc_tecnico_BPIN091_OCAD61.pdf · informe_uniminuto.pdf",
+    "horizonte_cronograma": "julio 2026 – junio 2027"
+  },
+  "objetivos": [
+    {
+      "id": "Obj. 1",
+      "texto": "Generar nuevo conocimiento de frontera en ciencias básicas que integre la generación y análisis de grandes volúmenes de datos científicos útiles en el sector salud y energías sostenibles.",
+      "actividad_uniminuto": "Actividad 1.3 — Ejecución del análisis y procesamiento de datos para análisis de consumo y eficiencia energética en el Chocó: datos de consumo y generación, algoritmos de análisis de la información telemétrica, identificación de patrones, tendencias y áreas de mejora."
+    },
+    {
+      "id": "Obj. 2",
+      "texto": "Fortalecer las infraestructuras de investigación en ciencias básicas requeridas para el desarrollo descentralizado de tecnologías 4.0 a nivel nacional.",
+      "actividad_uniminuto": "Actividad 1.6 — Estrategias de descentralización: movilidad de investigadores y estudiantes entre la alianza (IDIC bajo y medio-bajo) y socialización de resultados (pasantías, visitas científicas, actividades ASC)."
+    },
+    {
+      "id": "Obj. 3",
+      "texto": "Implementar estrategias de apropiación social del conocimiento que faciliten la adopción de tecnologías convergentes en la comunidad académica y en general.",
+      "actividad_uniminuto": "Actividades 3.1–3.4 — Programas de formación especializada, red interdepartamental de centros de investigación, jornadas de puertas abiertas, participación en eventos académicos y campañas de divulgación/capacitación (kits y plataforma)."
+    }
+  ],
+  "compromisos_uniminuto": [
+    "1 artículo categoría A1 o A2 (matemáticas computacionales y/o tecnologías de materiales).",
+    "1 artículo categoría B o C (matemáticas computacionales)."
+  ],
+  "equipo": [
+    {
+      "nombre": "Alejandro Arenas Tirado",
+      "rol": "Coinvestigador UNIMINUTO",
+      "labores": [
+        "Artículo de revisión sistemática (metodología SIGMA + protocolo PRISMA 2020, 61 referencias).",
+        "Formulación del modelo matemático (caracterización estocástica de demanda, SAA→MILP para dimensionamiento/despacho FV+almacenamiento).",
+        "Análisis y limpieza de los datos IPSE 2025 (Acandí, Nuquí, Unguía) y consolidación de la base tri-cabecera.",
+        "Diseño de arquitectura y gobernanza de la base de datos telemétrica.",
+        "Informes de avance por actividad y tablero de seguimiento."
+      ]
+    },
+    {
+      "nombre": "(por registrar)",
+      "rol": "Coinvestigador — completar en data/proyecto.json",
+      "labores": ["Editar este archivo para añadir a cada coinvestigador sus actividades."]
+    }
+  ],
+  "alianza_ies": "UdeA, UniCórdoba, UniNorte, UniLlanos, UniCauca, UNIMINUTO (análisis de datos: abordaje teórico UdeA, UniNorte, UniMinuto).",
+  "avances": [
+    {
+      "track": "Track A — Bibliográfico",
+      "estado": "Entregado",
+      "detalle": "Artículo de revisión SIGMA+PRISMA (11 pág., LaTeX/natbib) y base de artículos enriquecida 61×23 con diccionario. Pendiente: verificación humana de autores/DOI (12 refs sin DOI) y ecuaciones de búsqueda ZNI/rural/sensores.",
+      "ubicacion": "Claude-Datecol/articulo_revision · base_datos_articulos"
+    },
+    {
+      "track": "Track B — Datos IPSE",
+      "estado": "Entregado",
+      "detalle": "Notebooks por cabecera con validación contra el informe oficial IPSE (coincidencia al kWh en Acandí y Nuquí; 0,15% en Unguía por 1.199 intervalos faltantes), 13 figuras por cabecera, tablas resumen y base consolidada fact_telemetry (formato largo/tidy, flag de corte, procedencia de medidor).",
+      "ubicacion": "Claude-Datecol/track_b_datos"
+    },
+    {
+      "track": "Track C — Modelos matemáticos",
+      "estado": "Documento base entregado",
+      "detalle": "Hoja de ruta Fase 1/Fase 2, Modelo 1 (Acandí): demanda latente × disponibilidad, escenarios por bootstrap de bloques + k-medoids con teorema de consistencia, y programa SAA→MILP con teoremas de existencia. Sigue: implementación computacional y experimentos.",
+      "ubicacion": "Claude-Datecol/track_c_modelos"
+    }
+  ],
+  "seleccion_cabecera": {
+    "elegida": "Acandí",
+    "codigo_dane": "27006000",
+    "justificacion_resumen": "Mayor energía anual (7,41 GWh) y demanda pico (1.437 kW); disponibilidad 85,4% con 420 interrupciones/año (SAIDI 1.279,8 h) — el caso con mayor margen de mejora para el retrofit FV+almacenamiento y sin huecos de registro (0 marcas faltantes). El informe completo de selección (estadístico, estratégico, demográfico, sociocultural) está en curso (actividad D4).",
+    "fuente": "resumen_comparativo.csv (Track B)"
+  }
+}

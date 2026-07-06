@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DATECOL 4.0 · Tablero UNIMINUTO</title>
+<style>
+:root{
+  --azul:#1f4e79; --azul2:#2e75b6; --gris:#f4f6f8; --borde:#d9dee4;
+  --verde:#1e7d32; --ambar:#b26a00; --rojo:#b3261e; --texto:#1c2430;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Segoe UI",Arial,sans-serif;color:var(--texto);background:var(--gris);line-height:1.5}
+header{background:var(--azul);color:#fff;padding:1.2rem 1.5rem}
+header h1{font-size:1.25rem;font-weight:600}
+header p{font-size:.85rem;opacity:.85;max-width:70rem;margin-top:.3rem}
+nav{background:#fff;border-bottom:1px solid var(--borde);display:flex;flex-wrap:wrap;gap:.25rem;padding:.4rem 1rem;position:sticky;top:0;z-index:5}
+nav button{border:none;background:none;padding:.55rem .9rem;font-size:.9rem;cursor:pointer;border-radius:6px;color:var(--azul)}
+nav button.active{background:var(--azul);color:#fff}
+main{max-width:78rem;margin:1.2rem auto;padding:0 1rem}
+section{display:none}
+section.visible{display:block}
+.card{background:#fff;border:1px solid var(--borde);border-radius:10px;padding:1.1rem 1.3rem;margin-bottom:1rem}
+.card h2{font-size:1.05rem;color:var(--azul);margin-bottom:.6rem}
+.card h3{font-size:.95rem;color:var(--azul2);margin:.7rem 0 .35rem}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem;margin-bottom:1rem}
+.kpi{background:#fff;border:1px solid var(--borde);border-radius:10px;padding:.9rem;text-align:center}
+.kpi .v{font-size:1.5rem;font-weight:700;color:var(--azul)}
+.kpi .l{font-size:.75rem;color:#5a6572}
+table{border-collapse:collapse;width:100%;font-size:.83rem}
+th{background:var(--azul2);color:#fff;text-align:left;padding:.45rem .55rem;position:sticky;top:0}
+td{border-bottom:1px solid var(--borde);padding:.45rem .55rem;vertical-align:top}
+tr:hover td{background:#eef3f8}
+.tabla-scroll{overflow:auto;max-height:70vh;border:1px solid var(--borde);border-radius:8px}
+.estado{display:inline-block;padding:.1rem .55rem;border-radius:999px;font-size:.75rem;font-weight:600;white-space:nowrap}
+.e-completado{background:#e2f3e5;color:var(--verde)}
+.e-encurso{background:#fdf0d8;color:var(--ambar)}
+.e-pendiente{background:#fde3e1;color:var(--rojo)}
+.barra{background:#e8ecf1;border-radius:999px;height:9px;min-width:70px;overflow:hidden}
+.barra>div{height:100%;background:var(--azul2);border-radius:999px}
+.gantt{overflow:auto;border:1px solid var(--borde);border-radius:8px}
+.gantt table{font-size:.75rem;min-width:900px}
+.gantt td.mes{padding:0;height:20px}
+.gantt .on{background:var(--azul2)}
+.gantt .on.comp{background:#7fb586}
+.filtros{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.7rem}
+.filtros button{border:1px solid var(--borde);background:#fff;border-radius:999px;padding:.25rem .8rem;font-size:.8rem;cursor:pointer}
+.filtros button.active{background:var(--azul2);color:#fff;border-color:var(--azul2)}
+.galeria{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.8rem}
+.galeria figure{background:#fff;border:1px solid var(--borde);border-radius:8px;padding:.5rem}
+.galeria img{width:100%;border-radius:4px;cursor:zoom-in}
+.galeria figcaption{font-size:.75rem;color:#5a6572;margin-top:.3rem}
+.persona{border-left:4px solid var(--azul2);padding:.6rem .9rem;background:#fff;border-radius:0 8px 8px 0;margin-bottom:.7rem;border-top:1px solid var(--borde);border-right:1px solid var(--borde);border-bottom:1px solid var(--borde)}
+.persona strong{color:var(--azul)}
+.persona ul{margin:.35rem 0 0 1.1rem;font-size:.85rem}
+ul.plain{margin-left:1.1rem;font-size:.88rem}
+.nota{font-size:.78rem;color:#5a6572;margin-top:.5rem}
+a{color:var(--azul2)}
+dialog{border:none;border-radius:10px;max-width:92vw}
+dialog img{max-width:88vw;max-height:82vh}
+footer{text-align:center;font-size:.75rem;color:#5a6572;padding:1rem}
+@media (max-width:640px){header h1{font-size:1rem}}
+</style>
+</head>
+<body>
+<header>
+  <h1>DATECOL 4.0 (BPIN091) — Tablero de seguimiento UNIMINUTO</h1>
+  <p id="subtitulo"></p>
+</header>
+<nav id="nav">
+  <button data-s="inicio" class="active">Inicio</button>
+  <button data-s="cronograma">Cronograma</button>
+  <button data-s="equipo">Equipo y labores</button>
+  <button data-s="resultados">Resultados de datos</button>
+  <button data-s="formacion">Formación</button>
+  <button data-s="informes">Informes</button>
+</nav>
+<main>
+  <section id="inicio" class="visible">
+    <div class="kpis" id="kpis"></div>
+    <div class="card"><h2>Proyecto</h2><p id="p-titulo" style="font-size:.9rem"></p>
+      <h3>Objetivos y actividades UNIMINUTO</h3><div id="p-objetivos"></div>
+      <h3>Compromisos de entrega (UNIMINUTO)</h3><ul class="plain" id="p-compromisos"></ul>
+    </div>
+    <div class="card"><h2>Estado de los tracks de investigación</h2><div id="p-avances"></div></div>
+    <div class="card"><h2>Selección de cabecera para la base telemétrica</h2><p id="p-seleccion" style="font-size:.9rem"></p></div>
+  </section>
+
+  <section id="cronograma">
+    <div class="filtros" id="filtros"></div>
+    <div class="card"><h2>Actividades (jul 2026 – jun 2027)</h2>
+      <div class="tabla-scroll"><table id="t-acts"></table></div>
+      <p class="nota">Fuente editable: <code>cronograma_DATECOL_UNIMINUTO.xlsx</code> → <code>scripts/exportar_datos.py</code> regenera este tablero.</p>
+    </div>
+    <div class="card"><h2>Gantt</h2><div class="gantt" id="gantt"></div></div>
+  </section>
+
+  <section id="equipo">
+    <div class="card"><h2>Institución y alianza</h2><p id="e-inst" style="font-size:.9rem"></p><p class="nota" id="e-alianza"></p></div>
+    <div class="card"><h2>Co-investigadores y labores</h2><div id="e-personas"></div>
+      <p class="nota">Para añadir coinvestigadores: editar <code>data/proyecto.json</code> (bloque <code>equipo</code>).</p></div>
+    <div class="card"><h2>Actividades por responsable</h2><div class="tabla-scroll"><table id="t-resp"></table></div></div>
+  </section>
+
+  <section id="resultados">
+    <div class="card"><h2>Comparativo tri-cabecera (telemetría IPSE 2025, 15 min)</h2>
+      <div class="tabla-scroll"><table id="t-res"></table></div>
+      <p class="nota">Fuente: <code>Claude-Datecol/track_b_datos/tablas/resumen_comparativo.csv</code>. Ceros de servicio tratados como corte (no como potencia válida); Unguía con 1.199 marcas faltantes y cambio de medidor el 21-jul-2025.</p></div>
+    <div class="card"><h2>Figuras comparativas</h2><div class="galeria" id="g-cons"></div></div>
+    <div class="card"><h2>Acandí (cabecera seleccionada) — caracterización</h2><div class="galeria" id="g-acandi"></div></div>
+  </section>
+
+  <section id="formacion">
+    <div class="card"><h2>Catálogo de cursos (Plan de Fortalecimiento Tecnológico 4.0)</h2>
+      <div class="tabla-scroll"><table id="t-cursos"></table></div></div>
+    <div class="card"><h2>Congresos y eventos</h2><div class="tabla-scroll"><table id="t-eventos"></table></div>
+      <p class="nota">Fuente: <code>plan_capacitacion_telemetria.xlsx</code>.</p></div>
+  </section>
+
+  <section id="informes">
+    <div class="card"><h2>Informes de actividad</h2><div id="i-lista"></div>
+      <p class="nota">Cada actividad genera informes en <code>informes/</code> (ver <code>informes/plantilla_informe.md</code>) indexados en <code>data/informes.json</code>.</p></div>
+  </section>
+</main>
+<dialog id="zoom" onclick="this.close()"><img id="zoom-img" alt=""></dialog>
+<footer>DATECOL 4.0 · UNIMINUTO · Objetivo 1 · Actividad 1.3 — tablero estático (GitHub Pages). Datos: IPSE 2025 y documentos del proyecto.</footer>
+
+<script>
+const $=q=>document.querySelector(q);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const estadoCls=e=>e==="Completado"?"e-completado":e==="En curso"?"e-encurso":"e-pendiente";
+const pct=v=>Math.round(v*100)+" %";
+const MESES=[...Array(12)].map((_,i)=>{const d=new Date(2026,6+i,1);return d;});
+const fmtM=d=>d.toLocaleDateString("es-CO",{month:"short",year:"2-digit"});
+
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));
+  document.querySelectorAll("section").forEach(x=>x.classList.remove("visible"));
+  b.classList.add("active"); $("#"+b.dataset.s).classList.add("visible");
+});
+
+async function j(p){const r=await fetch(p);if(!r.ok)throw new Error(p);return r.json();}
+
+(async()=>{
+try{
+  const [P,A,R,F,I]=await Promise.all([
+    j("data/proyecto.json"),j("data/actividades.json"),
+    j("data/resultados.json").catch(()=>null),
+    j("data/formacion.json").catch(()=>null),
+    j("data/informes.json").catch(()=>[])
+  ]);
+
+  /* ---- Inicio ---- */
+  $("#subtitulo").textContent=P.proyecto.codigo+" · "+P.proyecto.institucion+" · Horizonte: "+P.proyecto.horizonte_cronograma;
+  $("#p-titulo").textContent=P.proyecto.titulo;
+  const done=A.filter(a=>a.estado==="Completado").length,
+        cur=A.filter(a=>a.estado==="En curso").length,
+        avg=A.reduce((s,a)=>s+a.avance,0)/A.length;
+  $("#kpis").innerHTML=[
+    [A.length,"Actividades"],[done,"Completadas"],[cur,"En curso"],
+    [A.length-done-cur,"Pendientes"],[Math.round(avg*100)+" %","Avance global"],
+    [I.length,"Informes publicados"]
+  ].map(([v,l])=>`<div class="kpi"><div class="v">${v}</div><div class="l">${l}</div></div>`).join("");
+  $("#p-objetivos").innerHTML=P.objetivos.map(o=>`<p style="font-size:.85rem;margin:.35rem 0"><strong>${esc(o.id)}.</strong> ${esc(o.texto)}<br><em style="color:#5a6572">${esc(o.actividad_uniminuto)}</em></p>`).join("");
+  $("#p-compromisos").innerHTML=P.compromisos_uniminuto.map(c=>`<li>${esc(c)}</li>`).join("");
+  $("#p-avances").innerHTML=P.avances.map(t=>`<div class="persona"><strong>${esc(t.track)}</strong> — <span class="estado ${estadoCls(t.estado==="Entregado"?"Completado":"En curso")}">${esc(t.estado)}</span><p style="font-size:.85rem;margin-top:.3rem">${esc(t.detalle)}</p><p class="nota">${esc(t.ubicacion)}</p></div>`).join("");
+  const S=P.seleccion_cabecera;
+  $("#p-seleccion").innerHTML=`<strong>${esc(S.elegida)}</strong> (DANE ${esc(S.codigo_dane)}). ${esc(S.justificacion_resumen)} <span class="nota">Fuente: ${esc(S.fuente)}</span>`;
+
+  /* ---- Cronograma ---- */
+  const frentes=["Todos",...new Set(A.map(a=>a.frente))];
+  let filtro="Todos";
+  $("#filtros").innerHTML=frentes.map(f=>`<button data-f="${esc(f)}" class="${f==="Todos"?"active":""}">${esc(f)}</button>`).join("");
+  document.querySelectorAll("#filtros button").forEach(b=>b.onclick=()=>{
+    filtro=b.dataset.f;
+    document.querySelectorAll("#filtros button").forEach(x=>x.classList.toggle("active",x===b));
+    pintarTabla();pintarGantt();
+  });
+  function filas(){return filtro==="Todos"?A:A.filter(a=>a.frente===filtro);}
+  function pintarTabla(){
+    $("#t-acts").innerHTML=`<tr><th>ID</th><th>Frente</th><th>Actividad</th><th>Entregable</th><th>Responsable</th><th>Inicio</th><th>Fin</th><th>Estado</th><th>Avance</th></tr>`+
+      filas().map(a=>`<tr><td>${esc(a.id)}</td><td>${esc(a.frente)}</td><td>${esc(a.actividad)}</td><td>${esc(a.entregable)}</td><td>${esc(a.responsable)}</td><td>${a.inicio}</td><td>${a.fin}</td><td><span class="estado ${estadoCls(a.estado)}">${esc(a.estado)}</span></td><td><div class="barra" title="${pct(a.avance)}"><div style="width:${a.avance*100}%"></div></div>${pct(a.avance)}</td></tr>`).join("");
+  }
+  function pintarGantt(){
+    const hdr=`<tr><th style="min-width:60px">ID</th><th style="min-width:260px">Actividad</th>${MESES.map(m=>`<th>${fmtM(m)}</th>`).join("")}</tr>`;
+    $("#gantt").innerHTML=`<table>${hdr}${filas().map(a=>{
+      const ini=new Date(a.inicio),fin=new Date(a.fin);
+      return `<tr><td>${esc(a.id)}</td><td>${esc(a.actividad.length>70?a.actividad.slice(0,70)+"…":a.actividad)}</td>`+
+        MESES.map(m=>{
+          const finMes=new Date(m.getFullYear(),m.getMonth()+1,0);
+          const on=ini<=finMes&&fin>=m;
+          return `<td class="mes ${on?("on"+(a.estado==="Completado"?" comp":"")):""}"></td>`;
+        }).join("")+"</tr>";
+    }).join("")}</table>`;
+  }
+  pintarTabla();pintarGantt();
+
+  /* ---- Equipo ---- */
+  $("#e-inst").textContent=P.proyecto.institucion;
+  $("#e-alianza").textContent="Alianza IES: "+P.alianza_ies;
+  $("#e-personas").innerHTML=P.equipo.map(p=>`<div class="persona"><strong>${esc(p.nombre)}</strong> — ${esc(p.rol)}<ul>${p.labores.map(l=>`<li>${esc(l)}</li>`).join("")}</ul></div>`).join("");
+  const porResp={};
+  A.forEach(a=>{(porResp[a.responsable]??=[]).push(a);});
+  $("#t-resp").innerHTML=`<tr><th>Responsable</th><th>Actividades</th><th>Completadas</th><th>Avance medio</th></tr>`+
+    Object.entries(porResp).map(([r,as])=>`<tr><td>${esc(r)}</td><td>${as.map(a=>a.id).join(", ")}</td><td>${as.filter(a=>a.estado==="Completado").length}/${as.length}</td><td>${pct(as.reduce((s,a)=>s+a.avance,0)/as.length)}</td></tr>`).join("");
+
+  /* ---- Resultados ---- */
+  if(R){
+    const met=Object.keys(R[Object.keys(R)[0]]);
+    const nice={ADF_stat:"ADF (estadístico)",ADF_p:"ADF (p-valor)",KPSS_stat:"KPSS (estadístico)",KPSS_p:"KPSS (p-valor)",
+      estacionalidad_diaria_R2:"R² estacionalidad diaria",ratio_pico_valle_intradia:"Ratio pico/valle intradía",
+      "variacion_semanal_%":"Variación semanal (%)",hora_pico:"Hora pico",n_interrupciones:"Interrupciones/año",
+      SAIDI_h:"SAIDI (h/año)",SAIFI:"SAIFI (int/año)",CAIDI_h:"CAIDI (h)",dur_media_corte_h:"Duración media corte (h)",
+      corte_mas_largo_h:"Corte más largo (h)","disponibilidad_%":"Disponibilidad (%)",horas_dia_servicio:"Horas de servicio/día",
+      V_nominal_estimada:"V nominal estimada (V)","V_dentro_10pct_%":"V dentro ±10% (%)","F_dentro_1pct_%":"F dentro ±1% (%)",
+      PF_medio:"PF medio",PF_p05:"PF p05",energia_anual_kWh:"Energía anual (kWh)",pico_kW:"Pico (kW)",missing_records:"Registros faltantes"};
+    const fmt=v=>v==null?"—":(Math.abs(v)>=1000?v.toLocaleString("es-CO",{maximumFractionDigits:0}):v.toLocaleString("es-CO",{maximumFractionDigits:3}));
+    $("#t-res").innerHTML=`<tr><th>Métrica</th>${Object.keys(R).map(c=>`<th>${esc(c)}</th>`).join("")}</tr>`+
+      met.map(m=>`<tr><td>${esc(nice[m]||m)}</td>${Object.keys(R).map(c=>`<td>${fmt(R[c][m])}</td>`).join("")}</tr>`).join("");
+  }
+  const figsC=["01_perfiles_comparados","02_energia_mensual_comparada","03_disponibilidad_comparada"];
+  const figsA=["01_energia_diaria","02_perfil_intradia","03_perfil_semanal","04_energia_mensual","05_curva_duracion_carga","06_histograma_potencia","07_heatmap_hora_mes","08_disponibilidad_mensual","09_calidad_factor_potencia","10_calidad_frecuencia","11_calidad_tension","12_acf","13_pacf"];
+  const fig=(dir,n)=>`<figure><img loading="lazy" src="assets/figuras/${dir}/${n}.png" alt="${n}" onclick="zoom(this.src)"><figcaption>${n.replace(/_/g," ")}</figcaption></figure>`;
+  $("#g-cons").innerHTML=figsC.map(n=>fig("consolidado",n)).join("");
+  $("#g-acandi").innerHTML=figsA.map(n=>fig("Acandi",n)).join("");
+
+  /* ---- Formación ---- */
+  if(F){
+    $("#t-cursos").innerHTML=`<tr><th>Categoría</th><th>Curso</th><th>Plataforma</th><th>Costo</th><th>Enfoque (Chocó)</th><th>Nivel</th><th>Enlaces</th><th>Estado</th></tr>`+
+      F.cursos.map(c=>`<tr><td>${esc(c.categoria)}</td><td>${esc(c.curso)}</td><td>${esc(c.plataforma)}</td><td>${esc(c.costo)}</td><td>${esc(c.enfoque)}</td><td>${esc(c.nivel)}</td><td>${c.enlaces.map((u,i)=>`<a href="${esc(u)}" target="_blank" rel="noopener">enlace ${i+1}</a>`).join(" · ")}</td><td><span class="estado ${estadoCls(c.estado)}">${esc(c.estado)}</span></td></tr>`).join("");
+    $("#t-eventos").innerHTML=`<tr><th>Evento</th><th>Entidad</th><th>Espacios de interés</th><th>Periodicidad</th><th>Relevancia</th></tr>`+
+      F.eventos.map(e=>`<tr><td>${esc(e.evento)}</td><td>${esc(e.entidad)}</td><td>${esc(e.espacios)}</td><td>${esc(e.periodicidad)}</td><td>${esc(e.relevancia)}</td></tr>`).join("");
+  }
+
+  /* ---- Informes ---- */
+  $("#i-lista").innerHTML=I.length?I.map(x=>`<div class="persona"><strong>${x.fecha}</strong> · ${esc(x.actividad_id)} — <a href="${esc(x.archivo)}" target="_blank" rel="noopener">${esc(x.titulo)}</a><p style="font-size:.85rem;margin-top:.2rem">${esc(x.resumen)}</p></div>`).join(""):"<p>Aún no hay informes.</p>";
+
+}catch(err){
+  document.querySelector("main").insertAdjacentHTML("afterbegin",
+   `<div class="card" style="border-color:var(--rojo)"><h2 style="color:var(--rojo)">No se pudieron cargar los datos</h2>
+    <p style="font-size:.85rem">Si abriste el archivo con doble clic (file://), el navegador bloquea <code>fetch</code>.
+    Sirve la carpeta con <code>python -m http.server</code> y abre <code>http://localhost:8000</code>, o publícala en GitHub Pages (ver README). Error: ${esc(err.message)}</p></div>`);
+}
+})();
+function zoom(src){$("#zoom-img").src=src;$("#zoom").showModal();}
+</script>
+</body>
+</html>

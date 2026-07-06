@@ -1,0 +1,216 @@
+{
+ "cursos": [
+  {
+   "categoria": "Estadística y Matemática",
+   "curso": "Modelamiento Matemático y Simulación de Sistemas",
+   "plataforma": "edX / MIT",
+   "costo": "Gratis (Pago para Certificado)",
+   "enfoque": "Creación de las ecuaciones diferenciales y modelos analíticos que describen el comportamiento de las variables físicas y de red.",
+   "nivel": "Intermedio",
+   "enlaces": [],
+   "estado": "Pendiente"
+  },
+  {
+   "categoria": "Estadística y Matemática",
+   "curso": "Model-Based Automotive Systems Engineering",
+   "plataforma": "edX",
+   "costo": "Gratis (Pago para Certificado)",
+   "enfoque": " basics of mathematical modeling applied to automotive systems, and based on the modeling framework different type of controller and state estimation methods will be introduced and applied. Starting from a pure state-feedback concept down to optimal control methods, with special attention on different automotive applications. Different methods for state reconstruction is also introduced and discussed in the course. Exercises play an important rolethroughout the course",
+   "nivel": "Intermedio",
+   "enlaces": [],
+   "estado": "Pendiente"
+  },
+  {
+   "categoria": "Estadística y Matemática",
+   "curso": "Deep Learning",
+   "plataforma": "MIT",
+   "costo": "Gratis",
+   "enfoque": "",
+   "nivel": "Avanzado",
+   "enlaces": [
+    "https://ocw.mit.edu/courses/6-7960-deep-learning-fall-2024/pages/readings/"
+   ],
+   "estado": "Pendiente"
+  },
+  {
+   "categoria": "Estadística y Matemática",
+   "curso": "Computer Vision",
+   "plataforma": "MIT",
+   "costo": "Gratis",
+   "enfoque": "",
+   "nivel": "Avanzado",
+   "enlaces": [
+    "https://visionbook.mit.edu/"
+   ],
+   "estado": "Pendiente"
+  },
+  {
+   "categoria": "Estadística y Matemática",
+   "curso": "Análisis de Series de Tiempo y Pronósticos",
+   "plataforma": "Coursera",
+   "costo": "Gratis (Pago para Certificado)",
+   "enfoque": "Procesamiento de los flujos de datos históricos recopilados por la estación telemétrica para predecir anomalías.",
+   "nivel": "Avanzado",
+   "enlaces": [
+    "https://www.coursera.org/learn/time-series-survival-analysis#modules",
+    "https://www.coursera.org/learn/practical-time-series-analysis#modules"
+   ],
+   "estado": "Pendiente"
+  },
+  {
+   "categoria": "Estadística y Matemática",
+   "curso": "Estadística Espacial y Modelado Geoespacial",
+   "plataforma": "Coursera / UC Davis (o tutoriales QGIS)",
+   "costo": "Gratis / Abierto",
+   "enfoque": "Crucial para analizar la distribución geográfica y las condiciones climáticas/topográficas extremas de la selva chocoana.",
+   "nivel": "Avanzado",
+   "enlaces": [
+    "https://www.coursera.org/specializations/gis",
+    "https://www.coursera.org/specializations/geospatial-foundations-python-tooling"
+   ],
+   "estado": "Pendiente"
+  },
+  {
+   "categoria": "Telecomunicaciones 4.0",
+   "curso": "Introducción a Internet de las Cosas (IoT) y Redes de Sensores",
+   "plataforma": "Coursera ",
+   "costo": "Gratis (Pago para Certificado)",
+   "enfoque": "Procesar los datos directamente en el 'Edge' (borde de la red) para optimizar el ancho de banda en la transmisión.",
+   "nivel": "Intermedio-Avanzado",
+   "enlaces": [
+    "https://www.coursera.org/learn/iot-wireless-cloud-computing",
+    "https://www.coursera.org/specializations/iot#courses"
+   ],
+   "estado": "Pendiente"
+  },
+  {
+   "categoria": "Telecomunicaciones 4.0",
+   "curso": "Redes del IoT: LoRaWAN, Sigfox y Zigbee",
+   "plataforma": "Udemy",
+   "costo": "De Pago (Económico)",
+   "enfoque": "Esencial para el Chocó. LoRaWAN permite transmitir a largas distancias con consumo mínimo, ideal para zonas sin cobertura móvil.",
+   "nivel": "Intermedio",
+   "enlaces": [
+    "https://www.udemy.com/course/master-en-internet-of-things-conectate-al-futuro/"
+   ],
+   "estado": "Pendiente"
+  },
+  {
+   "categoria": "Telecomunicaciones 4.0",
+   "curso": "Comunicaciones por Satélite e Infraestructura Remota",
+   "plataforma": "ITU Academy (Unión Int. Telecomunicaciones)",
+   "costo": "Gratis / Cupos Limitados",
+   "enfoque": "Explorar el uso de nanosatélites o enlaces satelitales como canal de retorno (backhaul) desde la zona no interconectada.",
+   "nivel": "Intermedio",
+   "enlaces": [
+    "https://academy.itu.int/training-courses/full-catalogue/satellite-connectivity-sustainable-development-technologies-global-strategies-and-policies-0"
+   ],
+   "estado": "Pendiente"
+  },
+  {
+   "categoria": "Sensores y Electrónica",
+   "curso": "Sistemas Embebidos con Microcontroladores (ESP32 y Arduino)",
+   "plataforma": "Udemy / edX",
+   "costo": "Mixto",
+   "enfoque": "Programación del hardware que controlará la adquisición de datos de los sensores en campo.",
+   "nivel": "Introductorio-Intermedio",
+   "enlaces": [
+    "https://www.udemy.com/course/1-1-introduccion-a-los-sistemas-embebidos/?couponCode=UDEAFFHP22025"
+   ],
+   "estado": "Pendiente"
+  },
+  {
+   "categoria": "Sensores y Electrónica",
+   "curso": "Instrumentación Electrónica y Sensores Ambientales",
+   "plataforma": "Coursera / Universidad de Colorado",
+   "costo": "Gratis (Pago para Certificado)",
+   "enfoque": "Selección, calibración y acondicionamiento de la señal de sensores (humedad, temperatura, pluviosidad, radiación).",
+   "nivel": "Intermedio",
+   "enlaces": [
+    "https://www.coursera.org/learn/electronics"
+   ],
+   "estado": "Pendiente"
+  },
+  {
+   "categoria": "Sensores y Electrónica",
+   "curso": "Diseño de Circuitos Impresos (PCB) con KiCad/Altium",
+   "plataforma": "Udemy / YouTube Avanzado",
+   "costo": "De Pago / Gratis",
+   "enfoque": "Diseñar tarjetas electrónicas robustas propias que soporten la alta humedad y temperatura del Chocó sin fallar.",
+   "nivel": "Intermedio-Avanzado",
+   "enlaces": [
+    "https://www.udemy.com/course/circuitos-impresos/?couponCode=UDEAFFHP22025"
+   ],
+   "estado": "Pendiente"
+  },
+  {
+   "categoria": "Sensores y Electrónica",
+   "curso": "Sistemas de Alimentación Autónoma y Energy Harvesting",
+   "plataforma": "IEEE Learning Network / EdX",
+   "costo": "De Pago (Miembros) / Gratis",
+   "enfoque": "Diseño de sistemas de energía solar fotovoltaica y gestión de baterías de Litio para garantizar autonomía 24/7 en la ZNI.",
+   "nivel": "Avanzado",
+   "enlaces": [
+    "https://iln.ieee.org/public/contentdetails.aspx?id=0F6AE0F71AB8424284432ED3714EAE31"
+   ],
+   "estado": "Pendiente"
+  },
+  {
+   "categoria": "AI",
+   "curso": "Claude",
+   "plataforma": "Udemy",
+   "costo": "De pago",
+   "enfoque": "",
+   "nivel": "",
+   "enlaces": [
+    "https://www.udemy.com/course/claude-aiagents-cowork-masterclass/?couponCode=UDEAFFHP22025",
+    "https://www.udemy.com/course/certified-claude-architect-masterclass-2026/?couponCode=UDEAFFHP22025",
+    "https://www.coursera.org/learn/mastering-claude-code-from-setup-to-real-projects#modules",
+    "https://www.coursera.org/learn/claude-code-in-action"
+   ],
+   "estado": "Pendiente"
+  },
+  {
+   "categoria": "Estadística y Matemática",
+   "curso": "Fondamentaux pour le Big Data",
+   "plataforma": "FUN",
+   "costo": "Gratis",
+   "enfoque": "",
+   "nivel": "",
+   "enlaces": [
+    "https://www.fun-mooc.fr/fr/cours/fondamentaux-pour-le-big-data/"
+   ],
+   "estado": "Pendiente"
+  }
+ ],
+ "eventos": [
+  {
+   "evento": "IEEE COLCOM (Colombia Communications Conference)",
+   "entidad": "IEEE Colombia / Sociedad de Comunicaciones",
+   "espacios": "Tutoriales pre-congreso sobre redes IoT, 5G, y tecnologías rurales adaptadas a la geografía nacional.",
+   "periodicidad": "Anual (Híbrido / Virtual)",
+   "relevancia": "Es el evento principal del país para validar la arquitectura de telecomunicaciones 4.0 con expertos internacionales."
+  },
+  {
+   "evento": "IEEE ANDESCON",
+   "entidad": "IEEE Sección Andean",
+   "espacios": "Workshops avanzados en procesamiento de señales, electrónica de potencia y sistemas embebidos de bajo consumo.",
+   "periodicidad": "Bienal (Sede rotativa LATAM / Opción virtual)",
+   "relevancia": "Permite revisar tendencias regionales andinas en conectividad rural y telemetría."
+  },
+  {
+   "evento": "ANDICOM / CINTEL",
+   "entidad": "Centro de Investigación de las Telecomunicaciones",
+   "espacios": "Paneles de tecnologías 4.0, despliegue de infraestructura en zonas aisladas y financiamiento de proyectos TIC.",
+   "periodicidad": "Anual (Cartagena / Transmisiones especiales)",
+   "relevancia": "Ideal para el enfoque de apropiación tecnológica 4.0 y marcos regulatorios de telecomunicaciones."
+  },
+  {
+   "evento": "Congreso de Matemáticas / Estadística (SCM / SCE)",
+   "entidad": "Sociedad Colombiana de Matemáticas / de Estadística",
+   "espacios": "Escuelas de verano y minicursos en modelamiento estocástico, optimización y análisis de datos climáticos o sociales.",
+   "periodicidad": "Anual / Bienal",
+   "relevancia": "Aporte directo a la rigurosidad del modelo matemático que procesará la telemetría."
+  }
+ ]
+}
