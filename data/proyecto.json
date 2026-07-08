@@ -30,8 +30,13 @@
   ],
   "equipo": [
     {
+      "nombre": "Aida Ximena Velasco",
+      "rol": "Investigadora líder",
+      "labores": ["(Tareas por asignar — editar data/proyecto.json)"]
+    },
+    {
       "nombre": "Alejandro Arenas Tirado",
-      "rol": "Coinvestigador UNIMINUTO",
+      "rol": "Co-investigador UNIMINUTO",
       "labores": [
         "Artículo de revisión sistemática (metodología SIGMA + protocolo PRISMA 2020, 61 referencias).",
         "Formulación del modelo matemático (caracterización estocástica de demanda, SAA→MILP para dimensionamiento/despacho FV+almacenamiento).",
@@ -41,10 +46,31 @@
       ]
     },
     {
-      "nombre": "(por registrar)",
-      "rol": "Coinvestigador — completar en data/proyecto.json",
-      "labores": ["Editar este archivo para añadir a cada coinvestigador sus actividades."]
+      "nombre": "Julio Ulises Palomeque",
+      "rol": "Co-investigador",
+      "labores": ["(Tareas por asignar — editar data/proyecto.json)"]
+    },
+    {
+      "nombre": "Carlos Villegas",
+      "rol": "Co-investigador",
+      "labores": ["(Tareas por asignar — editar data/proyecto.json)"]
+    },
+    {
+      "nombre": "Sara (apellido por confirmar)",
+      "rol": "Co-investigadora",
+      "labores": ["(Tareas por asignar — editar data/proyecto.json)"]
+    },
+    {
+      "nombre": "Alexis (apellido por confirmar)",
+      "rol": "Co-investigador",
+      "labores": ["(Tareas por asignar — editar data/proyecto.json)"]
     }
+  ],
+  "logos": [
+    {"archivo": "assets/logos/datecol.png", "nombre": "DATECOL 4.0"},
+    {"archivo": "assets/logos/minciencias.png", "nombre": "MinCiencias"},
+    {"archivo": "assets/logos/sgr.png", "nombre": "Sistema General de Regalías"},
+    {"archivo": "assets/logos/colombia_potencia.png", "nombre": "Colombia Potencia de la Vida"}
   ],
   "alianza_ies": "UdeA, UniCórdoba, UniNorte, UniLlanos, UniCauca, UNIMINUTO (análisis de datos: abordaje teórico UdeA, UniNorte, UniMinuto).",
   "avances": [

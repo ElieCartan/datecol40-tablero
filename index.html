@@ -4,86 +4,152 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DATECOL 4.0 · Tablero UNIMINUTO</title>
+<link rel="icon" type="image/png" href="assets/logos/datecol.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --azul:#1f4e79; --azul2:#2e75b6; --gris:#f4f6f8; --borde:#d9dee4;
-  --verde:#1e7d32; --ambar:#b26a00; --rojo:#b3261e; --texto:#1c2430;
+  --bg:#05070d; --bg2:#0a0e1a; --panel:#0d1322; --panel2:#111a2e;
+  --borde:#1d2942; --borde2:#2b3a5e;
+  --txt:#e8edf7; --txt2:#8fa0bd; --txt3:#5c6b8a;
+  --ac1:#4f7cff; --ac2:#a855f7; --ac3:#22d3ee;
+  --grad:linear-gradient(90deg,var(--ac1),var(--ac2));
+  --verde:#34d399; --ambar:#fbbf24; --rojo:#f87171;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:"Segoe UI",Arial,sans-serif;color:var(--texto);background:var(--gris);line-height:1.5}
-header{background:var(--azul);color:#fff;padding:1.2rem 1.5rem}
-header h1{font-size:1.25rem;font-weight:600}
-header p{font-size:.85rem;opacity:.85;max-width:70rem;margin-top:.3rem}
-nav{background:#fff;border-bottom:1px solid var(--borde);display:flex;flex-wrap:wrap;gap:.25rem;padding:.4rem 1rem;position:sticky;top:0;z-index:5}
-nav button{border:none;background:none;padding:.55rem .9rem;font-size:.9rem;cursor:pointer;border-radius:6px;color:var(--azul)}
-nav button.active{background:var(--azul);color:#fff}
-main{max-width:78rem;margin:1.2rem auto;padding:0 1rem}
+html{scroll-behavior:smooth}
+body{font-family:"Inter",system-ui,sans-serif;background:var(--bg);color:var(--txt);line-height:1.55;overflow-x:hidden}
+h1,h2,h3,.kpi .v{font-family:"Space Grotesk","Inter",sans-serif}
+/* fondo con glows */
+.glow{position:fixed;border-radius:50%;filter:blur(120px);opacity:.22;pointer-events:none;z-index:0}
+.glow.g1{width:560px;height:560px;background:var(--ac1);top:-180px;left:-120px}
+.glow.g2{width:480px;height:480px;background:var(--ac2);top:30%;right:-160px}
+.glow.g3{width:420px;height:420px;background:#1e3a8a;bottom:-140px;left:30%}
+.grid-bg{position:fixed;inset:0;background-image:linear-gradient(rgba(79,124,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(79,124,255,.05) 1px,transparent 1px);background-size:44px 44px;pointer-events:none;z-index:0;
+ mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 40%,transparent 100%)}
+main,header.hero,nav{position:relative;z-index:1}
+/* nav */
+nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:.2rem;flex-wrap:wrap;
+ padding:.55rem 1.2rem;background:rgba(5,7,13,.75);backdrop-filter:blur(14px);border-bottom:1px solid var(--borde)}
+nav .brand{display:flex;align-items:center;gap:.55rem;margin-right:auto;font-family:"Space Grotesk";font-weight:700;letter-spacing:.04em}
+nav .brand img{height:30px;filter:drop-shadow(0 0 8px rgba(168,85,247,.5))}
+nav button{border:none;background:none;color:var(--txt2);padding:.5rem .8rem;font-size:.83rem;font-weight:500;cursor:pointer;border-radius:8px;transition:.2s}
+nav button:hover{color:var(--txt)}
+nav button.active{color:#fff;background:linear-gradient(90deg,rgba(79,124,255,.25),rgba(168,85,247,.25));box-shadow:inset 0 0 0 1px var(--borde2)}
+/* hero */
+header.hero{padding:3.2rem 1.2rem 2rem;text-align:center;max-width:62rem;margin:0 auto}
+.eyebrow{display:inline-block;font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ac3);border:1px solid var(--borde2);border-radius:999px;padding:.3rem .9rem;margin-bottom:1.1rem;background:rgba(34,211,238,.06)}
+header.hero img.logo-hero{height:88px;margin-bottom:1rem;filter:drop-shadow(0 0 22px rgba(168,85,247,.45))}
+header.hero h1{font-size:clamp(1.5rem,3.6vw,2.5rem);font-weight:700;line-height:1.18}
+header.hero h1 span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+header.hero p{color:var(--txt2);font-size:.92rem;max-width:46rem;margin:.9rem auto 0}
+/* franja de logos */
+.logos-strip{display:flex;justify-content:center;align-items:center;gap:1rem;flex-wrap:wrap;padding:1.4rem 1rem;border-top:1px solid var(--borde);border-bottom:1px solid var(--borde);background:rgba(13,19,34,.5)}
+.logos-strip .chip{background:#f5f7fb;border-radius:12px;padding:.5rem .9rem;display:flex;align-items:center;justify-content:center;min-height:56px;transition:.25s;border:1px solid transparent}
+.logos-strip .chip:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(79,124,255,.25)}
+.logos-strip img{height:40px;max-width:150px;object-fit:contain}
+.logos-strip .chip-txt{background:var(--panel);border:1px solid var(--borde2);color:var(--txt2);font-size:.72rem;font-weight:600;letter-spacing:.05em;border-radius:12px;padding:.6rem .9rem;min-height:56px;display:flex;align-items:center}
+main{max-width:80rem;margin:1.6rem auto;padding:0 1.2rem}
 section{display:none}
-section.visible{display:block}
-.card{background:#fff;border:1px solid var(--borde);border-radius:10px;padding:1.1rem 1.3rem;margin-bottom:1rem}
-.card h2{font-size:1.05rem;color:var(--azul);margin-bottom:.6rem}
-.card h3{font-size:.95rem;color:var(--azul2);margin:.7rem 0 .35rem}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem;margin-bottom:1rem}
-.kpi{background:#fff;border:1px solid var(--borde);border-radius:10px;padding:.9rem;text-align:center}
-.kpi .v{font-size:1.5rem;font-weight:700;color:var(--azul)}
-.kpi .l{font-size:.75rem;color:#5a6572}
-table{border-collapse:collapse;width:100%;font-size:.83rem}
-th{background:var(--azul2);color:#fff;text-align:left;padding:.45rem .55rem;position:sticky;top:0}
-td{border-bottom:1px solid var(--borde);padding:.45rem .55rem;vertical-align:top}
-tr:hover td{background:#eef3f8}
-.tabla-scroll{overflow:auto;max-height:70vh;border:1px solid var(--borde);border-radius:8px}
-.estado{display:inline-block;padding:.1rem .55rem;border-radius:999px;font-size:.75rem;font-weight:600;white-space:nowrap}
-.e-completado{background:#e2f3e5;color:var(--verde)}
-.e-encurso{background:#fdf0d8;color:var(--ambar)}
-.e-pendiente{background:#fde3e1;color:var(--rojo)}
-.barra{background:#e8ecf1;border-radius:999px;height:9px;min-width:70px;overflow:hidden}
-.barra>div{height:100%;background:var(--azul2);border-radius:999px}
-.gantt{overflow:auto;border:1px solid var(--borde);border-radius:8px}
-.gantt table{font-size:.75rem;min-width:900px}
+section.visible{display:block;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* tarjetas */
+.card{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--borde);border-radius:16px;padding:1.3rem 1.5rem;margin-bottom:1.1rem;position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(79,124,255,.6),rgba(168,85,247,.6),transparent)}
+.card h2{font-size:1.05rem;margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem}
+.card h2::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--grad);box-shadow:0 0 10px rgba(168,85,247,.8)}
+.card h3{font-size:.92rem;color:var(--ac3);margin:.9rem 0 .4rem}
+/* kpis */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.9rem;margin-bottom:1.1rem}
+.kpi{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--borde);border-radius:14px;padding:1rem;text-align:center;transition:.25s}
+.kpi:hover{border-color:var(--borde2);transform:translateY(-3px);box-shadow:0 10px 30px rgba(79,124,255,.15)}
+.kpi .v{font-size:1.7rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.kpi .l{font-size:.72rem;color:var(--txt2);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem}
+/* tablas */
+table{border-collapse:collapse;width:100%;font-size:.82rem}
+th{background:var(--panel2);color:var(--ac3);text-align:left;padding:.5rem .6rem;position:sticky;top:0;font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;border-bottom:1px solid var(--borde2)}
+td{border-bottom:1px solid var(--borde);padding:.5rem .6rem;vertical-align:top;color:var(--txt2)}
+td:first-child{color:var(--txt)}
+tr:hover td{background:rgba(79,124,255,.06)}
+.tabla-scroll{overflow:auto;max-height:70vh;border:1px solid var(--borde);border-radius:12px}
+a{color:var(--ac3);text-decoration:none}
+a:hover{text-decoration:underline}
+code{background:var(--panel2);border:1px solid var(--borde);border-radius:6px;padding:.05rem .35rem;font-size:.8em;color:var(--ac3)}
+/* estados */
+.estado{display:inline-block;padding:.12rem .6rem;border-radius:999px;font-size:.72rem;font-weight:600;white-space:nowrap;border:1px solid}
+.e-completado{color:var(--verde);border-color:rgba(52,211,153,.4);background:rgba(52,211,153,.08)}
+.e-encurso{color:var(--ambar);border-color:rgba(251,191,36,.4);background:rgba(251,191,36,.08)}
+.e-pendiente{color:var(--rojo);border-color:rgba(248,113,113,.35);background:rgba(248,113,113,.07)}
+.barra{background:var(--panel2);border-radius:999px;height:8px;min-width:70px;overflow:hidden;border:1px solid var(--borde)}
+.barra>div{height:100%;background:var(--grad);border-radius:999px;box-shadow:0 0 8px rgba(168,85,247,.6)}
+/* gantt */
+.gantt{overflow:auto;border:1px solid var(--borde);border-radius:12px}
+.gantt table{font-size:.74rem;min-width:900px}
 .gantt td.mes{padding:0;height:20px}
-.gantt .on{background:var(--azul2)}
-.gantt .on.comp{background:#7fb586}
-.filtros{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.7rem}
-.filtros button{border:1px solid var(--borde);background:#fff;border-radius:999px;padding:.25rem .8rem;font-size:.8rem;cursor:pointer}
-.filtros button.active{background:var(--azul2);color:#fff;border-color:var(--azul2)}
-.galeria{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.8rem}
-.galeria figure{background:#fff;border:1px solid var(--borde);border-radius:8px;padding:.5rem}
-.galeria img{width:100%;border-radius:4px;cursor:zoom-in}
-.galeria figcaption{font-size:.75rem;color:#5a6572;margin-top:.3rem}
-.persona{border-left:4px solid var(--azul2);padding:.6rem .9rem;background:#fff;border-radius:0 8px 8px 0;margin-bottom:.7rem;border-top:1px solid var(--borde);border-right:1px solid var(--borde);border-bottom:1px solid var(--borde)}
-.persona strong{color:var(--azul)}
-.persona ul{margin:.35rem 0 0 1.1rem;font-size:.85rem}
-ul.plain{margin-left:1.1rem;font-size:.88rem}
-.nota{font-size:.78rem;color:#5a6572;margin-top:.5rem}
-a{color:var(--azul2)}
-dialog{border:none;border-radius:10px;max-width:92vw}
-dialog img{max-width:88vw;max-height:82vh}
-footer{text-align:center;font-size:.75rem;color:#5a6572;padding:1rem}
-@media (max-width:640px){header h1{font-size:1rem}}
+.gantt .on{background:var(--grad);box-shadow:inset 0 0 6px rgba(0,0,0,.3)}
+.gantt .on.comp{background:linear-gradient(90deg,#059669,#34d399)}
+/* filtros */
+.filtros{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.8rem}
+.filtros button{border:1px solid var(--borde2);background:var(--panel);color:var(--txt2);border-radius:999px;padding:.3rem .95rem;font-size:.78rem;cursor:pointer;transition:.2s}
+.filtros button:hover{color:var(--txt)}
+.filtros button.active{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 0 14px rgba(124,100,255,.4)}
+/* galería */
+.galeria{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.9rem}
+.galeria figure{background:var(--panel);border:1px solid var(--borde);border-radius:12px;padding:.55rem;transition:.25s}
+.galeria figure:hover{border-color:var(--borde2);transform:translateY(-3px);box-shadow:0 12px 30px rgba(79,124,255,.18)}
+.galeria img{width:100%;border-radius:8px;cursor:zoom-in;background:#fff}
+.galeria figcaption{font-size:.72rem;color:var(--txt3);margin-top:.35rem;text-transform:capitalize}
+/* equipo */
+.personas{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:.9rem}
+.persona{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--borde);border-radius:14px;padding:1rem 1.1rem;transition:.25s}
+.persona:hover{border-color:var(--borde2);transform:translateY(-3px)}
+.persona.lider{border:1px solid transparent;background:linear-gradient(var(--panel2),var(--panel2)) padding-box,var(--grad) border-box;grid-column:1/-1}
+.persona .avatar{width:44px;height:44px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-weight:700;font-family:"Space Grotesk";margin-bottom:.5rem;box-shadow:0 0 14px rgba(168,85,247,.5)}
+.persona strong{color:var(--txt);font-size:.95rem}
+.persona .rol{font-size:.72rem;color:var(--ac3);text-transform:uppercase;letter-spacing:.1em;margin:.15rem 0 .45rem}
+.persona ul{margin-left:1rem;font-size:.82rem;color:var(--txt2)}
+.persona ul li{margin-bottom:.2rem}
+.track{border-left:3px solid;border-image:var(--grad) 1;padding:.7rem 1rem;background:var(--panel2);border-radius:0 10px 10px 0;margin-bottom:.7rem}
+.nota{font-size:.75rem;color:var(--txt3);margin-top:.55rem}
+ul.plain{margin-left:1.1rem;font-size:.86rem;color:var(--txt2)}
+dialog{border:1px solid var(--borde2);border-radius:14px;max-width:92vw;background:var(--panel);padding:.6rem}
+dialog::backdrop{background:rgba(0,0,0,.75);backdrop-filter:blur(4px)}
+dialog img{max-width:88vw;max-height:82vh;border-radius:8px;background:#fff}
+footer{position:relative;z-index:1;text-align:center;font-size:.74rem;color:var(--txt3);padding:1.6rem 1rem;border-top:1px solid var(--borde);margin-top:2rem}
+@media (max-width:640px){nav .brand span{display:none}header.hero{padding-top:2rem}}
 </style>
 </head>
 <body>
-<header>
-  <h1>DATECOL 4.0 (BPIN091) — Tablero de seguimiento UNIMINUTO</h1>
-  <p id="subtitulo"></p>
-</header>
+<div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div><div class="grid-bg"></div>
+
 <nav id="nav">
+  <div class="brand"><img src="assets/logos/datecol.png" alt="DATECOL 4.0"><span>DATECOL&nbsp;4.0</span></div>
   <button data-s="inicio" class="active">Inicio</button>
   <button data-s="cronograma">Cronograma</button>
-  <button data-s="equipo">Equipo y labores</button>
-  <button data-s="resultados">Resultados de datos</button>
+  <button data-s="equipo">Equipo</button>
+  <button data-s="resultados">Resultados</button>
   <button data-s="formacion">Formación</button>
   <button data-s="informes">Informes</button>
 </nav>
+
+<header class="hero">
+  <span class="eyebrow">BPIN091 · OCAD 61 · Sistema General de Regalías</span><br>
+  <img class="logo-hero" src="assets/logos/datecol.png" alt="DATECOL 4.0">
+  <h1>Tablero de seguimiento <span>UNIMINUTO</span><br>Telemetría y energías sostenibles en el Chocó</h1>
+  <p id="subtitulo"></p>
+</header>
+
+<div class="logos-strip" id="logos-strip"></div>
+
 <main>
   <section id="inicio" class="visible">
     <div class="kpis" id="kpis"></div>
-    <div class="card"><h2>Proyecto</h2><p id="p-titulo" style="font-size:.9rem"></p>
+    <div class="card"><h2>Proyecto</h2><p id="p-titulo" style="font-size:.9rem;color:var(--txt2)"></p>
       <h3>Objetivos y actividades UNIMINUTO</h3><div id="p-objetivos"></div>
       <h3>Compromisos de entrega (UNIMINUTO)</h3><ul class="plain" id="p-compromisos"></ul>
     </div>
     <div class="card"><h2>Estado de los tracks de investigación</h2><div id="p-avances"></div></div>
-    <div class="card"><h2>Selección de cabecera para la base telemétrica</h2><p id="p-seleccion" style="font-size:.9rem"></p></div>
+    <div class="card"><h2>Selección de cabecera para la base telemétrica</h2><p id="p-seleccion" style="font-size:.9rem;color:var(--txt2)"></p></div>
   </section>
 
   <section id="cronograma">
@@ -96,9 +162,9 @@ footer{text-align:center;font-size:.75rem;color:#5a6572;padding:1rem}
   </section>
 
   <section id="equipo">
-    <div class="card"><h2>Institución y alianza</h2><p id="e-inst" style="font-size:.9rem"></p><p class="nota" id="e-alianza"></p></div>
-    <div class="card"><h2>Co-investigadores y labores</h2><div id="e-personas"></div>
-      <p class="nota">Para añadir coinvestigadores: editar <code>data/proyecto.json</code> (bloque <code>equipo</code>).</p></div>
+    <div class="card"><h2>Institución y alianza</h2><p id="e-inst" style="font-size:.9rem;color:var(--txt2)"></p><p class="nota" id="e-alianza"></p></div>
+    <div class="card"><h2>Equipo de investigación</h2><div class="personas" id="e-personas"></div>
+      <p class="nota">Para editar nombres o labores: <code>data/proyecto.json</code> (bloque <code>equipo</code>).</p></div>
     <div class="card"><h2>Actividades por responsable</h2><div class="tabla-scroll"><table id="t-resp"></table></div></div>
   </section>
 
@@ -130,13 +196,14 @@ const $=q=>document.querySelector(q);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const estadoCls=e=>e==="Completado"?"e-completado":e==="En curso"?"e-encurso":"e-pendiente";
 const pct=v=>Math.round(v*100)+" %";
-const MESES=[...Array(12)].map((_,i)=>{const d=new Date(2026,6+i,1);return d;});
+const MESES=[...Array(12)].map((_,i)=>new Date(2026,6+i,1));
 const fmtM=d=>d.toLocaleDateString("es-CO",{month:"short",year:"2-digit"});
 
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{
   document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));
   document.querySelectorAll("section").forEach(x=>x.classList.remove("visible"));
   b.classList.add("active"); $("#"+b.dataset.s).classList.add("visible");
+  window.scrollTo({top:0,behavior:"smooth"});
 });
 
 async function j(p){const r=await fetch(p);if(!r.ok)throw new Error(p);return r.json();}
@@ -150,22 +217,26 @@ try{
     j("data/informes.json").catch(()=>[])
   ]);
 
+  /* ---- Hero y logos ---- */
+  $("#subtitulo").textContent=P.proyecto.titulo;
+  $("#logos-strip").innerHTML=(P.logos||[]).map(l=>`<div class="chip" title="${esc(l.nombre)}"><img src="${esc(l.archivo)}" alt="${esc(l.nombre)}"></div>`).join("")+
+    `<div class="chip-txt">ALIANZA: ${esc(P.alianza_ies.split("(")[0])}</div>`;
+
   /* ---- Inicio ---- */
-  $("#subtitulo").textContent=P.proyecto.codigo+" · "+P.proyecto.institucion+" · Horizonte: "+P.proyecto.horizonte_cronograma;
-  $("#p-titulo").textContent=P.proyecto.titulo;
   const done=A.filter(a=>a.estado==="Completado").length,
         cur=A.filter(a=>a.estado==="En curso").length,
         avg=A.reduce((s,a)=>s+a.avance,0)/A.length;
   $("#kpis").innerHTML=[
     [A.length,"Actividades"],[done,"Completadas"],[cur,"En curso"],
     [A.length-done-cur,"Pendientes"],[Math.round(avg*100)+" %","Avance global"],
-    [I.length,"Informes publicados"]
+    [I.length,"Informes"]
   ].map(([v,l])=>`<div class="kpi"><div class="v">${v}</div><div class="l">${l}</div></div>`).join("");
-  $("#p-objetivos").innerHTML=P.objetivos.map(o=>`<p style="font-size:.85rem;margin:.35rem 0"><strong>${esc(o.id)}.</strong> ${esc(o.texto)}<br><em style="color:#5a6572">${esc(o.actividad_uniminuto)}</em></p>`).join("");
+  $("#p-titulo").textContent=P.proyecto.codigo+" · "+P.proyecto.institucion+" · Horizonte: "+P.proyecto.horizonte_cronograma;
+  $("#p-objetivos").innerHTML=P.objetivos.map(o=>`<p style="font-size:.85rem;margin:.4rem 0;color:var(--txt2)"><strong style="color:var(--txt)">${esc(o.id)}.</strong> ${esc(o.texto)}<br><em style="color:var(--txt3)">${esc(o.actividad_uniminuto)}</em></p>`).join("");
   $("#p-compromisos").innerHTML=P.compromisos_uniminuto.map(c=>`<li>${esc(c)}</li>`).join("");
-  $("#p-avances").innerHTML=P.avances.map(t=>`<div class="persona"><strong>${esc(t.track)}</strong> — <span class="estado ${estadoCls(t.estado==="Entregado"?"Completado":"En curso")}">${esc(t.estado)}</span><p style="font-size:.85rem;margin-top:.3rem">${esc(t.detalle)}</p><p class="nota">${esc(t.ubicacion)}</p></div>`).join("");
+  $("#p-avances").innerHTML=P.avances.map(t=>`<div class="track"><strong>${esc(t.track)}</strong> — <span class="estado ${estadoCls(t.estado==="Entregado"?"Completado":"En curso")}">${esc(t.estado)}</span><p style="font-size:.84rem;margin-top:.3rem;color:var(--txt2)">${esc(t.detalle)}</p><p class="nota">${esc(t.ubicacion)}</p></div>`).join("");
   const S=P.seleccion_cabecera;
-  $("#p-seleccion").innerHTML=`<strong>${esc(S.elegida)}</strong> (DANE ${esc(S.codigo_dane)}). ${esc(S.justificacion_resumen)} <span class="nota">Fuente: ${esc(S.fuente)}</span>`;
+  $("#p-seleccion").innerHTML=`<strong style="color:var(--txt)">${esc(S.elegida)}</strong> (DANE ${esc(S.codigo_dane)}). ${esc(S.justificacion_resumen)} <span class="nota">Fuente: ${esc(S.fuente)}</span>`;
 
   /* ---- Cronograma ---- */
   const frentes=["Todos",...new Set(A.map(a=>a.frente))];
@@ -198,7 +269,11 @@ try{
   /* ---- Equipo ---- */
   $("#e-inst").textContent=P.proyecto.institucion;
   $("#e-alianza").textContent="Alianza IES: "+P.alianza_ies;
-  $("#e-personas").innerHTML=P.equipo.map(p=>`<div class="persona"><strong>${esc(p.nombre)}</strong> — ${esc(p.rol)}<ul>${p.labores.map(l=>`<li>${esc(l)}</li>`).join("")}</ul></div>`).join("");
+  const inic=n=>n.split(/\s+/).filter(w=>/^[A-ZÁÉÍÓÚ]/.test(w)).slice(0,2).map(w=>w[0]).join("");
+  $("#e-personas").innerHTML=P.equipo.map(p=>{
+    const lider=/líder|lider/i.test(p.rol);
+    return `<div class="persona ${lider?"lider":""}"><div class="avatar">${esc(inic(p.nombre))}</div><strong>${esc(p.nombre)}</strong><div class="rol">${esc(p.rol)}</div><ul>${p.labores.map(l=>`<li>${esc(l)}</li>`).join("")}</ul></div>`;
+  }).join("");
   const porResp={};
   A.forEach(a=>{(porResp[a.responsable]??=[]).push(a);});
   $("#t-resp").innerHTML=`<tr><th>Responsable</th><th>Actividades</th><th>Completadas</th><th>Avance medio</th></tr>`+
@@ -233,12 +308,12 @@ try{
   }
 
   /* ---- Informes ---- */
-  $("#i-lista").innerHTML=I.length?I.map(x=>`<div class="persona"><strong>${x.fecha}</strong> · ${esc(x.actividad_id)} — <a href="${esc(x.archivo)}" target="_blank" rel="noopener">${esc(x.titulo)}</a><p style="font-size:.85rem;margin-top:.2rem">${esc(x.resumen)}</p></div>`).join(""):"<p>Aún no hay informes.</p>";
+  $("#i-lista").innerHTML=I.length?I.map(x=>`<div class="track"><strong>${x.fecha}</strong> · ${esc(x.actividad_id)} — <a href="${esc(x.archivo)}" target="_blank" rel="noopener">${esc(x.titulo)}</a><p style="font-size:.84rem;margin-top:.2rem;color:var(--txt2)">${esc(x.resumen)}</p></div>`).join(""):"<p style='color:var(--txt2)'>Aún no hay informes.</p>";
 
 }catch(err){
   document.querySelector("main").insertAdjacentHTML("afterbegin",
    `<div class="card" style="border-color:var(--rojo)"><h2 style="color:var(--rojo)">No se pudieron cargar los datos</h2>
-    <p style="font-size:.85rem">Si abriste el archivo con doble clic (file://), el navegador bloquea <code>fetch</code>.
+    <p style="font-size:.85rem;color:var(--txt2)">Si abriste el archivo con doble clic (file://), el navegador bloquea <code>fetch</code>.
     Sirve la carpeta con <code>python -m http.server</code> y abre <code>http://localhost:8000</code>, o publícala en GitHub Pages (ver README). Error: ${esc(err.message)}</p></div>`);
 }
 })();

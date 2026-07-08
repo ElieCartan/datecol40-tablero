@@ -18,6 +18,8 @@ Regalias_Webpage/
 │   └── informes.json       # índice de informes (EDITABLE: una entrada por informe)
 ├── informes/               # informes por actividad (.md) + plantilla_informe.md
 ├── assets/figuras/         # figuras del Track B (consolidado + Acandí)
+├── assets/logos/           # logos oficiales extraídos del doc técnico (DATECOL, MinCiencias, SGR, Colombia)
+│   └── aliadas/            # colocar aquí los logos de las IES aliadas (PNG) y añadirlos al bloque "logos" de proyecto.json
 └── scripts/exportar_datos.py  # regenera los JSON desde las fuentes
 ```
 
