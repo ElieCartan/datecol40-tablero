@@ -4,11 +4,13 @@
 Fuentes:
   - ../cronograma_DATECOL_UNIMINUTO.xlsx  (hoja Cronograma)  -> data/actividades.json
   - ../Claude-Datecol/track_b_datos/tablas/resumen_comparativo.csv -> data/resultados.json
-  - plan_capacitacion_telemetria.xlsx (si está junto al cronograma) -> data/formacion.json
+  - ../plan_capacitacion_telemetria.xlsx -> data/formacion.json
+  - ../Revistas_Publicacion_Fotovoltaica_ZNI.xlsx -> data/revistas.json
 Uso:  python scripts/exportar_datos.py   (ejecutar desde Regalias_Webpage/)
 """
 import json, sys
 from pathlib import Path
+from urllib.parse import quote_plus
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]      # Regalias_Webpage/
@@ -73,6 +75,8 @@ if plan:
             "enlaces": links,
             "estado": "Pendiente",
         })
+    raw = pd.read_excel(plan, "Congresos y Eventos", header=None)
+    estrategia = " ".join(str(v) for v in raw.iloc[1:3, 0] if pd.notna(v))
     cong = pd.read_excel(plan, "Congresos y Eventos", header=4).dropna(how="all")
     eventos = []
     for _, r in cong.iterrows():
@@ -84,8 +88,63 @@ if plan:
             "relevancia": str(r.iloc[4]),
         })
     (DATA / "formacion.json").write_text(
-        json.dumps({"cursos": cursos, "eventos": eventos},
+        json.dumps({"cursos": cursos, "eventos": eventos, "estrategia": estrategia},
                    ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"formacion.json: {len(cursos)} cursos, {len(eventos)} eventos")
 else:
     print("AVISO: no se encontró plan_capacitacion_telemetria.xlsx", file=sys.stderr)
+
+# ---- revistas.json ----
+# Mapa curado de URLs (homepage). Scimago usa la búsqueda oficial por nombre
+# (determinista); verificar homepage antes de someter.
+URLS = {
+ "Revista Facultad de Ingeniería Universidad de Antioquia": "https://revistas.udea.edu.co/index.php/ingenieria",
+ "Revista Iberoamericana de Automática e Informática Industrial (RIAI)": "https://polipapers.upv.es/index.php/RIAI",
+ "Ingeniería e Investigación": "https://revistas.unal.edu.co/index.php/ingeinv",
+ "Energies": "https://www.mdpi.com/journal/energies",
+ "IEEE Access": "https://ieeeaccess.ieee.org/",
+ "Sustainability": "https://www.mdpi.com/journal/sustainability",
+ "Frontiers in Energy Research": "https://www.frontiersin.org/journals/energy-research",
+ "Global Energy Interconnection": "https://www.sciencedirect.com/journal/global-energy-interconnection",
+ "Journal of King Saud University - Science": "https://www.sciencedirect.com/journal/journal-of-king-saud-university-science",
+ "Engineering, Technology & Applied Science Research (ETASR)": "https://etasr.com/index.php/ETASR",
+ "Journal of Advanced Research in Applied Sciences and Engineering Technology": "https://semarakilmu.com.my/journals/index.php/applied_sciences_eng_tech",
+ "Clean Energy": "https://academic.oup.com/ce",
+ "Applied Energy": "https://www.sciencedirect.com/journal/applied-energy",
+ "Renewable Energy": "https://www.sciencedirect.com/journal/renewable-energy",
+ "Solar Energy": "https://www.sciencedirect.com/journal/solar-energy",
+ "International Journal of Electrical Power & Energy Systems": "https://www.sciencedirect.com/journal/international-journal-of-electrical-power-and-energy-systems",
+ "IEEE Transactions on Sustainable Energy": "https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=5165391",
+}
+rev_x = None
+for cand in [BASE / "Revistas_Publicacion_Fotovoltaica_ZNI.xlsx", ROOT / "Revistas_Publicacion_Fotovoltaica_ZNI.xlsx"]:
+    if cand.exists():
+        rev_x = cand
+        break
+if rev_x:
+    rv = pd.read_excel(rev_x, "Propuestas de Revistas", header=2).dropna(how="all")
+    revistas = []
+    for _, r in rv.iterrows():
+        nombre = r.iloc[0]
+        if pd.isna(nombre):
+            continue
+        nombre = str(nombre).strip()
+        acceso = str(r.iloc[2]) if pd.notna(r.iloc[2]) else ""
+        revistas.append({
+            "nombre": nombre,
+            "editorial": str(r.iloc[1]) if pd.notna(r.iloc[1]) else "",
+            "acceso": acceso,
+            "open_access": ("No OA" not in acceso and "Suscripción" not in acceso),
+            "cuartil": str(r.iloc[3]) if pd.notna(r.iloc[3]) else "",
+            "enfoque": str(r.iloc[4]) if pd.notna(r.iloc[4]) else "",
+            "idiomas": str(r.iloc[5]) if pd.notna(r.iloc[5]) else "",
+            "apc": str(r.iloc[6]) if pd.notna(r.iloc[6]) else "",
+            "ventajas": str(r.iloc[7]) if pd.notna(r.iloc[7]) else "",
+            "web": URLS.get(nombre, ""),
+            "scimago": "https://www.scimagojr.com/journalsearch.php?q=" + quote_plus(nombre.split("(")[0].strip()),
+        })
+    (DATA / "revistas.json").write_text(
+        json.dumps(revistas, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(f"revistas.json: {len(revistas)} revistas")
+else:
+    print("AVISO: no se encontró Revistas_Publicacion_Fotovoltaica_ZNI.xlsx", file=sys.stderr)

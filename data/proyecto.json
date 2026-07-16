@@ -51,26 +51,34 @@
       "labores": ["(Tareas por asignar — editar data/proyecto.json)"]
     },
     {
-      "nombre": "Carlos Villegas",
+      "nombre": "Carlos Enrique Villegas López",
       "rol": "Co-investigador",
       "labores": ["(Tareas por asignar — editar data/proyecto.json)"]
     },
     {
-      "nombre": "Sara (apellido por confirmar)",
+      "nombre": "Sara Lucía Gómez Rodríguez",
       "rol": "Co-investigadora",
       "labores": ["(Tareas por asignar — editar data/proyecto.json)"]
     },
     {
-      "nombre": "Alexis (apellido por confirmar)",
+      "nombre": "Alexis López Figueroa",
       "rol": "Co-investigador",
       "labores": ["(Tareas por asignar — editar data/proyecto.json)"]
     }
   ],
+  "logo_uniminuto": {"archivo": "assets/logos/uniminuto.png", "nombre": "UNIMINUTO"},
   "logos": [
     {"archivo": "assets/logos/datecol.png", "nombre": "DATECOL 4.0"},
     {"archivo": "assets/logos/minciencias.png", "nombre": "MinCiencias"},
     {"archivo": "assets/logos/sgr.png", "nombre": "Sistema General de Regalías"},
     {"archivo": "assets/logos/colombia_potencia.png", "nombre": "Colombia Potencia de la Vida"}
+  ],
+  "logos_aliadas": [
+    {"archivo": "assets/logos/aliadas/udea.png", "nombre": "Universidad de Antioquia"},
+    {"archivo": "assets/logos/aliadas/unicordoba.png", "nombre": "Universidad de Córdoba"},
+    {"archivo": "assets/logos/aliadas/uninorte.png", "nombre": "Universidad del Norte"},
+    {"archivo": "assets/logos/aliadas/unillanos.png", "nombre": "Universidad de los Llanos"},
+    {"archivo": "assets/logos/aliadas/unicauca.png", "nombre": "Universidad del Cauca"}
   ],
   "alianza_ies": "UdeA, UniCórdoba, UniNorte, UniLlanos, UniCauca, UNIMINUTO (análisis de datos: abordaje teórico UdeA, UniNorte, UniMinuto).",
   "avances": [
