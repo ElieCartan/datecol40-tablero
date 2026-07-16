@@ -75,12 +75,18 @@
   ],
   "logos_aliadas": [
     {"archivo": "assets/logos/aliadas/udea.png", "nombre": "Universidad de Antioquia"},
-    {"archivo": "assets/logos/aliadas/unicordoba.png", "nombre": "Universidad de Córdoba"},
-    {"archivo": "assets/logos/aliadas/uninorte.png", "nombre": "Universidad del Norte"},
-    {"archivo": "assets/logos/aliadas/unillanos.png", "nombre": "Universidad de los Llanos"},
-    {"archivo": "assets/logos/aliadas/unicauca.png", "nombre": "Universidad del Cauca"}
+    {"archivo": "assets/logos/aliadas/unal.png", "nombre": "Universidad Nacional de Colombia"},
+    {"archivo": "assets/logos/aliadas/ucordoba.png", "nombre": "Universidad de Córdoba"},
+    {"archivo": "assets/logos/aliadas/ullanos.png", "nombre": "Universidad de los Llanos"},
+    {"archivo": "assets/logos/aliadas/unicauca.png", "nombre": "Universidad del Cauca"},
+    {"archivo": "assets/logos/aliadas/utolima.png", "nombre": "Universidad del Tolima"},
+    {"archivo": "assets/logos/aliadas/uamazonia.png", "nombre": "Universidad de la Amazonia"},
+    {"archivo": "assets/logos/aliadas/tecnova.png", "nombre": "Tecnnova"},
+    {"archivo": "assets/logos/aliadas/halmamater.png", "nombre": "Hospital AlmaMáter"},
+    {"archivo": "assets/logos/aliadas/scif.png", "nombre": "Sociedad Colombiana de Ingeniería Física"},
+    {"archivo": "assets/logos/aliadas/parqueexplora.png", "nombre": "Parque Explora"}
   ],
-  "alianza_ies": "UdeA, UniCórdoba, UniNorte, UniLlanos, UniCauca, UNIMINUTO (análisis de datos: abordaje teórico UdeA, UniNorte, UniMinuto).",
+  "alianza_ies": "UNIMINUTO, U. de Antioquia, U. Nacional de Colombia, U. de Córdoba, U. de los Llanos, U. del Cauca, U. del Tolima, U. de la Amazonia, Tecnnova, Hospital AlmaMáter, Sociedad Colombiana de Ingeniería Física y Parque Explora.",
   "avances": [
     {
       "track": "Track A — Bibliográfico",
