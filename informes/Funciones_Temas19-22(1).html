@@ -1,0 +1,1925 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matemáticas Básicas · Funciones (Temas 19–25, 28–29)</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<style>
+:root{
+  --bg:#0b0f1a; --card:#121a2b; --ink:#e2e8f4; --muted:#8fa0b8;
+  --accent:#818cf8; --accent2:#f87171; --accent3:#34d399; --accent4:#fb923c;
+  --soft:#1b2338; --border:#243049; --canvas:#0d1424;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+header{background:linear-gradient(120deg,#151238,#2b2870 55%,#3730a3);color:#eef0ff;padding:26px 22px 18px;
+  border-bottom:1px solid #33306e}
+header h1{margin:0;font-size:1.45rem;font-weight:700;letter-spacing:.2px}
+header p{margin:6px 0 0;opacity:.75;font-size:.92rem}
+nav{position:sticky;top:0;z-index:50;background:rgba(13,18,32,.92);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;gap:4px;padding:8px 14px}
+nav button{border:1px solid transparent;background:transparent;color:var(--muted);padding:7px 12px;
+  border-radius:8px;cursor:pointer;font-size:.85rem;font-weight:600;font-family:inherit}
+nav button:hover{background:var(--soft);color:var(--accent)}
+nav button.active{background:var(--accent);color:#0b0f1a}
+main{max-width:1000px;margin:0 auto;padding:20px 16px 70px}
+section.panel{display:none}
+section.panel.show{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2{font-size:1.3rem;margin:18px 0 6px;color:#c7d2fe}
+h3{font-size:1.05rem;margin:22px 0 6px;color:var(--accent)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:14px 0;
+  box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.def{border-left:4px solid var(--accent);background:linear-gradient(180deg,#1a2138,#151c30)}
+.warn{border-left:4px solid var(--accent4);background:#221a10}
+.ok{border-left:4px solid var(--accent3);background:#0e2118}
+.two{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}
+.two>div{flex:1 1 320px;min-width:300px}
+canvas{background:var(--canvas);border:1px solid var(--border);border-radius:10px;max-width:100%;display:block;margin:8px auto}
+.ctrl{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:center;margin:8px 0;font-size:.9rem}
+.ctrl label{font-weight:600;color:var(--muted)}
+.ctrl input[type=range]{width:170px;accent-color:var(--accent)}
+.ctrl select{padding:5px 8px;border:1px solid var(--border);border-radius:8px;font-family:inherit;
+  background:var(--soft);color:var(--ink)}
+.btn{background:var(--accent);color:#0b0f1a;border:none;border-radius:8px;padding:8px 16px;cursor:pointer;
+  font-family:inherit;font-weight:700;font-size:.88rem}
+.btn:hover{filter:brightness(1.15)}
+.btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+.chip{display:inline-block;background:var(--soft);color:var(--accent);border-radius:999px;padding:2px 12px;
+  font-size:.78rem;font-weight:700;margin-right:6px;vertical-align:middle;border:1px solid #2e3a58}
+.readout{font-family:inherit;background:#060a14;border:1px solid var(--border);color:#7dd3fc;padding:6px 14px;
+  border-radius:8px;font-size:.92rem;text-align:center;margin:6px auto;max-width:560px}
+.steps .step{display:none;border-left:3px solid var(--accent3);padding:8px 14px;margin:8px 0;background:#101a26;border-radius:0 8px 8px 0}
+.steps .step.visible{display:block;animation:fade .3s ease}
+.steps .step b.n{color:var(--accent3)}
+details.sol{margin:10px 0;border:1px solid var(--border);border-radius:10px;background:#0f1626}
+details.sol summary{cursor:pointer;padding:10px 16px;font-weight:700;color:var(--accent);list-style:none}
+details.sol summary::before{content:"▸ ";transition:.2s}
+details.sol[open] summary::before{content:"▾ "}
+details.sol .inner{padding:4px 20px 14px;border-top:1px dashed var(--border)}
+table.tt{border-collapse:collapse;margin:10px auto;font-size:.92rem}
+table.tt th,table.tt td{border:1px solid var(--border);padding:6px 14px;text-align:center}
+table.tt th{background:var(--soft);color:#c7d2fe}
+.leg{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;font-size:.84rem;color:var(--muted);margin-top:2px}
+.leg span::before{content:"—";font-weight:900;margin-right:5px}
+.leg .l1::before{color:var(--accent)} .leg .l2::before{color:var(--accent2)}
+.leg .l3::before{color:var(--accent3)} .leg .l4::before{color:var(--accent4)}
+.ej{counter-increment:ej}
+.exl{counter-reset:exi}
+.exl .exi{counter-increment:exi;border-top:1px dashed var(--border);padding:10px 2px 4px;margin-top:8px}
+.exl .exi::before{content:counter(exi) ". ";font-weight:800;color:var(--accent4)}
+.exl .exi details.sol{margin:6px 0 4px}
+.foot{color:var(--muted);font-size:.8rem;text-align:center;margin-top:40px}
+.kbig{font-size:1.05rem}
+</style>
+</head>
+<body>
+<header>
+  <h1>Funciones: gráficas, transformaciones y álgebra</h1>
+  <p>Matemáticas Básicas · Universidad Nacional de Colombia — Material interactivo · Temas 19–25 y 28–29 · Talleres 9–13</p>
+</header>
+<nav id="topnav">
+  <button data-t="s1" class="active">1 · Modelos</button>
+  <button data-t="s2">2 · Gráficas, dominio y rango</button>
+  <button data-t="s3">3 · Funciones a trozos</button>
+  <button data-t="s4">4 · Valor absoluto</button>
+  <button data-t="s5">5 · xⁿ y x^(1/n)</button>
+  <button data-t="s6">6 · Traslación y reflexión</button>
+  <button data-t="s7">7 · Álgebra de funciones</button>
+  <button data-t="s9">8 · Inyectivas e inversas</button>
+  <button data-t="s10">9 · Exponenciales</button>
+  <button data-t="s11">10 · Logarítmicas</button>
+  <button data-t="s12">11 · Trigonométricas</button>
+  <button data-t="s8">★ Retos</button>
+</nav>
+<main>
+
+<!-- ============ SECCIÓN 1: MODELOS ============ -->
+<section id="s1" class="panel show">
+<h2>1 · Modelos matemáticos</h2>
+<div class="card def">
+Un <b>modelo matemático</b> es una ecuación (o función) que traduce al lenguaje matemático la relación entre
+dos o más cantidades de un problema real. <b>Metodología de 5 pasos</b> (Tema 19):
+\[ \textbf{1. Leer} \;\to\; \textbf{2. Nombrar variables} \;\to\; \textbf{3. Relacionar} \;\to\; \textbf{4. Plantear ecuación} \;\to\; \textbf{5. Resolver y verificar} \]
+</div>
+
+<h3>Ejemplo resuelto · Inversión en dos fondos</h3>
+<div class="card">
+<p><i>Carlos invirtió $120&thinsp;000 en dos fondos: uno al 4.5% anual y otro al 4% anual (interés simple).
+Tras un año recibió $5&thinsp;250 en intereses. ¿Cuánto invirtió en cada fondo?</i></p>
+<div class="steps" id="steps-inv">
+  <div class="step"><b class="n">Paso 1 — Leer:</b> hay dos cantidades desconocidas (dinero en cada fondo) ligadas por dos datos: el total invertido y el total de intereses.</div>
+  <div class="step"><b class="n">Paso 2 — Variables:</b> sea \(x\) = pesos invertidos al 4.5%. Entonces el resto, \(120000-x\), está al 4%.</div>
+  <div class="step"><b class="n">Paso 3 — Relacionar:</b> los intereses de cada fondo son \(0.045x\) y \(0.04(120000-x)\).</div>
+  <div class="step"><b class="n">Paso 4 — Ecuación:</b> \[0.045x + 0.04(120000-x) = 5250\]</div>
+  <div class="step"><b class="n">Paso 5 — Resolver:</b> \[0.045x + 4800 - 0.04x = 5250 \;\Longleftrightarrow\; 0.005x = 450 \;\Longleftrightarrow\; x = 90000.\]
+  <b>Respuesta:</b> $90&thinsp;000 al 4.5% y $30&thinsp;000 al 4%. <i>Verificación:</i> \(0.045(90000)+0.04(30000)=4050+1200=5250\) ✓</div>
+</div>
+<div class="ctrl"><button class="btn" onclick="nextStep('steps-inv',this)">Siguiente paso →</button></div>
+</div>
+
+<h3>Ejemplo interactivo · El área como función de la altura</h3>
+<div class="card">
+<p><i>Exprese el área \(A\) de un triángulo equilátero en función de su altura \(h\).</i>
+Con Pitágoras sobre la mitad del triángulo: \(b^2 = h^2 + \tfrac{b^2}{4}\Rightarrow b = \tfrac{2}{\sqrt3}h\), luego
+\[ A(h) = \frac{1}{2}\,b\,h = \frac{\sqrt{3}}{3}\,h^{2},\qquad h>0. \]
+Observa que <b>el modelo es una función</b>: cada altura determina exactamente un área. Mueve el deslizador:</p>
+<div class="ctrl"><label>altura \(h\):</label><input type="range" id="triH" min="0.5" max="4" step="0.05" value="2"><span id="triHval"></span></div>
+<canvas id="cvTri" width="640" height="300"></canvas>
+<div class="readout" id="triOut"></div>
+</div>
+
+<h3>Ejemplo resuelto · Semejanza: la sombra del caminante</h3>
+<div class="card">
+<p><i>Un hombre de 2 m se aleja de un poste con lámpara a 6 m de altura. ¿Cuánto mide su sombra cuando está a 10 m del poste?</i></p>
+<div class="steps" id="steps-som">
+  <div class="step"><b class="n">Paso 1–2:</b> sea \(s\) la longitud de la sombra. La luz genera dos triángulos rectángulos semejantes: el grande (poste, base \(10+s\)) y el pequeño (hombre, base \(s\)).</div>
+  <div class="step"><b class="n">Paso 3–4:</b> por semejanza de triángulos, las razones altura/base coinciden: \[\frac{6}{10+s}=\frac{2}{s}\]</div>
+  <div class="step"><b class="n">Paso 5:</b> \(6s = 2(10+s) \Rightarrow 6s = 20+2s \Rightarrow 4s=20 \Rightarrow s=5\). <b>La sombra mide 5 m.</b>
+  De hecho, a distancia \(d\) del poste el modelo general es \(s(d)=\tfrac{d}{2}\): ¡otra función!</div>
+</div>
+<div class="ctrl"><button class="btn" onclick="nextStep('steps-som',this)">Siguiente paso →</button></div>
+</div>
+
+<h3>Ejercicios del tema <span class="chip">Taller 9</span></h3>
+<div class="card exl">
+<div class="exi">Si un fabricante vende \(x\) unidades, sus ingresos son \(R=20x\) y sus costos \(C=2000+8x+0.0025x^2\) (dólares).
+¿Cuántas unidades debe vender para tener una ganancia de al menos 2400 dólares?
+<details class="sol"><summary>Solución</summary><div class="inner">
+\[G(x)=R-C=-0.0025x^2+12x-2000\ge 2400 \iff x^2-4800x+1\,760\,000\le 0\]
+<p>Raíces: \(x=\dfrac{4800\pm\sqrt{4800^2-4(1\,760\,000)}}{2}=\dfrac{4800\pm 4000}{2}\), es decir \(x=400\) y \(x=4400\).
+Como la parábola abre hacia arriba, la desigualdad se cumple <b>entre</b> las raíces: debe vender entre 400 y 4400 unidades.</p>
+</div></details></div>
+<div class="exi">En una comunidad de 8000 personas, la velocidad \(v\) con que se difunde un rumor es conjuntamente proporcional
+al número \(n\) de personas que lo han escuchado y al número que no. Si cuando \(n=20\), \(v=200\) personas/hora, halle el modelo \(v(n)\).
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(v=k\,n(8000-n)\). Con los datos: \(200=k(20)(7980)\Rightarrow k=\dfrac{200}{159\,600}=\dfrac{1}{798}\). Luego
+\(v(n)=\dfrac{n(8000-n)}{798}\), con \(0\le n\le 8000\).</p>
+</div></details></div>
+<div class="exi">Un envase cilíndrico cerrado tiene volumen \(60\) cm³. El material de las tapas cuesta 200 pesos/cm² (el doble
+que el de los lados). Exprese el costo total como función del radio \(r\).
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>De \(V=\pi r^2 h=60\): \(h=\dfrac{60}{\pi r^2}\). Costo = tapas + lado:</p>
+\[C(r)=200\cdot 2\pi r^2+100\cdot 2\pi r h=400\pi r^2+200\pi r\cdot\frac{60}{\pi r^2}=400\pi r^2+\frac{12\,000}{r},\quad r>0\]
+</div></details></div>
+<div class="exi">Una caja tiene ancho igual al triple de su profundidad \(x\) y altura igual a 5 veces la profundidad.
+(a) Modele el volumen \(V(x)\). (b) Calcule el volumen si \(x=1.5\) pulg.
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>(a) \(V(x)=x\cdot 3x\cdot 5x=15x^3\), \(x>0\). (b) \(V(1.5)=15(3.375)=50.625\) pulg³.</p>
+</div></details></div>
+<div class="exi">Una isla está en el punto \(A\), 6 km mar adentro del punto \(B\) de una playa recta. Una mujer quiere llegar a \(H\),
+a 9 km de \(B\) por la playa. Va en lancha ($15&thinsp;000/km) hasta un punto \(P\) entre \(B\) y \(H\), y sigue en carro ($12&thinsp;000/km).
+Si \(x\) es la distancia \(BP\), exprese el costo del viaje y su dominio.
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>Lancha: \(AP=\sqrt{36+x^2}\) (Pitágoras). Carro: \(PH=9-x\). Entonces</p>
+\[C(x)=15\,000\sqrt{36+x^2}+12\,000(9-x),\qquad D_C=[0,9]\]
+</div></details></div>
+</div>
+</section>
+
+<!-- ============ SECCIÓN 2: GRÁFICAS, DOMINIO Y RANGO ============ -->
+<section id="s2" class="panel">
+<h2>2 · Gráficas de funciones, dominio y rango</h2>
+<div class="card def">
+Una <b>función</b> \(f:A\to B\) asigna a cada \(x\in A\) <b>exactamente un</b> \(y=f(x)\in B\).
+El <b>dominio</b> \(D_f\) es el conjunto de entradas válidas; el <b>rango</b> \(R_f=\{f(x): x\in D_f\}\) es el conjunto de salidas.
+La <b>gráfica</b> es \(\{(x,f(x)) : x\in D_f\}\subseteq\mathbb{R}^2\).
+<br><br>Al determinar dominios, recuerda las dos restricciones clásicas y una tercera para logaritmos:
+\[\frac{1}{u}\;(u\neq 0),\qquad \sqrt[2k]{u}\;(u\ge 0),\qquad \log_b u\;(u> 0).\]
+</div>
+
+<h3>Prueba de la recta vertical <span class="chip">interactivo</span></h3>
+<div class="card">
+<p>Una curva es la gráfica de una función \(\iff\) toda recta vertical la corta <b>a lo sumo una vez</b>. Desliza la recta:</p>
+<div class="ctrl">
+  <label>curva:</label>
+  <select id="vltCurve"><option value="par">parábola y = x²/3 − 2</option><option value="circ">circunferencia x² + y² = 9</option></select>
+  <label>posición de la recta:</label><input type="range" id="vltX" min="-4.5" max="4.5" step="0.05" value="1.5">
+</div>
+<canvas id="cvVLT" width="640" height="380"></canvas>
+<div class="readout" id="vltOut"></div>
+</div>
+
+<h3>Caso 1 · Función racional: \(f(x)=\dfrac{1}{9x^2-4}\)</h3>
+<div class="card">
+<div class="two">
+<div>
+<p><b>Dominio (algebraicamente).</b> El denominador no puede ser \(0\):</p>
+\[9x^2-4=0 \iff (3x+2)(3x-2)=0 \iff x=\pm\tfrac{2}{3}\]
+\[D_f=\mathbb{R}-\left\{-\tfrac23,\tfrac23\right\}=\left(-\infty,-\tfrac23\right)\cup\left(-\tfrac23,\tfrac23\right)\cup\left(\tfrac23,\infty\right)\]
+<p><b>Rango (gráficamente).</b> Proyectando la gráfica sobre el eje \(y\):
+si \(|x|>\tfrac23\) el denominador recorre \((0,\infty)\) y \(f>0\);
+si \(|x|<\tfrac23\) el denominador recorre \([-4,0)\) y \(f\le-\tfrac14\). Así
+\[R_f=\left(-\infty,-\tfrac14\right]\cup(0,\infty).\]</p>
+<p class="kbig">👁 Las rectas punteadas \(x=\pm\frac23\) son <b>asíntotas verticales</b>: la gráfica “explota” justo donde el dominio se rompe.</p>
+</div>
+<div>
+<canvas id="cvRac" width="440" height="360"></canvas>
+<div class="leg"><span class="l1">f(x)</span><span class="l2">asíntotas</span><span class="l3">dominio (eje x)</span><span class="l4">rango (eje y)</span></div>
+</div>
+</div>
+</div>
+
+<h3>Caso 2 · Raíz cuadrada: \(f(x)=\sqrt{16-4x^2}\)</h3>
+<div class="card">
+<div class="two">
+<div>
+<p><b>Dominio.</b> La cantidad subradical debe ser \(\ge 0\):</p>
+\[16-4x^2\ge 0 \iff 4-x^2 \ge 0 \iff (2+x)(2-x)\ge 0 \iff -2\le x\le 2\]
+\[D_f=[-2,2]\]
+<p><b>Rango.</b> Como \(0\le 16-4x^2\le 16\), entonces \(0\le f(x)\le 4\):
+\[R_f=[0,4]\]</p>
+<p>La gráfica es la <b>mitad superior de una elipse</b> (al elevar al cuadrado: \(y^2=16-4x^2\), es decir \(\tfrac{x^2}{4}+\tfrac{y^2}{16}=1\), con \(y\ge0\)).</p>
+</div>
+<div>
+<canvas id="cvRaiz" width="440" height="360"></canvas>
+<div class="leg"><span class="l1">f(x)</span><span class="l3">dominio [−2, 2]</span><span class="l4">rango [0, 4]</span></div>
+</div>
+</div>
+</div>
+
+<h3>Caso 3 · Logaritmo: \(f(x)=\ln(4-x^2)\)</h3>
+<div class="card">
+<div class="two">
+<div>
+<p><b>Dominio.</b> El argumento del logaritmo debe ser <b>estrictamente positivo</b>:</p>
+\[4-x^2>0 \iff (2+x)(2-x)>0 \iff -2&lt;x&lt;2\]
+\[D_f=(-2,2)\quad\text{(¡intervalo abierto!)}\]
+<p><b>Rango.</b> El argumento \(4-x^2\) recorre \((0,4]\) (máximo \(4\) en \(x=0\)). Como \(\ln\) es creciente y \(\ln t\to-\infty\) cuando \(t\to 0^+\):
+\[R_f=(-\infty,\ln 4]\]</p>
+<p class="kbig">👁 Compara: la raíz par produce dominio con desigualdad \(\ge\) (bordes incluidos); el logaritmo exige \(>\) (bordes excluidos) y genera asíntotas verticales en ellos.</p>
+</div>
+<div>
+<canvas id="cvLog" width="440" height="360"></canvas>
+<div class="leg"><span class="l1">f(x)</span><span class="l2">asíntotas x = ±2</span><span class="l3">dominio (−2, 2)</span><span class="l4">rango (−∞, ln 4]</span></div>
+</div>
+</div>
+</div>
+
+<div class="card warn">
+<b>Cómo leer dominio y rango en una gráfica.</b> El dominio es la <b>sombra</b> de la gráfica al proyectarla
+verticalmente sobre el eje \(x\); el rango es su sombra horizontal sobre el eje \(y\).
+En los tres casos anteriores, las bandas verde (eje \(x\)) y naranja (eje \(y\)) muestran exactamente esas proyecciones.
+</div>
+
+<h3>Ejercicios del tema <span class="chip">Taller 9</span></h3>
+<div class="card exl">
+<div class="exi">Halle el dominio de \(g(x)=\dfrac{\sqrt{x}}{2x^2+x-1}\).
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>Se necesita \(x\ge 0\) y \(2x^2+x-1=(2x-1)(x+1)\neq 0\), es decir \(x\neq \tfrac12\) y \(x\neq -1\).
+Como \(-1\notin[0,\infty)\), queda \(D_g=[0,\tfrac12)\cup(\tfrac12,\infty)\).</p>
+</div></details></div>
+<div class="exi">Halle el dominio de \(g(x)=\sqrt[4]{x^2-6x}\).
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>Raíz par: \(x^2-6x\ge 0\iff x(x-6)\ge 0\). Tabla de signos: positivo fuera de las raíces.
+\(D_g=(-\infty,0]\cup[6,\infty)\).</p>
+</div></details></div>
+<div class="exi">Halle el dominio de \(f(x)=\dfrac{1}{\sqrt[4]{x^2-5x-14}}\).
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>Raíz par <b>en denominador</b>: desigualdad estricta. \(x^2-5x-14=(x-7)(x+2)>0\):
+\(D_f=(-\infty,-2)\cup(7,\infty)\). Compare con el ejercicio anterior: el \(\ge\) se volvió \(>\).</p>
+</div></details></div>
+<div class="exi">Halle el dominio de \(h(t)=\sqrt[4]{9-t^2}\) y de \(g(x)=\sqrt[3]{x^2-1}\).
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(h\): \(9-t^2\ge0\iff -3\le t\le 3\): \(D_h=[-3,3]\).
+\(g\): la raíz <b>impar</b> acepta cualquier real: \(D_g=\mathbb{R}\). La paridad del índice lo es todo.</p>
+</div></details></div>
+<div class="exi">Halle el dominio de \(g(x)=\sqrt{\dfrac{1-x}{2+x}}\).
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(\dfrac{1-x}{2+x}\ge 0\) con \(x\neq-2\). Puntos críticos \(-2\) y \(1\); el cociente es \(\ge0\) solo entre ellos
+(en \(x=1\) vale 0, se incluye; \(x=-2\) se excluye): \(D_g=(-2,1]\).</p>
+</div></details></div>
+</div>
+</section>
+
+<!-- ============ SECCIÓN 3: TROZOS ============ -->
+<section id="s3" class="panel">
+<h2>3 · Funciones definidas a trozos</h2>
+<div class="card def">
+Una función está <b>definida a trozos</b> si usa expresiones distintas en diferentes subconjuntos de su dominio.
+Para graficarla: se grafica cada expresión <b>solo</b> en su intervalo, marcando con punto <b>lleno ●</b> los extremos incluidos
+y con punto <b>vacío ○</b> los excluidos.
+</div>
+
+<h3>Ejemplo interactivo · Evaluando pieza por pieza (Tema 21)</h3>
+<div class="card">
+\[f(x)=\begin{cases} -x-3 & \text{si } x\le -2\\[2pt] 3 & \text{si } -2< x< 1\\[2pt] 2 & \text{si } x=1\\[2pt] \tfrac12 x+\tfrac12 & \text{si } x>1 \end{cases}\]
+<p>Mueve \(x\) y observa <b>qué tramo se activa</b> y el punto que produce sobre la gráfica:</p>
+<div class="ctrl"><label>\(x=\)</label><input type="range" id="pwX" min="-5" max="5" step="0.05" value="-3"><span id="pwXval"></span></div>
+<canvas id="cvPW" width="640" height="400"></canvas>
+<div class="readout" id="pwOut"></div>
+<p><b>Lectura de la gráfica:</b> \(D_f=\mathbb{R}\) (todo real cae en algún tramo) y \(R_f=[-1,\infty)\):
+la recta \(y=-x-3\) sobre \((-\infty,-2]\) aporta \([-1,\infty)\), los demás tramos aportan valores ya incluidos.
+Nota el detalle fino en \(x=1\): la recta \(y=\tfrac12x+\tfrac12\) “apunta” a \((1,1)\) ○ pero la función vale \(f(1)=2\) ●.</p>
+</div>
+
+<div class="card warn">
+<b>Errores frecuentes:</b> ① graficar cada fórmula en todo \(\mathbb{R}\) y no solo en su tramo;
+② olvidar los puntos abiertos/cerrados en las fronteras (la prueba de la recta vertical fallaría si dos tramos incluyeran el mismo \(x\));
+③ calcular \(f(a)\) con la fórmula equivocada: <b>primero</b> se ubica en qué intervalo está \(a\), <b>después</b> se evalúa.
+</div>
+
+<h3>Ejercicios del tema <span class="chip">Taller 9</span></h3>
+<div class="card exl">
+<div class="exi">Para \(f(x)=\begin{cases}2x & \text{si } x&lt;0\\ x+1 & \text{si } 0\le x\le 2\\ (x-2)^2 & \text{si } x>2\end{cases}\)
+evalúe \(f(0)\), \(f(1.5)\), \(f(-1.5)\), \(f(2)\), \(f(-3)\) y \(f(5)\).
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(f(0)=0+1=1\); \(f(1.5)=2.5\); \(f(-1.5)=2(-1.5)=-3\); \(f(2)=3\) (el tramo central incluye 2);
+\(f(-3)=-6\); \(f(5)=(5-2)^2=9\).</p>
+</div></details></div>
+<div class="exi">Grafique la función del ejercicio anterior y determine su dominio y rango.
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>Recta \(y=2x\) para \(x&lt;0\) (aporta \((-\infty,0)\), punto abierto en \((0,0)\)); recta \(y=x+1\) sobre \([0,2]\)
+(aporta \([1,3]\)); parábola \(y=(x-2)^2\) para \(x>2\) (aporta \((0,\infty)\), abierto en \((2,0)\)).
+\(D_f=\mathbb{R}\); rango: \((-\infty,0)\cup(0,\infty)\cup[1,3]=\mathbb{R}-\{0\}\).</p>
+</div></details></div>
+<div class="exi">Escriba \(f(x)=|2x-4|+x\) como una función definida a trozos sin valor absoluto y grafíquela.
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(|2x-4|=2x-4\) si \(x\ge 2\), y \(4-2x\) si \(x&lt;2\). Luego</p>
+\[f(x)=\begin{cases}4-x & \text{si } x&lt;2\\ 3x-4 & \text{si } x\ge 2\end{cases}\]
+<p>Dos rectas que empalman en \((2,2)\): una V asimétrica. Rango \([2,\infty)\).</p>
+</div></details></div>
+<div class="exi">Un parqueadero cobra $4000 por la primera hora (o fracción) y $2500 por cada hora adicional (o fracción),
+hasta un máximo diario de $12&thinsp;000. Escriba la tarifa \(T(t)\) para \(0&lt;t\le 5\) horas como función a trozos y grafíquela.
+<details class="sol"><summary>Solución</summary><div class="inner">
+\[T(t)=\begin{cases}4000 & 0&lt;t\le 1\\ 6500 & 1&lt;t\le 2\\ 9000 & 2&lt;t\le 3\\ 11\,500 & 3&lt;t\le 4\\ 12\,000 & 4&lt;t\le 5\end{cases}\]
+<p>Función <b>escalonada</b>: cada tramo es horizontal, con salto en los enteros (punto lleno a la derecha del intervalo,
+abierto a la izquierda del siguiente). El tope de $12&thinsp;000 corta la progresión en la última franja.</p>
+</div></details></div>
+<div class="exi">Halle el valor de \(c\) para que \(f(x)=\begin{cases}x^2 & \text{si } x\le c\\ x+2 & \text{si } x>c\end{cases}\)
+con \(c>0\) empalme sin salto en \(x=c\), y grafique la función resultante.
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>Se requiere \(c^2=c+2\iff c^2-c-2=(c-2)(c+1)=0\iff c=2\) (se descarta \(c=-1&lt;0\)).
+Con \(c=2\) la parábola llega a \((2,4)\) y la recta continúa desde allí.</p>
+</div></details></div>
+</div>
+</section>
+
+<!-- ============ SECCIÓN 4: VALOR ABSOLUTO ============ -->
+<section id="s4" class="panel">
+<h2>4 · Valor absoluto: \(|x|\) y el efecto de \(|g(x)|\)</h2>
+<div class="card def">
+El valor absoluto es, en sí mismo, una función a trozos:
+\[|x|=\begin{cases}-x & \text{si } x<0\\ \;\;x & \text{si } x\ge 0\end{cases}\qquad D=\mathbb{R},\quad R=[0,\infty)\]
+Geométricamente \(|x|\) es la <b>distancia de \(x\) al origen</b>, por eso nunca es negativa.
+</div>
+
+<h3>El efecto gráfico de \(y=|g(x)|\) <span class="chip">animación</span></h3>
+<div class="card">
+<p>Regla de oro: donde \(g(x)\ge 0\) la gráfica <b>no cambia</b>; donde \(g(x)<0\) la gráfica se
+<b>refleja respecto al eje \(x\)</b> (lo negativo “rebota” hacia arriba). Formalmente:
+\[|g(x)|=\begin{cases} g(x) & \text{si } g(x)\ge 0\\ -g(x) & \text{si } g(x)<0\end{cases}\]</p>
+<div class="ctrl">
+  <label>función:</label>
+  <select id="absFn">
+    <option value="q">g(x) = x² − 4</option>
+    <option value="l">g(x) = ½x − 1</option>
+    <option value="c">g(x) = x³ − 3x</option>
+  </select>
+  <button class="btn" id="absPlay">▶ Animar g → |g|</button>
+  <button class="btn ghost" id="absReset">↺ Volver a g</button>
+</div>
+<canvas id="cvAbs" width="640" height="400"></canvas>
+<div class="leg"><span class="l1">estado actual</span><span class="l2">g original (guía punteada)</span></div>
+</div>
+
+<h3>Ejemplo resuelto · \(g(x)=\big||x|-3\big|\) como función a trozos (Tema 21)</h3>
+<div class="card">
+<div class="steps" id="steps-abs">
+  <div class="step"><b class="n">Paso 1:</b> aplicamos la definición al valor absoluto <b>exterior</b>:
+  \[g(x)=\begin{cases}|x|-3 & \text{si } |x|\ge 3\\ -(|x|-3) & \text{si } |x|<3\end{cases}\]</div>
+  <div class="step"><b class="n">Paso 2:</b> resolvemos las condiciones: \(|x|\ge3 \iff x\le-3 \text{ ó } x\ge3\); y \(|x|&lt;3\iff -3&lt;x&lt;3\). Ahora abrimos el valor absoluto <b>interior</b> en cada zona según el signo de \(x\).</div>
+  <div class="step"><b class="n">Paso 3:</b> reuniendo los cuatro casos:
+  \[g(x)=\begin{cases}-x-3 & \text{si } x\le -3\\ x+3 & \text{si } -3&lt;x&lt;0\\ -x+3 & \text{si } 0\le x<3\\ x-3 & \text{si } x\ge 3\end{cases}\]</div>
+  <div class="step"><b class="n">Paso 4 — Interpretación por transformaciones:</b> partimos de \(y=|x|\) (V), bajamos 3: \(y=|x|-3\) (la V con vértice en \((0,-3)\)),
+  y el absoluto exterior refleja hacia arriba la parte negativa: resulta la “W”. Dominio \(\mathbb{R}\), rango \([0,\infty)\).</div>
+</div>
+<div class="ctrl"><button class="btn" onclick="nextStep('steps-abs',this)">Siguiente paso →</button>
+<button class="btn ghost" id="wPlay">▶ Ver construcción animada</button></div>
+<canvas id="cvW" width="640" height="380"></canvas>
+<div class="readout" id="wOut">y = |x|</div>
+</div>
+
+<h3>Ejercicios del tema <span class="chip">Talleres 9–10</span></h3>
+<div class="card exl">
+<div class="exi">Grafique \(f(x)=|x-4|\), escríbala como función a trozos y halle su dominio y rango.
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(f(x)=x-4\) si \(x\ge4\); \(f(x)=4-x\) si \(x&lt;4\). Es la V de \(|x|\) trasladada 4 a la derecha:
+vértice \((4,0)\), \(D=\mathbb{R}\), \(R=[0,\infty)\). Nota: <b>no</b> es inyectiva (falla la recta horizontal).</p>
+</div></details></div>
+<div class="exi">Escriba \(g(x)=|x^2-1|\) como función a trozos y grafíquela.
+<details class="sol"><summary>Solución</summary><div class="inner">
+\[g(x)=\begin{cases}x^2-1 & \text{si } |x|\ge 1\\ 1-x^2 & \text{si } |x|&lt;1\end{cases}\]
+<p>La parábola \(x^2-1\) con su “panza” \((-1,1)\) reflejada hacia arriba: una W suave con máximos locales en \((0,1)\)
+y ceros en \(\pm1\). Rango \([0,\infty)\).</p>
+</div></details></div>
+<div class="exi">Grafique \(f(x)=x|x|\) y escríbala a trozos. ¿Qué simetría tiene?
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(f(x)=x^2\) si \(x\ge0\); \(f(x)=-x^2\) si \(x&lt;0\). Media parábola arriba, media abajo: curva creciente en forma de S.
+\(f(-x)=(-x)|-x|=-x|x|=-f(x)\): es <b>impar</b> (simétrica respecto al origen). Además es inyectiva.</p>
+</div></details></div>
+<div class="exi">Demuestre que si \(g\) es una función impar, entonces \(h(x)=|g(x)|\) es par.
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(h(-x)=|g(-x)|=|-g(x)|=|g(x)|=h(x)\) para todo \(x\) del dominio (que es simétrico por ser \(g\) impar). \(\blacksquare\)</p>
+<p><i>Interpretación:</i> al reflejar hacia arriba las partes negativas de una gráfica simétrica respecto al origen,
+queda una gráfica simétrica respecto al eje \(y\). Compruébelo con \(g(x)=x^3-3x\) en la animación de arriba.</p>
+</div></details></div>
+<div class="exi">¿Para qué valores de \(k\) la ecuación \(\big||x|-2\big|=k\) tiene exactamente 3 soluciones? ¿Y 4?
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>La gráfica de \(y=||x|-2|\) es una W con ceros en \(\pm2\) y pico central \((0,2)\).
+Intersecciones con \(y=k\): \(k&lt;0\): 0; \(k=0\): 2; \(0&lt;k&lt;2\): 4; \(k=2\): 3 (toca el pico central);
+\(k>2\): 2. Respuesta: 3 soluciones solo si \(k=2\); 4 soluciones si \(0&lt;k&lt;2\).</p>
+</div></details></div>
+</div>
+</section>
+
+<!-- ============ SECCIÓN 5: POTENCIAS Y RAÍCES ============ -->
+<section id="s5" class="panel">
+<h2>5 · Las familias \(f(x)=x^{n}\) y \(f(x)=x^{1/n}\)</h2>
+
+<h3>Potencias \(x^n\), \(n\in\mathbb{N}\) <span class="chip">interactivo</span></h3>
+<div class="card">
+<div class="two">
+<div>
+<p>Dos subfamilias según la paridad de \(n\):</p>
+<p><b>\(n\) par</b> (tipo \(x^2\)): simétricas respecto al eje \(y\), pasan por \((-1,1),(0,0),(1,1)\). Rango \([0,\infty)\).</p>
+<p><b>\(n\) impar</b> (tipo \(x^3\)): simétricas respecto al origen, pasan por \((-1,-1),(0,0),(1,1)\). Rango \(\mathbb{R}\).</p>
+<p>Al crecer \(n\), la gráfica se <b>aplana</b> en \((-1,1)\) y se <b>empina</b> para \(|x|>1\) — compara con la guía \(x^2\) o \(x^3\) punteada.</p>
+<p>Dominio: siempre \(\mathbb{R}\).</p>
+</div>
+<div>
+<div class="ctrl"><label>\(n=\)</label><input type="range" id="powN" min="1" max="7" step="1" value="2"><span id="powNval"></span></div>
+<canvas id="cvPow" width="440" height="380"></canvas>
+<div class="readout" id="powOut"></div>
+</div>
+</div>
+</div>
+
+<h3>Raíces \(x^{1/n}=\sqrt[n]{x}\), \(n\ge 2\) <span class="chip">interactivo</span></h3>
+<div class="card">
+<div class="two">
+<div>
+<p><b>\(n\) par</b> (tipo \(\sqrt{x}\)): la raíz par de un negativo no es real, así que
+\[D=[0,\infty),\qquad R=[0,\infty).\]</p>
+<p><b>\(n\) impar</b> (tipo \(\sqrt[3]{x}\)): todo real tiene raíz impar:
+\[D=\mathbb{R},\qquad R=\mathbb{R}.\]</p>
+<p>Todas pasan por \((0,0)\) y \((1,1)\); las impares además por \((-1,-1)\).</p>
+<p class="kbig">⚠ Identidad clave: \(\sqrt{x^2}=|x|\), <b>no</b> \(x\). Por ejemplo \(\sqrt{(-5)^2}=5\).</p>
+</div>
+<div>
+<div class="ctrl"><label>\(n=\)</label><input type="range" id="rootN" min="2" max="6" step="1" value="2"><span id="rootNval"></span></div>
+<canvas id="cvRoot" width="440" height="380"></canvas>
+<div class="readout" id="rootOut"></div>
+</div>
+</div>
+</div>
+
+<div class="card ok">
+<b>Panorama de familias que debes reconocer a golpe de vista:</b> lineales \(mx+b\) (rectas), cuadráticas/potencias pares (∪ simétricas al eje \(y\)),
+cúbicas/potencias impares (S simétricas al origen), \(|x|\) (V), \(\sqrt{x}\) (media parábola acostada), \(\sqrt[3]{x}\) (S acostada),
+\(1/x\) (hipérbola con dos ramas y asíntotas), \(\ln x\) (crece lento, asíntota vertical en \(x=0\)).
+Reconocer la familia + aplicar transformaciones (sección 6) = graficar casi cualquier función del curso sin tabular.
+</div>
+
+<h3>Ejercicios del tema <span class="chip">Talleres 9–10</span></h3>
+<div class="card exl">
+<div class="exi">Sin graficar, decida cuál es mayor en el intervalo \(0&lt;x&lt;1\): \(x^2\) o \(x^4\). ¿Y para \(x>1\)? Justifique.
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(x^4-x^2 = x^2(x^2-1)\). Si \(0&lt;x&lt;1\): \(x^2>0\) y \(x^2-1&lt;0\), luego \(x^4&lt;x^2\).
+Si \(x>1\): ambos factores positivos, \(x^4>x^2\). Esto explica por qué las potencias altas se “aplanan” en \((-1,1)\)
+y se “empinan” después: compruébelo con el deslizador.</p>
+</div></details></div>
+<div class="exi">Halle el dominio de \(f(x)=\sqrt[4]{x^2-1}\) y de \(g(x)=\sqrt[3]{x^2-1}\) y explique la diferencia.
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(f\) (índice par): \(x^2-1\ge0\): \(D_f=(-\infty,-1]\cup[1,\infty)\). \(g\) (índice impar): \(D_g=\mathbb{R}\).
+Solo el índice par impone restricción de signo.</p>
+</div></details></div>
+<div class="exi">Simplifique, si es posible: (a) \(\sqrt{x^2}\); (b) \(\sqrt[3]{x^3}\); (c) \(\left(\sqrt{x}\right)^2\). Indique en cada caso el dominio de la expresión.
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>(a) \(\sqrt{x^2}=|x|\) para todo \(x\in\mathbb{R}\) (¡no es \(x\)!). (b) \(\sqrt[3]{x^3}=x\) en \(\mathbb{R}\): la raíz impar sí cancela.
+(c) \((\sqrt x)^2=x\) pero <b>solo</b> en \([0,\infty)\), donde la expresión interior está definida.
+Tres expresiones parecidas, tres comportamientos distintos.</p>
+</div></details></div>
+<div class="exi">¿Cuántas soluciones reales tiene \(x^n=c\)? Analice según la paridad de \(n\) y el signo de \(c\)
+(por ejemplo \(x^4=16\) y \(x^5=-32\)).
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>Es intersectar \(y=x^n\) con la horizontal \(y=c\). \(n\) par: 2 soluciones si \(c>0\) (\(\pm\sqrt[n]{c}\)),
+1 si \(c=0\), 0 si \(c&lt;0\). \(n\) impar: exactamente 1 solución para todo \(c\) (la función es biyectiva).
+Así \(x^4=16\) da \(x=\pm2\); \(x^5=-32\) da \(x=-2\).</p>
+</div></details></div>
+<div class="exi">Grafique \(f(x)=1-\sqrt[3]{x}\) mediante transformaciones y halle dominio y rango.
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(\sqrt[3]{x}\to-\sqrt[3]{x}\) (reflexión eje \(x\)) \(\to 1-\sqrt[3]{x}\) (subir 1). La S acostada queda decreciente
+pasando por \((0,1)\), \((1,0)\) y \((-1,2)\). \(D=\mathbb{R}\), \(R=\mathbb{R}\); sigue siendo inyectiva.</p>
+</div></details></div>
+</div>
+</section>
+
+<!-- ============ SECCIÓN 6: TRASLACIONES Y REFLEXIONES ============ -->
+<section id="s6" class="panel">
+<h2>6 · Traslación y reflexión de funciones</h2>
+<div class="card def">
+Sea \(c>0\). A partir de la gráfica de \(y=f(x)\):
+<table class="tt">
+<tr><th>Nueva función</th><th>Efecto geométrico</th></tr>
+<tr><td>\(y=f(x)+c\)</td><td>traslada \(c\) unidades <b>hacia arriba</b></td></tr>
+<tr><td>\(y=f(x)-c\)</td><td>traslada \(c\) unidades <b>hacia abajo</b></td></tr>
+<tr><td>\(y=f(x-c)\)</td><td>traslada \(c\) unidades <b>a la derecha</b></td></tr>
+<tr><td>\(y=f(x+c)\)</td><td>traslada \(c\) unidades <b>a la izquierda</b></td></tr>
+<tr><td>\(y=-f(x)\)</td><td><b>refleja</b> respecto al eje \(x\) (cambia el signo de las salidas)</td></tr>
+<tr><td>\(y=f(-x)\)</td><td><b>refleja</b> respecto al eje \(y\) (cambia el signo de las entradas)</td></tr>
+</table>
+Lo horizontal actúa “al revés” de lo que parece: \(f(x-3)\) mueve a la <b>derecha</b>, porque el punto que antes
+respondía a \(x=0\) ahora responde a \(x=3\).
+</div>
+
+<h3>Laboratorio de transformaciones <span class="chip">interactivo</span></h3>
+<div class="card">
+<p>Elige una función base y construye \(y = \pm f\big(\pm(x-a)\big)+b\). La guía punteada es la función original.</p>
+<div class="ctrl">
+  <label>base:</label>
+  <select id="trFn">
+    <option value="sq">f(x) = x²</option>
+    <option value="abs">f(x) = |x|</option>
+    <option value="sqrt">f(x) = √x</option>
+    <option value="inv">f(x) = 1/x</option>
+    <option value="cub">f(x) = x³</option>
+  </select>
+</div>
+<div class="ctrl">
+  <label>horizontal \(a\):</label><input type="range" id="trA" min="-4" max="4" step="0.5" value="0"><span id="trAval"></span>
+  <label>vertical \(b\):</label><input type="range" id="trB" min="-4" max="4" step="0.5" value="0"><span id="trBval"></span>
+</div>
+<div class="ctrl">
+  <label><input type="checkbox" id="trRX"> reflejar eje \(x\): \(-f\)</label>
+  <label><input type="checkbox" id="trRY"> reflejar eje \(y\): \(f(-x)\)</label>
+  <button class="btn ghost" id="trReset">↺ Reiniciar</button>
+</div>
+<canvas id="cvTr" width="640" height="420"></canvas>
+<div class="readout" id="trOut"></div>
+<div class="readout" id="trDom" style="background:#312e81"></div>
+</div>
+
+<h3>Ejemplo resuelto · Graficar \(h(x)=-\,(x+2)^2+3\) sin tabular</h3>
+<div class="card">
+<div class="steps" id="steps-tr">
+  <div class="step"><b class="n">Paso 1 — Reconocer la familia:</b> la base es \(f(x)=x^2\) (parábola con vértice en el origen).</div>
+  <div class="step"><b class="n">Paso 2 — Descomponer:</b> \(x^2 \;\to\; (x+2)^2\) (traslada 2 a la <b>izquierda</b>) \(\;\to\; -(x+2)^2\) (refleja respecto al eje \(x\)) \(\;\to\; -(x+2)^2+3\) (sube 3).</div>
+  <div class="step"><b class="n">Paso 3 — Seguir un punto de control:</b> el vértice \((0,0)\mapsto(-2,0)\mapsto(-2,0)\mapsto(-2,3)\). La parábola abre hacia abajo con vértice \((-2,3)\).</div>
+  <div class="step"><b class="n">Paso 4 — Leer dominio y rango:</b> \(D_h=\mathbb{R}\) y, como el máximo es 3, \(R_h=(-\infty,3]\).
+  <i>Puedes reproducirlo en el laboratorio: base \(x^2\), \(a=-2\), reflejar eje \(x\), \(b=3\).</i></div>
+</div>
+<div class="ctrl"><button class="btn" onclick="nextStep('steps-tr',this)">Siguiente paso →</button></div>
+</div>
+
+<div class="card ok">
+<b>Simetrías (Tema 22):</b> \(f\) es <b>par</b> si \(f(-x)=f(x)\) (gráfica simétrica respecto al eje \(y\): la reflexión \(f(-x)\) la deja igual)
+y es <b>impar</b> si \(f(-x)=-f(x)\) (simétrica respecto al origen). Ejemplos: \(x^2+|x|\) es par; \(\dfrac{1}{x^3-x^9}+5x+10x^7\) es impar; \(1-x^3+x^7\) no es ni lo uno ni lo otro.
+</div>
+
+<h3>Ejercicios del tema <span class="chip">Taller 10</span></h3>
+<div class="card exl">
+<div class="exi">Determine si cada función es par, impar o ninguna:
+(a) \(f(x)=\dfrac{x^2}{1-x^4}\); (b) \(g(x)=\sqrt[5]{x}+13x^7-x\); (c) \(h(x)=\dfrac{3+2x^2-x^6}{3x}\).
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>(a) \(f(-x)=\dfrac{x^2}{1-x^4}=f(x)\): <b>par</b>.
+(b) cada sumando cambia de signo: \(g(-x)=-g(x)\): <b>impar</b>.
+(c) numerador par, denominador impar: \(h(-x)=\dfrac{3+2x^2-x^6}{-3x}=-h(x)\): <b>impar</b>
+(par÷impar = impar, como con números).</p>
+</div></details></div>
+<div class="exi">La función \(f(x)=x(4-x)\) está definida solo en \([0,4]\). Extienda su definición a \([-4,0)\)
+para obtener (a) una función par; (b) una función impar. Escriba las fórmulas.
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>(a) Par: se copia el espejo, \(f(x)=f(-x)=-x(4+x)\) para \(x\in[-4,0)\).
+(b) Impar: se rota el espejo, \(f(x)=-f(-x)=x(4+x)\) para \(x\in[-4,0)\).
+Gráficamente: reflejar respecto al eje \(y\) versus reflejar respecto al origen.</p>
+</div></details></div>
+<div class="exi">Grafique \(g(x)=-\sqrt{x+3}+2\) por transformaciones y halle su dominio y rango.
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(\sqrt x\to\sqrt{x+3}\) (3 a la izquierda) \(\to-\sqrt{x+3}\) (reflexión eje \(x\)) \(\to+2\) (sube 2).
+Punto inicial: \((0,0)\to(-3,0)\to(-3,0)\to(-3,2)\). Decrece desde \((-3,2)\).
+\(D=[-3,\infty)\), \(R=(-\infty,2]\). <i>Verifíquelo en el laboratorio.</i></p>
+</div></details></div>
+<div class="exi">Grafique \(h(x)=\dfrac{1}{x-2}+3\) identificando sus asíntotas, dominio y rango.
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>Hipérbola \(1/x\) trasladada 2 a la derecha y 3 arriba: asíntota vertical \(x=2\), horizontal \(y=3\).
+\(D=\mathbb{R}-\{2\}\), \(R=\mathbb{R}-\{3\}\). Las asíntotas se trasladan junto con la gráfica.</p>
+</div></details></div>
+<div class="exi">La gráfica de \(f\) se traslada 2 unidades a la izquierda, se refleja respecto al eje \(x\) y se sube 1 unidad.
+(a) Escriba la fórmula de la nueva función \(g\). (b) ¿A qué punto va a parar el punto \((3,5)\) de la gráfica de \(f\)?
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>(a) \(g(x)=-f(x+2)+1\) (¡el orden importa: reflejar antes de subir!).
+(b) \((3,5)\xrightarrow{\text{izq }2}(1,5)\xrightarrow{\text{reflexión}}(1,-5)\xrightarrow{\text{sube }1}(1,-4)\).
+Verificación: \(g(1)=-f(3)+1=-5+1=-4\) ✓.</p>
+</div></details></div>
+</div>
+</section>
+
+<!-- ============ SECCIÓN 7: ÁLGEBRA DE FUNCIONES ============ -->
+<section id="s7" class="panel">
+<h2>7 · Álgebra de funciones y sus dominios</h2>
+<div class="card def">
+Dadas \(f\) y \(g\), definimos:
+\[(f\pm g)(x)=f(x)\pm g(x),\qquad (fg)(x)=f(x)\,g(x),\qquad \left(\tfrac{f}{g}\right)(x)=\tfrac{f(x)}{g(x)}\]
+<table class="tt">
+<tr><th>Operación</th><th>Dominio</th></tr>
+<tr><td>\(f+g,\; f-g,\; fg\)</td><td>\(D_f\cap D_g\)</td></tr>
+<tr><td>\(\dfrac{f}{g}\)</td><td>\(\big(D_f\cap D_g\big)-\{x : g(x)=0\}\)</td></tr>
+</table>
+La intuición: para poder <b>operar</b> \(f(x)\) con \(g(x)\), ambas deben existir en ese \(x\); y para dividir, además \(g(x)\neq0\).
+</div>
+
+<h3>Ejemplo resuelto (Tema 22) · \(f(x)=\dfrac{5x}{x^2-4}\), \(g(x)=\sqrt{x-1}\)</h3>
+<div class="card">
+<div class="steps" id="steps-alg">
+  <div class="step"><b class="n">Paso 1 — Dominios individuales:</b>
+  \[D_f=\{x: x^2-4\neq 0\}=\mathbb{R}-\{-2,2\},\qquad D_g=\{x: x-1\ge 0\}=[1,\infty)\]</div>
+  <div class="step"><b class="n">Paso 2 — Intersección:</b> en la recta numérica (abajo), \(D_f\cap D_g = [1,\infty)-\{2\}=[1,2)\cup(2,\infty).\)</div>
+  <div class="step"><b class="n">Paso 3 — Las cuatro funciones:</b>
+  \[(f\pm g)(x)=\frac{5x}{x^2-4}\pm\sqrt{x-1},\qquad (fg)(x)=\frac{5x\sqrt{x-1}}{x^2-4}\]
+  todas con dominio \([1,2)\cup(2,\infty)\).</div>
+  <div class="step"><b class="n">Paso 4 — El cociente pierde un punto más:</b> \(g(x)=0\iff \sqrt{x-1}=0 \iff x=1\), luego
+  \[\left(\frac{f}{g}\right)(x)=\frac{5x}{(x^2-4)\sqrt{x-1}},\qquad D_{f/g}=(1,2)\cup(2,\infty)\]</div>
+  <div class="step"><b class="n">Paso 5 — Evaluaciones:</b>
+  \[(f+g)(5)=\tfrac{25}{21}+2=\tfrac{67}{21},\quad (f-g)(3)=3-\sqrt2,\quad (fg)(10)=\tfrac{25}{16},\quad \left(\tfrac{f}{g}\right)(4)=\tfrac{20}{12\sqrt3}=\tfrac{5\sqrt3}{9}\]</div>
+</div>
+<div class="ctrl"><button class="btn" onclick="nextStep('steps-alg',this)">Siguiente paso →</button></div>
+<canvas id="cvNL" width="640" height="190"></canvas>
+</div>
+
+<h3>Visualizar la suma \((f+g)(x)\) <span class="chip">interactivo</span></h3>
+<div class="card">
+<p>La suma de funciones opera <b>punto a punto</b>: la altura de \(f+g\) en cada \(x\) es la suma de las alturas.
+Con \(f(x)=\sqrt{x}\) y \(g(x)=\dfrac{4}{x}-2\) (dominio de la suma: \((0,\infty)\)), desliza \(x\):</p>
+<div class="ctrl"><label>\(x=\)</label><input type="range" id="sumX" min="0.3" max="8" step="0.05" value="2"></div>
+<canvas id="cvSum" width="640" height="400"></canvas>
+<div class="readout" id="sumOut"></div>
+<div class="leg"><span class="l1">f</span><span class="l3">g</span><span class="l2">f+g</span></div>
+</div>
+
+<h3>Ejercicios del tema <span class="chip">Taller 10</span></h3>
+<div class="card exl">
+<div class="exi">Sean \(f(x)=\sqrt{9-x^2}\) y \(g(x)=\sqrt{x^2-4}\). Halle \(f+g\), \(fg\) y sus dominios.
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(D_f=[-3,3]\), \(D_g=(-\infty,-2]\cup[2,\infty)\). Intersección:
+\(D_{f+g}=D_{fg}=[-3,-2]\cup[2,3]\). Las fórmulas son \((f+g)(x)=\sqrt{9-x^2}+\sqrt{x^2-4}\) y
+\((fg)(x)=\sqrt{(9-x^2)(x^2-4)}\), ambas solo válidas en esos dos intervalos cortos.</p>
+</div></details></div>
+<div class="exi">Sean \(f(x)=\dfrac{1}{\sqrt{x}}\) y \(g(x)=x^2-4x\). Halle \(\dfrac{f}{g}\) y su dominio.
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(D_f=(0,\infty)\), \(D_g=\mathbb{R}\), y se excluye \(g(x)=x(x-4)=0\), es decir \(x=0,4\):</p>
+\[\left(\frac{f}{g}\right)(x)=\frac{1}{\sqrt{x}\,x(x-4)},\qquad D_{f/g}=(0,4)\cup(4,\infty)\]
+</div></details></div>
+<div class="exi">Sean \(f(x)=\dfrac{2}{x}\) y \(g(x)=\dfrac{x}{x+2}\). Halle \(f\cdot g\) y \(\dfrac{f}{g}\) con sus dominios.
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(D_f=\mathbb{R}-\{0\}\), \(D_g=\mathbb{R}-\{-2\}\), \(D_f\cap D_g=\mathbb{R}-\{-2,0\}\).</p>
+<p>\((fg)(x)=\dfrac{2}{x+2}\), pero \(D_{fg}=\mathbb{R}-\{-2,0\}\): ¡\(x=0\) sigue excluido aunque la fórmula
+simplificada lo acepte! Para \(f/g\): \(g(x)=0\iff x=0\) (ya excluido), luego
+\(\left(\dfrac{f}{g}\right)(x)=\dfrac{2(x+2)}{x^2}\) con \(D_{f/g}=\mathbb{R}-\{-2,0\}\).</p>
+</div></details></div>
+<div class="exi">Con \(f(x)=x^2+1\) y \(g(x)=\sqrt{x+2}\), calcule \((f+g)(2)\), \((f-g)(-1)\), \((fg)(7)\) y \(\left(\tfrac{g}{f}\right)(0)\).
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\((f+g)(2)=5+2=7\); \((f-g)(-1)=2-1=1\); \((fg)(7)=50\cdot3=150\);
+\(\left(\tfrac{g}{f}\right)(0)=\dfrac{\sqrt2}{1}=\sqrt2\). Todos los puntos pertenecen a los dominios respectivos
+(\(D_{f+g}=[-2,\infty)\)), por eso las evaluaciones son legítimas.</p>
+</div></details></div>
+<div class="exi">Dé un ejemplo de funciones \(f\) y \(g\), ambas con dominio no vacío, tales que \(f+g\) no esté definida en ningún punto.
+¿Puede pasar lo mismo con \(f\cdot f\)?
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>Basta que los dominios no se toquen: \(f(x)=\sqrt{x-5}\) (\(D_f=[5,\infty)\)) y \(g(x)=\sqrt{1-x}\) (\(D_g=(-\infty,1]\)):
+\(D_{f+g}=\varnothing\). Con \(f\cdot f\) es imposible: \(D_{ff}=D_f\cap D_f=D_f\neq\varnothing\).</p>
+</div></details></div>
+</div>
+</section>
+
+<!-- ============ SECCIÓN 9: INYECTIVAS E INVERSAS ============ -->
+<section id="s9" class="panel">
+<h2>8 · Funciones inyectivas e inversas</h2>
+<div class="card def">
+Una función \(f\) es <b>inyectiva</b> (uno a uno, 1-1) si entradas distintas producen salidas distintas:
+\[x_1\neq x_2 \implies f(x_1)\neq f(x_2)\qquad\text{(equivalentemente, } f(x_1)=f(x_2)\implies x_1=x_2\text{)}\]
+<b>Prueba de la recta horizontal:</b> \(f\) es 1-1 \(\iff\) toda recta horizontal corta su gráfica a lo sumo una vez.
+<br><br>
+Si \(f\) es 1-1 con dominio \(A\) y rango \(B\), su <b>inversa</b> \(f^{-1}:B\to A\) se define por
+\[f^{-1}(y)=x \iff f(x)=y\]
+con las <b>propiedades de cancelación</b> \(f^{-1}(f(x))=x\;\forall x\in A\) y \(f(f^{-1}(y))=y\;\forall y\in B\).
+Dominio y rango se intercambian: \(D_{f^{-1}}=R_f\), \(R_{f^{-1}}=D_f\). ¡Cuidado!: \(f^{-1}\neq \dfrac{1}{f}\).
+</div>
+
+<h3>Prueba de la recta horizontal <span class="chip">interactivo</span></h3>
+<div class="card">
+<div class="ctrl">
+  <label>función:</label>
+  <select id="hltFn">
+    <option value="ncub">f(x) = x³ − 3x</option>
+    <option value="sq">f(x) = x² − 2</option>
+    <option value="abs">f(x) = |x − 1| − 2</option>
+    <option value="lin">f(x) = ½x + 1</option>
+    <option value="cub">f(x) = x³/4 + 1</option>
+  </select>
+  <label>recta \(y=\)</label><input type="range" id="hltY" min="-3.5" max="3.5" step="0.05" value="1">
+</div>
+<canvas id="cvHLT" width="640" height="380"></canvas>
+<div class="readout" id="hltOut"></div>
+</div>
+
+<h3>La gráfica de \(f^{-1}\): reflexión sobre \(y=x\) <span class="chip">animación</span></h3>
+<div class="card">
+<p>Como \((a,b)\in \text{gráfica de } f \iff (b,a)\in\text{gráfica de } f^{-1}\), la gráfica de la inversa es la
+<b>reflexión de la de \(f\) respecto a la recta \(y=x\)</b>. Observa cómo cada punto viaja a su posición espejo:</p>
+<div class="ctrl">
+  <label>función:</label>
+  <select id="invFn">
+    <option value="cub">f(x) = x³/4 + 1</option>
+    <option value="sqrt">f(x) = √(x+3)</option>
+    <option value="lin">f(x) = 2x − 1</option>
+  </select>
+  <button class="btn" id="invPlay">▶ Reflejar sobre y = x</button>
+  <button class="btn ghost" id="invReset">↺ Volver a f</button>
+</div>
+<canvas id="cvInv" width="640" height="420"></canvas>
+<div class="leg"><span class="l1">f</span><span class="l2">f⁻¹ (en construcción)</span><span class="l3">y = x</span></div>
+</div>
+
+<h3>Ejemplo 1 · Método algebraico: inversa de \(f(x)=x^3+8\)</h3>
+<div class="card">
+<div class="steps" id="steps-inv1">
+  <div class="step"><b class="n">Paso 1 — ¿Es 1-1?</b> \(x^3\) es estrictamente creciente, así que \(x^3+8\) también:
+  pasa la prueba de la recta horizontal. ✓</div>
+  <div class="step"><b class="n">Paso 2 — Despejar:</b> escribimos \(y=x^3+8\) y despejamos \(x\):
+  \(x^3=y-8 \iff x=\sqrt[3]{y-8}\).</div>
+  <div class="step"><b class="n">Paso 3 — Intercambiar el nombre de la variable:</b>
+  \[f^{-1}(x)=\sqrt[3]{x-8},\qquad D_{f^{-1}}=R_{f^{-1}}=\mathbb{R}\]</div>
+  <div class="step"><b class="n">Paso 4 — Verificar cancelación:</b>
+  \(f^{-1}(f(x))=\sqrt[3]{(x^3+8)-8}=\sqrt[3]{x^3}=x\) ✓ y \(f(f^{-1}(x))=(\sqrt[3]{x-8})^3+8=x\) ✓.</div>
+</div>
+<div class="ctrl"><button class="btn" onclick="nextStep('steps-inv1',this)">Siguiente paso →</button></div>
+</div>
+
+<h3>Ejemplo 2 · Inversa de una racional: \(f(x)=\dfrac{x-2}{x+2}\)</h3>
+<div class="card">
+<div class="steps" id="steps-inv2">
+  <div class="step"><b class="n">Paso 1:</b> \(y=\dfrac{x-2}{x+2}\) con \(x\neq-2\). Multiplicamos: \(y(x+2)=x-2\).</div>
+  <div class="step"><b class="n">Paso 2:</b> agrupamos las \(x\): \(xy-x=-2-2y \iff x(y-1)=-2(1+y)\).</div>
+  <div class="step"><b class="n">Paso 3:</b> \(x=\dfrac{-2(1+y)}{y-1}=\dfrac{2(1+y)}{1-y}\), luego
+  \[f^{-1}(x)=\frac{2(1+x)}{1-x},\qquad D_{f^{-1}}=\mathbb{R}-\{1\}\]
+  Nota: \(y=1\) queda excluido porque \(1\) no está en el rango de \(f\) (la asíntota horizontal).</div>
+</div>
+<div class="ctrl"><button class="btn" onclick="nextStep('steps-inv2',this)">Siguiente paso →</button></div>
+</div>
+
+<h3>Ejemplo 3 · Restringir el dominio: \(f(x)=x^2-2\)</h3>
+<div class="card">
+<p>\(x^2-2\) <b>no</b> es 1-1 en \(\mathbb{R}\) (recta horizontal \(y=0\) la corta en \(\pm\sqrt2\)). Pero si la
+restringimos a \([0,\infty)\), la media parábola sí es 1-1 y
+\[f^{-1}(x)=\sqrt{x+2},\qquad D_{f^{-1}}=[-2,\infty),\; R_{f^{-1}}=[0,\infty)\]
+Así se definen \(\sqrt x\), \(\arcsin\), \(\arccos\)…: restringiendo una función no inyectiva a un tramo donde sí lo sea.</p>
+</div>
+
+<h3>Ejercicios del tema <span class="chip">Taller 10</span></h3>
+<div class="card exl">
+<div class="exi">Decida si cada función es 1-1: (a) \(f(x)=2x+1\); (b) \(f(x)=|x-4|\); (c) \(f(x)=x^3+8\); (d) \(f(x)=x^2-2\);
+(e) \(f(t)\) = distancia recorrida a velocidad constante de 30 km/h tras \(t\) horas.
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>(a) Sí: recta no horizontal. (b) No: \(f(3)=f(5)=1\). (c) Sí: estrictamente creciente. (d) No: \(f(1)=f(-1)\).
+(e) Sí: \(f(t)=30t\) es lineal creciente — físicamente, a cada distancia le corresponde un único instante.</p>
+</div></details></div>
+<div class="exi">Halle la inversa de \(f(x)=5-4x^3\).
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(y=5-4x^3\iff x^3=\dfrac{5-y}{4}\iff x=\sqrt[3]{\dfrac{5-y}{4}}\). Así \(f^{-1}(x)=\sqrt[3]{\dfrac{5-x}{4}}\),
+con dominio y rango \(\mathbb{R}\).</p>
+</div></details></div>
+<div class="exi">Use la propiedad de cancelación para demostrar que \(f(x)=x^3+1\) y \(g(x)=\sqrt[3]{x-1}\) son inversas entre sí.
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(f(g(x))=(\sqrt[3]{x-1})^3+1=(x-1)+1=x\) y \(g(f(x))=\sqrt[3]{(x^3+1)-1}=\sqrt[3]{x^3}=x\), ambas para todo
+\(x\in\mathbb{R}\). Por definición, cada una deshace a la otra. \(\blacksquare\)</p>
+</div></details></div>
+<div class="exi">Sea \(f(x)=16-x^2\) con \(x\ge 0\). Halle \(f^{-1}\), su dominio y rango, y describa cómo graficarla a partir de \(f\).
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>Con \(x\ge0\): \(y=16-x^2\iff x=\sqrt{16-y}\). Luego \(f^{-1}(x)=\sqrt{16-x}\),
+\(D_{f^{-1}}=(-\infty,16]\) \((=R_f)\) y \(R_{f^{-1}}=[0,\infty)\) \((=D_f)\).
+Gráficamente: reflejar la media parábola sobre la recta \(y=x\).</p>
+</div></details></div>
+<div class="exi">Sea \(f(x)=x|x|\) (sección 4). Muestre que es 1-1 y halle \(f^{-1}\).
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>A trozos: \(f(x)=x^2\) si \(x\ge0\), \(f(x)=-x^2\) si \(x&lt;0\): estrictamente creciente en \(\mathbb{R}\), luego 1-1.
+Invirtiendo cada tramo: si \(y\ge0\), \(x=\sqrt y\); si \(y&lt;0\), \(x=-\sqrt{-y}\). En una sola fórmula:
+\[f^{-1}(x)=\operatorname{sgn}(x)\sqrt{|x|}\]
+que también puede escribirse a trozos. Note la simetría: \(f\) y \(f^{-1}\) son ambas impares.</p>
+</div></details></div>
+</div>
+</section>
+
+<!-- ============ SECCIÓN 10: EXPONENCIALES ============ -->
+<section id="s10" class="panel">
+<h2>9 · Funciones exponenciales</h2>
+<div class="card def">
+Para \(a>0\), \(a\neq 1\), la <b>función exponencial de base \(a\)</b> es
+\[f(x)=a^x,\qquad D_f=\mathbb{R},\quad R_f=(0,\infty)\]
+Toda exponencial pasa por \((0,1)\) y \((1,a)\), tiene asíntota horizontal \(y=0\), y es
+<b>creciente si \(a>1\)</b>, <b>decreciente si \(0&lt;a&lt;1\)</b>. En ambos casos es 1-1 (su inversa será el logaritmo).
+La base más importante es \(e\approx 2.71828\).
+<br><br><b>Leyes de los exponentes</b> (las “identidades” del tema):
+\[a^{x+y}=a^x a^y,\qquad a^{x-y}=\frac{a^x}{a^y},\qquad (a^x)^y=a^{xy},\qquad (ab)^x=a^x b^x,\qquad a^{-x}=\frac{1}{a^x}=\Big(\frac1a\Big)^{x}\]
+</div>
+
+<h3>La familia \(a^x\) <span class="chip">interactivo</span></h3>
+<div class="card">
+<p>Mueve la base y observa el cambio creciente ↔ decreciente al cruzar \(a=1\), y cómo <b>todas</b> las curvas
+se anclan en \((0,1)\):</p>
+<div class="ctrl"><label>base \(a=\)</label><input type="range" id="expA" min="0.2" max="4" step="0.05" value="2"><span id="expAval"></span></div>
+<canvas id="cvExp" width="640" height="400"></canvas>
+<div class="readout" id="expOut"></div>
+</div>
+
+<h3>Ejemplo 1 · Graficar \(f(x)=6-3^x\) por transformaciones</h3>
+<div class="card">
+<div class="steps" id="steps-exp1">
+  <div class="step"><b class="n">Paso 1:</b> reescribimos \(f(x)=-3^x+6\): base \(3^x\), reflexión respecto al eje \(x\), luego subir 6.</div>
+  <div class="step"><b class="n">Paso 2 — Puntos y asíntota de control:</b> \((0,1)\to(0,-1)\to(0,5)\); \((1,3)\to(1,-3)\to(1,3)\);
+  la asíntota \(y=0\to y=0\to y=6\).</div>
+  <div class="step"><b class="n">Paso 3 — Leer:</b> curva decreciente que baja desde la asíntota \(y=6\).
+  \(D=\mathbb{R}\), \(R=(-\infty,6)\) (¡abierto: la asíntota no se alcanza!). Corte con el eje \(x\): \(3^x=6\iff x=\log_3 6\).</div>
+</div>
+<div class="ctrl"><button class="btn" onclick="nextStep('steps-exp1',this)">Siguiente paso →</button></div>
+</div>
+
+<h3>Ejemplo 2 · \(g(x)=e^{x-3}+4\)</h3>
+<div class="card">
+<p>Traslación de \(e^x\): 3 unidades a la derecha y 4 hacia arriba. Asíntota: \(y=4\); punto de control \((0,1)\to(3,5)\).
+\(D=\mathbb{R}\), \(R=(4,\infty)\). Es 1-1, y su inversa (¡tema siguiente!) es \(g^{-1}(x)=3+\ln(x-4)\).</p>
+</div>
+
+<h3>Ejemplo 3 · Valor absoluto sobre exponencial: \(f(x)=|1-2^x|\)</h3>
+<div class="card">
+<p>Primero \(y=1-2^x\): decreciente, asíntota \(y=1\), cero en \(x=0\), negativa para \(x>0\).
+El valor absoluto refleja hacia arriba la parte con \(x>0\). Resultado: una “V curva” con vértice en \((0,0)\),
+que tiende a \(1\) por la izquierda y crece sin cota por la derecha. \(R=[0,\infty)\).
+<i>Puedes reproducir la idea en la animación \(|g(x)|\) de la sección 4.</i></p>
+</div>
+
+<h3>Ejemplo 4 · Modelo de decaimiento radiactivo</h3>
+<div class="card">
+<div class="steps" id="steps-exp2">
+  <div class="step"><b class="n">Planteo:</b> una sustancia se desintegra según \(m(t)=13e^{-0.015t}\) kg (\(t\) en días).
+  (a) masa inicial; (b) masa a los 45 días; (c) ¿cuánto tarda en desintegrarse el 40% de la masa inicial?</div>
+  <div class="step"><b class="n">(a) y (b):</b> \(m(0)=13\) kg. \(m(45)=13e^{-0.675}\approx 6.62\) kg — en 45 días pierde
+  cerca de la mitad.</div>
+  <div class="step"><b class="n">(c):</b> queda el 60%: \(13e^{-0.015t}=0.6\times13 \iff e^{-0.015t}=0.6\iff
+  -0.015t=\ln 0.6\iff t=\dfrac{\ln 0.6}{-0.015}\approx 34.05\) días.
+  <i>Para despejar el exponente necesitamos logaritmos: motivación perfecta para la sección siguiente.</i></div>
+</div>
+<div class="ctrl"><button class="btn" onclick="nextStep('steps-exp2',this)">Siguiente paso →</button></div>
+</div>
+
+<h3>Ejercicios del tema <span class="chip">Taller 11</span></h3>
+<div class="card exl">
+<div class="exi">Grafique \(g(x)=\pi^{-x}-2\) por transformaciones, indicando asíntota, dominio y rango.
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(\pi^{-x}=(1/\pi)^x\): exponencial <b>decreciente</b> (reflexión de \(\pi^x\) respecto al eje \(y\)), bajada 2.
+Asíntota \(y=-2\); pasa por \((0,-1)\) y \((-1,\pi-2)\). \(D=\mathbb{R}\), \(R=(-2,\infty)\).</p>
+</div></details></div>
+<div class="exi">Resuelva \(e^{2x}-9=0\).
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(e^{2x}=9\iff 2x=\ln 9\iff x=\dfrac{\ln 9}{2}=\ln 3\approx 1.0986\).</p>
+</div></details></div>
+<div class="exi">Resuelva \(5^{2x}-5^{x+1}-14=0\).
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>Con \(u=5^x>0\): \(u^2-5u-14=0\iff(u-7)(u+2)=0\). Como \(u>0\), \(u=7\):
+\(5^x=7\iff x=\log_5 7=\dfrac{\ln 7}{\ln 5}\approx 1.209\). (\(u=-2\) se descarta: una exponencial nunca es negativa.)</p>
+</div></details></div>
+<div class="exi">Resuelva \(2^{3x}+5\cdot 2^{2x}-24\cdot 2^x=0\).
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>Con \(u=2^x\): \(u^3+5u^2-24u=u(u+8)(u-3)=0\). Las opciones \(u=0\) y \(u=-8\) son imposibles para \(2^x\),
+queda \(2^x=3\iff x=\log_2 3\approx 1.585\).</p>
+</div></details></div>
+<div class="exi">La población de conejos de San Antonio de Pereira crece a una tasa relativa del 7% anual; en 2015 había 5000.
+(a) Modele la población \(t\) años después de 2015. (b) Estime la población en 2026. (c) ¿En qué año se duplica?
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>(a) \(P(t)=5000\,e^{0.07t}\). (b) \(P(11)=5000e^{0.77}\approx 10\,800\) conejos.
+(c) \(2=e^{0.07t}\iff t=\dfrac{\ln 2}{0.07}\approx 9.9\) años: hacia finales de 2024.
+(Regla del 70: duplicación \(\approx 70/7=10\) años.)</p>
+</div></details></div>
+</div>
+</section>
+
+<!-- ============ SECCIÓN 11: LOGARÍTMICAS ============ -->
+<section id="s11" class="panel">
+<h2>10 · Funciones logarítmicas</h2>
+<div class="card def">
+Sea \(a>0\), \(a\neq 1\). El <b>logaritmo en base \(a\)</b> se define como la <b>inversa</b> de la exponencial:
+\[y=\log_a x \iff a^{y}=x\]
+Por ser inversa de \(a^x\): \(D=(0,\infty)\), \(R=\mathbb{R}\), pasa por \((1,0)\) y \((a,1)\), tiene <b>asíntota vertical</b> \(x=0\),
+y es creciente si \(a>1\), decreciente si \(0&lt;a&lt;1\). Casos especiales: \(\log x=\log_{10}x\) y \(\ln x=\log_e x\).
+Identidades de cancelación (inversas mutuas):
+\[\log_a(a^{x})=x \;\;\forall x\in\mathbb{R},\qquad a^{\log_a x}=x \;\;\forall x>0.\]
+</div>
+
+<div class="card">
+<h3 style="margin-top:2px">Leyes de los logaritmos (Tema 25)</h3>
+<table class="tt">
+<tr><th>Ley</th><th>Identidad</th></tr>
+<tr><td>producto</td><td>\(\log_a(xy)=\log_a x+\log_a y\)</td></tr>
+<tr><td>cociente</td><td>\(\log_a\!\left(\dfrac{x}{y}\right)=\log_a x-\log_a y\)</td></tr>
+<tr><td>potencia</td><td>\(\log_a(x^{r})=r\,\log_a x\)</td></tr>
+<tr><td>cambio de base</td><td>\(\log_b x=\dfrac{\log_a x}{\log_a b}=\dfrac{\ln x}{\ln b}\)</td></tr>
+</table>
+<p class="kbig">⚠ No existen "leyes" para \(\log_a(x+y)\): en particular \(\log_a(x+y)\neq \log_a x+\log_a y\).</p>
+</div>
+
+<h3>El espejo exponencial ↔ logaritmo <span class="chip">interactivo</span></h3>
+<div class="card">
+<p>La gráfica de \(y=\log_a x\) es la <b>reflexión</b> de \(y=a^x\) sobre la recta \(y=x\).
+Observa cómo \((0,1)\leftrightarrow(1,0)\) y \((1,a)\leftrightarrow(a,1)\):</p>
+<div class="ctrl"><label>base \(a=\)</label><input type="range" id="logA" min="0.2" max="4" step="0.05" value="2"><span id="logAval"></span></div>
+<canvas id="cvLogM" width="640" height="420"></canvas>
+<div class="readout" id="logOut"></div>
+<div class="leg"><span class="l2">y = aˣ</span><span class="l1">y = log_a x</span><span class="l3">y = x</span></div>
+</div>
+
+<h3>Ejemplo 1 · Evaluar logaritmos con la definición</h3>
+<div class="card">
+<div class="steps" id="steps-log1">
+  <div class="step"><b class="n">a)</b> \(\log_2 32\): buscamos \(y\) con \(2^y=32=2^5\), luego \(\log_2 32=5\).</div>
+  <div class="step"><b class="n">b)</b> \(\log_9 3\): \(9^y=3 \iff 3^{2y}=3^1 \iff y=\tfrac12\).</div>
+  <div class="step"><b class="n">c)</b> \(\log 0.001\): \(10^y=10^{-3}\iff y=-3\).</div>
+  <div class="step"><b class="n">d)</b> \(\ln\sqrt{e}\): \(e^{y}=e^{1/2}\iff y=\tfrac12\). <i>Moraleja: todo logaritmo es una pregunta sobre exponentes.</i></div>
+</div>
+<div class="ctrl"><button class="btn" onclick="nextStep('steps-log1',this)">Siguiente paso →</button></div>
+</div>
+
+<h3>Ejemplo 2 · Dominio y gráfica de \(f(x)=\log_3(2x-5)\)</h3>
+<div class="card">
+<div class="two">
+<div>
+<p><b>Dominio.</b> El argumento debe ser positivo:</p>
+\[2x-5>0 \iff x>\tfrac52 \qquad\Longrightarrow\qquad D_f=\left(\tfrac52,\infty\right)\]
+<p><b>Gráfica por transformaciones.</b> \(f(x)=\log_3\!\big(2(x-\tfrac52)\big)\): la asíntota vertical se traslada de \(x=0\) a \(x=\tfrac52\).
+Corte con el eje \(x\): \(2x-5=1\iff x=3\). Rango: \(\mathbb{R}\) (el rango del logaritmo no se altera con transformaciones horizontales).</p>
+</div>
+<div>
+<canvas id="cvLogD" width="440" height="340"></canvas>
+<div class="leg"><span class="l1">f(x)</span><span class="l2">asíntota x = 5/2</span><span class="l3">dominio</span></div>
+</div>
+</div>
+</div>
+
+<h3>Ejemplo 3 · Ecuación logarítmica (¡con solución extraña!)</h3>
+<div class="card">
+<p><i>Resolver</i> \(\log_2 x+\log_2(x-2)=3\).</p>
+<div class="steps" id="steps-log2">
+  <div class="step"><b class="n">Paso 1:</b> ley del producto: \(\log_2\big(x(x-2)\big)=3\).</div>
+  <div class="step"><b class="n">Paso 2:</b> definición de logaritmo: \(x(x-2)=2^{3}=8\).</div>
+  <div class="step"><b class="n">Paso 3:</b> \(x^2-2x-8=0\iff (x-4)(x+2)=0\iff x=4\ \text{ó}\ x=-2\).</div>
+  <div class="step"><b class="n">Paso 4 — Verificar en la ecuación original:</b> \(x=-2\) hace \(\log_2 x\) indefinido (¡argumento negativo!), se descarta.
+  Con \(x=4\): \(\log_2 4+\log_2 2=2+1=3\) ✓. <b>Solución: \(x=4\).</b></div>
+</div>
+<div class="ctrl"><button class="btn" onclick="nextStep('steps-log2',this)">Siguiente paso →</button></div>
+</div>
+
+<h3>Ejemplo 4 · Exponencial con bases distintas</h3>
+<div class="card">
+<p><i>Resolver</i> \(2^{x}=3^{x-1}\).</p>
+<div class="steps" id="steps-log3">
+  <div class="step"><b class="n">Paso 1:</b> tomamos \(\ln\) a ambos lados (es inyectiva, preserva la igualdad): \(x\ln 2=(x-1)\ln 3\).</div>
+  <div class="step"><b class="n">Paso 2:</b> agrupamos los términos con \(x\): \(x(\ln 2-\ln 3)=-\ln 3\).</div>
+  <div class="step"><b class="n">Paso 3:</b> \[x=\frac{\ln 3}{\ln 3-\ln 2}=\frac{\ln 3}{\ln(3/2)}\approx 2.7095.\]
+  <i>Verificación numérica: \(2^{2.7095}\approx 6.54\) y \(3^{1.7095}\approx 6.54\) ✓</i></div>
+</div>
+<div class="ctrl"><button class="btn" onclick="nextStep('steps-log3',this)">Siguiente paso →</button></div>
+</div>
+
+<h3>Ejercicios</h3>
+<div class="card exl">
+<div class="exi">Evalúe sin calculadora: \(\log_5 125\), \(\log_4 8\), \(\log_{10} 10^{-4}\), \(\ln\dfrac{1}{e^{2}}\).
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(\log_5 125=3\) (pues \(5^3=125\)); \(\log_4 8=\dfrac{\ln 8}{\ln 4}=\dfrac{3\ln 2}{2\ln 2}=\dfrac32\);
+\(\log 10^{-4}=-4\); \(\ln e^{-2}=-2\).</p>
+</div></details></div>
+<div class="exi">Escriba como un solo logaritmo: \(2\log x+\tfrac12\log y-3\log z\).
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>Por las leyes de potencia, producto y cociente: \(\log\dfrac{x^{2}\sqrt{y}}{z^{3}}\) (con \(x,y,z>0\)).</p>
+</div></details></div>
+<div class="exi">Halle el dominio de \(g(x)=\log_2(9-x^{2})\) y de \(h(x)=\ln\dfrac{x+1}{x-2}\).
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(g\): \(9-x^2>0\iff -3&lt;x&lt;3\): \(D_g=(-3,3)\).</p>
+<p>\(h\): \(\dfrac{x+1}{x-2}>0\): tabla de signos con críticos \(-1\) y \(2\) → positivo en \((-\infty,-1)\cup(2,\infty)=D_h\).</p>
+</div></details></div>
+<div class="exi">Resuelva \(\log_3(x+1)+\log_3(x-1)=1\).
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(\log_3(x^2-1)=1\iff x^2-1=3\iff x=\pm 2\). Verificación: \(x=-2\) hace negativos ambos argumentos → extraña.
+<b>Solución: \(x=2\)</b> (\(\log_3 3+\log_3 1=1+0=1\) ✓).</p>
+</div></details></div>
+<div class="exi">Resuelva \(\log_2(x+2)-\log_2(x-1)=2\).
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(\log_2\dfrac{x+2}{x-1}=2\iff \dfrac{x+2}{x-1}=4\iff x+2=4x-4\iff x=2\).
+Verificación: argumentos \(4>0\) y \(1>0\) ✓, y \(\log_2 4-\log_2 1=2\) ✓.</p>
+</div></details></div>
+</div>
+</section>
+
+<!-- ============ SECCIÓN 12: TRIGONOMÉTRICAS ============ -->
+<section id="s12" class="panel">
+<h2>11 · Funciones trigonométricas</h2>
+<div class="card def">
+Medimos ángulos en <b>radianes</b>: \(\pi\ \text{rad}=180^\circ\). Para \(t\in\mathbb{R}\), recorremos una longitud \(|t|\)
+sobre la <b>circunferencia unitaria</b> \(x^2+y^2=1\) desde \((1,0)\) (antihorario si \(t>0\)) y llegamos a un punto \(P(t)\).
+Se define (Tema 28):
+\[\cos t = \text{abscisa de }P(t),\qquad \operatorname{sen} t=\text{ordenada de }P(t),\qquad \tan t=\frac{\operatorname{sen} t}{\cos t}\]
+<table class="tt">
+<tr><th></th><th>dominio</th><th>rango</th><th>período</th><th>paridad</th></tr>
+<tr><td>\(\operatorname{sen} t\)</td><td>\(\mathbb{R}\)</td><td>\([-1,1]\)</td><td>\(2\pi\)</td><td>impar: \(\operatorname{sen}(-t)=-\operatorname{sen} t\)</td></tr>
+<tr><td>\(\cos t\)</td><td>\(\mathbb{R}\)</td><td>\([-1,1]\)</td><td>\(2\pi\)</td><td>par: \(\cos(-t)=\cos t\)</td></tr>
+<tr><td>\(\tan t\)</td><td>\(t\neq \tfrac{\pi}{2}+k\pi\)</td><td>\(\mathbb{R}\)</td><td>\(\pi\)</td><td>impar</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3 style="margin-top:2px">Valores notables</h3>
+<table class="tt">
+<tr><th>\(t\)</th><th>\(0\)</th><th>\(\pi/6\)</th><th>\(\pi/4\)</th><th>\(\pi/3\)</th><th>\(\pi/2\)</th></tr>
+<tr><td>\(\operatorname{sen} t\)</td><td>\(0\)</td><td>\(\tfrac12\)</td><td>\(\tfrac{\sqrt2}{2}\)</td><td>\(\tfrac{\sqrt3}{2}\)</td><td>\(1\)</td></tr>
+<tr><td>\(\cos t\)</td><td>\(1\)</td><td>\(\tfrac{\sqrt3}{2}\)</td><td>\(\tfrac{\sqrt2}{2}\)</td><td>\(\tfrac12\)</td><td>\(0\)</td></tr>
+<tr><td>\(\tan t\)</td><td>\(0\)</td><td>\(\tfrac{\sqrt3}{3}\)</td><td>\(1\)</td><td>\(\sqrt3\)</td><td>—</td></tr>
+</table>
+<p style="text-align:center;color:var(--muted)">Mnemotecnia: la fila del seno es \(\tfrac{\sqrt0}{2},\tfrac{\sqrt1}{2},\tfrac{\sqrt2}{2},\tfrac{\sqrt3}{2},\tfrac{\sqrt4}{2}\).</p>
+</div>
+
+<div class="card">
+<h3 style="margin-top:2px">Identidades fundamentales (Tema 29)</h3>
+<table class="tt">
+<tr><th>Pitagóricas</th><td>\(\operatorname{sen}^2 t+\cos^2 t=1\qquad 1+\tan^2 t=\sec^2 t\qquad 1+\cot^2 t=\csc^2 t\)</td></tr>
+<tr><th>Recíprocas</th><td>\(\sec t=\dfrac{1}{\cos t}\qquad \csc t=\dfrac{1}{\operatorname{sen} t}\qquad \cot t=\dfrac{\cos t}{\operatorname{sen} t}\)</td></tr>
+<tr><th>Suma y resta</th><td>\(\operatorname{sen}(\alpha\pm\beta)=\operatorname{sen}\alpha\cos\beta\pm\cos\alpha\operatorname{sen}\beta\)<br>\(\cos(\alpha\pm\beta)=\cos\alpha\cos\beta\mp\operatorname{sen}\alpha\operatorname{sen}\beta\)</td></tr>
+<tr><th>Ángulo doble</th><td>\(\operatorname{sen} 2t=2\operatorname{sen} t\cos t\qquad \cos 2t=\cos^2 t-\operatorname{sen}^2 t=2\cos^2 t-1=1-2\operatorname{sen}^2 t\)</td></tr>
+</table>
+<p class="kbig">👁 La pitagórica es simplemente la ecuación \(x^2+y^2=1\) del círculo evaluada en \(P(t)=(\cos t,\operatorname{sen} t)\): compruébalo abajo.</p>
+</div>
+
+<h3>Ejemplo 1 · La circunferencia unitaria genera las ondas <span class="chip">animación</span></h3>
+<div class="card">
+<p>El punto recorre el círculo; su <b>ordenada</b> (rojo) dibuja el seno y su <b>abscisa</b> (verde) el coseno. Reproduce o mueve \(t\) a mano:</p>
+<div class="ctrl">
+  <label>\(t=\)</label><input type="range" id="ucT" min="0" max="6.283" step="0.01" value="1">
+  <button class="btn" id="ucPlay">▶ Animar</button>
+  <button class="btn ghost" id="ucStop">⏸ Pausar</button>
+</div>
+<canvas id="cvUC" width="640" height="330"></canvas>
+<div class="readout" id="ucOut"></div>
+</div>
+
+<h3>Ejemplo 2 · Valores exactos con ángulo de referencia</h3>
+<div class="card">
+<div class="steps" id="steps-trig1">
+  <div class="step"><b class="n">a)</b> \(\operatorname{sen}\dfrac{2\pi}{3}\): el ángulo está en el cuadrante II, su referencia es \(\pi-\dfrac{2\pi}{3}=\dfrac{\pi}{3}\).
+  En QII el seno es positivo: \(\operatorname{sen}\dfrac{2\pi}{3}=+\operatorname{sen}\dfrac{\pi}{3}=\dfrac{\sqrt3}{2}\).</div>
+  <div class="step"><b class="n">b)</b> \(\cos\left(-\dfrac{\pi}{4}\right)\): el coseno es <b>par</b>, así que \(\cos\left(-\tfrac{\pi}{4}\right)=\cos\tfrac{\pi}{4}=\dfrac{\sqrt2}{2}\).</div>
+  <div class="step"><b class="n">c)</b> \(\tan\dfrac{5\pi}{6}\): cuadrante II (tangente negativa), referencia \(\pi-\tfrac{5\pi}{6}=\tfrac{\pi}{6}\):
+  \(\tan\tfrac{5\pi}{6}=-\tan\tfrac{\pi}{6}=-\dfrac{\sqrt3}{3}\).</div>
+  <div class="step"><b class="n">Regla general:</b> signo según el cuadrante (<i>seno QI–QII, coseno QI–QIV, tangente QI–QIII</i>) y magnitud según el ángulo de referencia.</div>
+</div>
+<div class="ctrl"><button class="btn" onclick="nextStep('steps-trig1',this)">Siguiente paso →</button></div>
+</div>
+
+<h3>Ejemplo 3 · Laboratorio de sinusoides: \(y=A\operatorname{sen}(Bx)+D\) <span class="chip">interactivo</span></h3>
+<div class="card">
+<p>\(|A|\) es la <b>amplitud</b>, el <b>período</b> es \(\dfrac{2\pi}{B}\) y \(D\) desplaza verticalmente. La guía punteada es \(y=\operatorname{sen} x\).</p>
+<div class="ctrl">
+  <label>\(A\)</label><input type="range" id="sinA" min="-3" max="3" step="0.5" value="2"><span id="sinAval"></span>
+  <label>\(B\)</label><input type="range" id="sinB" min="0.5" max="4" step="0.5" value="2"><span id="sinBval"></span>
+  <label>\(D\)</label><input type="range" id="sinD" min="-2" max="2" step="0.5" value="1"><span id="sinDval"></span>
+</div>
+<canvas id="cvSin" width="640" height="380"></canvas>
+<div class="readout" id="sinOut"></div>
+<p><i>Caso resuelto:</i> \(y=2\operatorname{sen}(2x)+1\): amplitud \(2\), período \(\tfrac{2\pi}{2}=\pi\), rango \([1-2,\,1+2]=[-1,3]\). Reprodúcelo con los deslizadores.</p>
+</div>
+
+<h3>Ejemplo 4 · Resolver \(\operatorname{sen} x=k\) gráficamente <span class="chip">interactivo</span></h3>
+<div class="card">
+<p>Las soluciones en \([0,2\pi]\) son los cortes de la onda con la recta \(y=k\). Mueve \(k\):</p>
+<div class="ctrl"><label>\(k=\)</label><input type="range" id="teqK" min="-1.2" max="1.2" step="0.05" value="0.5"><span id="teqKval"></span></div>
+<canvas id="cvTrigEq" width="640" height="330"></canvas>
+<div class="readout" id="teqOut"></div>
+<p><b>Caso exacto \(k=\tfrac12\):</b> la referencia es \(\operatorname{sen}^{-1}\tfrac12=\tfrac{\pi}{6}\); por simetría de la onda,
+las soluciones en \([0,2\pi]\) son \(x=\tfrac{\pi}{6}\) y \(x=\pi-\tfrac{\pi}{6}=\tfrac{5\pi}{6}\).
+Solución general: \(x=\tfrac{\pi}{6}+2k\pi\) ó \(x=\tfrac{5\pi}{6}+2k\pi\), \(k\in\mathbb{Z}\).</p>
+</div>
+
+<h3>Ejercicios</h3>
+<div class="card exl">
+<div class="exi">Convierta \(150^\circ\) a radianes y \(\dfrac{3\pi}{4}\) a grados. ¿En qué cuadrante termina \(t=4\) rad?
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(150^\circ=150\cdot\tfrac{\pi}{180}=\tfrac{5\pi}{6}\); \(\tfrac{3\pi}{4}=135^\circ\).
+Como \(\pi\approx 3.14 &lt; 4 &lt; \tfrac{3\pi}{2}\approx 4.71\), \(t=4\) termina en el <b>cuadrante III</b>.</p>
+</div></details></div>
+<div class="exi">Calcule los valores exactos: \(\cos\dfrac{7\pi}{6}\), \(\operatorname{sen}\left(-\dfrac{\pi}{3}\right)\), \(\tan\dfrac{3\pi}{4}\).
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(\tfrac{7\pi}{6}\) está en QIII (coseno negativo), referencia \(\tfrac{\pi}{6}\): \(\cos\tfrac{7\pi}{6}=-\tfrac{\sqrt3}{2}\).
+Seno impar: \(\operatorname{sen}(-\tfrac{\pi}{3})=-\tfrac{\sqrt3}{2}\).
+\(\tfrac{3\pi}{4}\) en QII, referencia \(\tfrac{\pi}{4}\): \(\tan\tfrac{3\pi}{4}=-1\).</p>
+</div></details></div>
+<div class="exi">Para \(y=-3\cos(\pi x)+2\): halle amplitud, período, rango, y determine si la función es par, impar o ninguna.
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>Amplitud \(|-3|=3\); período \(\tfrac{2\pi}{\pi}=2\); rango \([2-3,2+3]=[-1,5]\).
+Como el coseno es par y la reflexión/traslación vertical preservan la paridad en \(x\): \(y(-x)=-3\cos(-\pi x)+2=-3\cos(\pi x)+2=y(x)\): <b>par</b>.</p>
+</div></details></div>
+<div class="exi">Resuelva \(2\cos x-1=0\) en \([0,2\pi)\) y dé la solución general.
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>\(\cos x=\tfrac12\): referencia \(\tfrac{\pi}{3}\); el coseno es positivo en QI y QIV:
+\(x=\tfrac{\pi}{3}\) y \(x=2\pi-\tfrac{\pi}{3}=\tfrac{5\pi}{3}\).
+General: \(x=\pm\tfrac{\pi}{3}+2k\pi\), \(k\in\mathbb{Z}\).</p>
+</div></details></div>
+<div class="exi">(a) Simplifique \(\dfrac{1-\cos^2 t}{\operatorname{sen} t}\) (para \(\operatorname{sen} t\neq 0\)).
+(b) Si \(\operatorname{sen} t=\tfrac35\) con \(t\) en el cuadrante II, calcule \(\cos t\), \(\operatorname{sen} 2t\) y \(\cos 2t\).
+<details class="sol"><summary>Solución</summary><div class="inner">
+<p>(a) Por la pitagórica, \(1-\cos^2 t=\operatorname{sen}^2 t\), luego la expresión es \(\operatorname{sen} t\).</p>
+<p>(b) \(\cos^2 t=1-\tfrac{9}{25}=\tfrac{16}{25}\) y en QII el coseno es negativo: \(\cos t=-\tfrac45\).
+Ángulo doble: \(\operatorname{sen} 2t=2\cdot\tfrac35\cdot\left(-\tfrac45\right)=-\tfrac{24}{25}\);
+\(\cos 2t=1-2\operatorname{sen}^2 t=1-\tfrac{18}{25}=\tfrac{7}{25}\).</p>
+</div></details></div>
+</div>
+</section>
+
+<!-- ============ SECCIÓN 8: RETOS ============ -->
+<section id="s8" class="panel">
+<h2>★ Retos · nivel intermedio–avanzado</h2>
+<p>Intenta cada reto antes de abrir la solución. Todos se resuelven con las herramientas de las secciones anteriores.</p>
+
+<div class="card ej">
+<b>Reto 1 · Dominio con cociente dentro de una raíz.</b> Halle el dominio de
+\[f(x)=\sqrt{\frac{x-1}{x+2}}\]
+<details class="sol"><summary>Ver solución</summary><div class="inner">
+<p>Se necesita \(\dfrac{x-1}{x+2}\ge 0\) <b>y</b> \(x\neq -2\). Tabla de signos con puntos críticos \(x=-2\) y \(x=1\):</p>
+<table class="tt"><tr><th></th><th>\((-\infty,-2)\)</th><th>\((-2,1)\)</th><th>\((1,\infty)\)</th></tr>
+<tr><td>\(x-1\)</td><td>−</td><td>−</td><td>+</td></tr>
+<tr><td>\(x+2\)</td><td>−</td><td>+</td><td>+</td></tr>
+<tr><td>cociente</td><td>+</td><td>−</td><td>+</td></tr></table>
+<p>El cociente es \(\ge 0\) en \((-\infty,-2)\cup[1,\infty)\) (en \(x=1\) vale \(0\), permitido; \(x=-2\) queda excluido por anular el denominador):</p>
+\[D_f=(-\infty,-2)\cup[1,\infty)\]
+<p><i>Trampa típica:</i> multiplicar la desigualdad por \(x+2\) sin considerar su signo.</p>
+</div></details>
+</div>
+
+<div class="card ej">
+<b>Reto 2 · Lectura gráfica con parámetro.</b> Sea \(g(x)=|x^2-2x-3|\).
+(a) Grafique \(g\) usando transformaciones. (b) Determine el rango de \(g\).
+(c) ¿Cuántas soluciones tiene la ecuación \(|x^2-2x-3|=k\) según el valor de \(k\in\mathbb{R}\)? Explora con el deslizador:
+<div class="ctrl"><label>\(k=\)</label><input type="range" id="retoK" min="-1" max="7" step="0.1" value="2"><span id="retoKval"></span></div>
+<canvas id="cvReto" width="640" height="380"></canvas>
+<div class="readout" id="retoOut"></div>
+<details class="sol"><summary>Ver solución</summary><div class="inner">
+<p><b>(a)</b> Completando el cuadrado: \(x^2-2x-3=(x-1)^2-4\): parábola con vértice \((1,-4)\) y raíces \(x=-1,\,3\).
+El valor absoluto refleja hacia arriba la parte bajo el eje: el vértice pasa a \((1,4)\) y se forma una “M” invertida sobre \([-1,3]\).</p>
+<p><b>(b)</b> \(R_g=[0,\infty)\).</p>
+<p><b>(c)</b> Las soluciones son las intersecciones con la recta horizontal \(y=k\):
+\(k<0\): 0 soluciones · \(k=0\): 2 (las raíces) · \(0&lt;k&lt;4\): 4 · \(k=4\): 3 (la recta toca el pico) · \(k>4\): 2.</p>
+<p><i>Moraleja:</i> una gráfica bien construida responde preguntas algebraicas sin resolver ninguna ecuación.</p>
+</div></details>
+</div>
+
+<div class="card ej">
+<b>Reto 3 · Trozos con parámetros.</b> Halle \(a\) y \(b\) para que la gráfica de
+\[f(x)=\begin{cases} a-x & \text{si } x\le -1\\ x^2+bx & \text{si } -1&lt;x&lt;2\\ 3x-4 & \text{si } x\ge 2\end{cases}\]
+no presente saltos (los tramos deben “empalmar” en las fronteras).
+<details class="sol"><summary>Ver solución</summary><div class="inner">
+<p>Empalme en \(x=2\): el tramo central debe llegar al valor del tercero: \(2^2+2b=3(2)-4=2 \Rightarrow 4+2b=2 \Rightarrow b=-1.\)</p>
+<p>Empalme en \(x=-1\): con \(b=-1\) el tramo central tiende a \((-1)^2-(-1)(-1)\cdot\!\ldots\) cuidado: \(x^2-x\) en \(x=-1\) vale \(1+1=2\). El primer tramo debe valer lo mismo: \(a-(-1)=a+1=2\Rightarrow a=1.\)</p>
+\[f(x)=\begin{cases}1-x & x\le -1\\ x^2-x & -1&lt;x&lt;2\\ 3x-4 & x\ge 2\end{cases}\]
+<p><i>Verificación:</i> en \(x=-1\): \(1-(-1)=2\) y \(x^2-x\to 2\) ✓; en \(x=2\): \(x^2-x\to 2\) y \(3(2)-4=2\) ✓.</p>
+</div></details>
+</div>
+
+<div class="card ej">
+<b>Reto 4 · Modelado.</b> Un alambre de 10 m se corta en dos pedazos: con uno (de longitud \(x\)) se forma un cuadrado
+y con el otro una circunferencia. Exprese el área total encerrada \(A\) como función de \(x\), indique su dominio,
+y evalúe \(A(0)\) y \(A(10)\). ¿Qué caso encierra más área?
+<details class="sol"><summary>Ver solución</summary><div class="inner">
+<p>Cuadrado: perímetro \(x\Rightarrow\) lado \(x/4\Rightarrow\) área \(x^2/16\).</p>
+<p>Circunferencia: longitud \(10-x = 2\pi r\Rightarrow r=\dfrac{10-x}{2\pi}\Rightarrow\) área \(\pi r^2=\dfrac{(10-x)^2}{4\pi}\).</p>
+\[A(x)=\frac{x^2}{16}+\frac{(10-x)^2}{4\pi},\qquad D_A=[0,10]\]
+<p>(los extremos corresponden a usar todo el alambre en una sola figura). \(A(0)=\dfrac{100}{4\pi}=\dfrac{25}{\pi}\approx 7.96\) m² y
+\(A(10)=\dfrac{100}{16}=6.25\) m²: <b>el círculo encierra más área con el mismo perímetro</b> (propiedad isoperimétrica).</p>
+</div></details>
+</div>
+
+<div class="card ej">
+<b>Reto 5 · Álgebra de funciones.</b> Sean \(f(x)=\dfrac{1}{\sqrt{3-x}}\) y \(g(x)=\dfrac{\sqrt{x+1}}{x-2}\).
+Halle \(D_f\), \(D_g\), \(D_{fg}\) y \(D_{f/g}\).
+<details class="sol"><summary>Ver solución</summary><div class="inner">
+<p>\(f\): se necesita \(3-x>0\) (raíz par <b>en el denominador</b>: estricto). \(D_f=(-\infty,3)\).</p>
+<p>\(g\): se necesita \(x+1\ge0\) y \(x\neq 2\). \(D_g=[-1,\infty)-\{2\}\).</p>
+<p>Producto: \(D_{fg}=D_f\cap D_g=[-1,3)-\{2\}=[-1,2)\cup(2,3)\).</p>
+<p>Cociente: se excluye además donde \(g(x)=0\), es decir \(\sqrt{x+1}=0\iff x=-1\):</p>
+\[D_{f/g}=(-1,2)\cup(2,3)\]
+<p><i>Nota fina:</i> \(\left(\dfrac{f}{g}\right)(x)=\dfrac{x-2}{\sqrt{3-x}\,\sqrt{x+1}}\) tras simplificar, pero el dominio se calcula <b>antes</b> de simplificar: \(x=2\) sigue excluido aunque la expresión final parezca aceptarlo.</p>
+</div></details>
+</div>
+
+<div class="card ej">
+<b>Reto 6 · Transformaciones en cadena.</b> Escriba \(h(x)=\sqrt{2-x}+1\) como una sucesión de transformaciones de
+\(f(x)=\sqrt{x}\), grafíquela y determine dominio y rango.
+<details class="sol"><summary>Ver solución</summary><div class="inner">
+<p>Reescribimos \( \sqrt{2-x}=\sqrt{-(x-2)} \). Cadena:</p>
+\[\sqrt{x}\;\xrightarrow{\text{reflejar eje } y}\;\sqrt{-x}\;\xrightarrow{\text{trasladar 2 a la derecha}}\;\sqrt{-(x-2)}=\sqrt{2-x}\;\xrightarrow{\text{subir }1}\;h(x)\]
+<p>Punto de control: el “inicio” \((0,0)\) de \(\sqrt x\) va a \((0,0)\to(2,0)\to(2,1)\). La gráfica sale de \((2,1)\) hacia la izquierda-arriba.</p>
+<p>Dominio: \(2-x\ge0\iff x\le 2\): \(D_h=(-\infty,2]\). Rango: \(R_h=[1,\infty)\).</p>
+<p><i>Puedes verificarlo en el laboratorio de la sección 6: base \(\sqrt x\), reflejar eje \(y\), \(a=2\), \(b=1\).</i></p>
+</div></details>
+</div>
+
+<div class="card ej">
+<b>Reto 7 · Paridad.</b> (a) Clasifique como par, impar o ninguna: \(f(x)=x|x|\), \(g(x)=x^3-x^2\), \(h(x)=x^4+3x^2-1\).
+(b) Demuestre: si \(f\) es par y \(g\) es impar (con el mismo dominio simétrico), el producto \(fg\) es impar.
+<details class="sol"><summary>Ver solución</summary><div class="inner">
+<p><b>(a)</b> \(f(-x)=(-x)|-x|=-x|x|=-f(x)\): <b>impar</b>.
+\(g(-x)=-x^3-x^2\), que no es \(g(x)\) ni \(-g(x)=x^2-x^3\) (compare en \(x=1\)): <b>ninguna</b>.
+\(h(-x)=x^4+3x^2-1=h(x)\): <b>par</b>.</p>
+<p><b>(b)</b> \((fg)(-x)=f(-x)\,g(-x)=f(x)\cdot(-g(x))=-(fg)(x)\) para todo \(x\) del dominio, que es lo que define ser impar. \(\blacksquare\)</p>
+<p><i>Conexión gráfica:</i> par = simetría especular respecto al eje \(y\); impar = rotación de 180° alrededor del origen.</p>
+</div></details>
+</div>
+</section>
+
+<!--SECTIONS_END-->
+</main>
+<div class="foot">Material de clase · Matemáticas Básicas · Basado en Temas 19–22, UNAL Sede Medellín · 2026</div>
+<script>
+'use strict';
+/* ---------- utilidades ---------- */
+function ctx2d(cv){
+  const d=window.devicePixelRatio||1, W=cv.width, H=cv.height;
+  cv.width=W*d; cv.height=H*d; cv.style.width=W+'px'; cv.style.height=H+'px';
+  const c=cv.getContext('2d'); c.scale(d,d); c._W=W; c._H=H; return c;
+}
+function makePlot(id,o){
+  const cv=document.getElementById(id); if(!cv)return null;
+  const ctx=ctx2d(cv);
+  const p={ctx,W:ctx._W,H:ctx._H,...o};
+  p.px=x=>(x-p.xmin)/(p.xmax-p.xmin)*p.W;
+  p.py=y=>p.H-(y-p.ymin)/(p.ymax-p.ymin)*p.H;
+  p.clear=()=>{ctx.clearRect(0,0,p.W,p.H);};
+  p.axes=(step=1,lab=1)=>{
+    ctx.save();
+    ctx.strokeStyle='#1a2338';ctx.lineWidth=1;
+    for(let x=Math.ceil(p.xmin);x<=p.xmax;x+=step){ctx.beginPath();ctx.moveTo(p.px(x),0);ctx.lineTo(p.px(x),p.H);ctx.stroke();}
+    for(let y=Math.ceil(p.ymin);y<=p.ymax;y+=step){ctx.beginPath();ctx.moveTo(0,p.py(y));ctx.lineTo(p.W,p.py(y));ctx.stroke();}
+    ctx.strokeStyle='#66738c';ctx.lineWidth=1.4;
+    ctx.beginPath();ctx.moveTo(0,p.py(0));ctx.lineTo(p.W,p.py(0));ctx.stroke();
+    ctx.beginPath();ctx.moveTo(p.px(0),0);ctx.lineTo(p.px(0),p.H);ctx.stroke();
+    ctx.fillStyle='#7e8ba3';ctx.font='11px Segoe UI';
+    ctx.textAlign='center';ctx.textBaseline='top';
+    for(let x=Math.ceil(p.xmin);x<=p.xmax;x+=lab){if(x!==0)ctx.fillText(x,p.px(x),p.py(0)+4);}
+    ctx.textAlign='right';ctx.textBaseline='middle';
+    for(let y=Math.ceil(p.ymin);y<=p.ymax;y+=lab){if(y!==0)ctx.fillText(y,p.px(0)-5,p.py(y));}
+    ctx.restore();
+  };
+  p.fn=(f,color,opt={})=>{
+    const N=opt.N||900, a=opt.a??p.xmin, b=opt.b??p.xmax;
+    ctx.save();ctx.strokeStyle=color;ctx.lineWidth=opt.w||2.6;
+    if(opt.dash)ctx.setLineDash(opt.dash);
+    ctx.beginPath();let pen=false,prev=null;
+    for(let i=0;i<=N;i++){
+      const x=a+(b-a)*i/N;const y=f(x);
+      if(!isFinite(y)){pen=false;prev=null;continue;}
+      const Y=p.py(y);
+      if(Y<-1.5*p.H||Y>2.5*p.H){pen=false;prev=null;continue;}
+      if(pen&&prev!==null&&Math.abs(Y-prev)>p.H*0.85)pen=false;
+      if(!pen){ctx.moveTo(p.px(x),Y);pen=true;}else ctx.lineTo(p.px(x),Y);
+      prev=Y;
+    }
+    ctx.stroke();ctx.restore();
+  };
+  p.dot=(x,y,color,open=false,r=4.5)=>{
+    ctx.save();ctx.beginPath();ctx.arc(p.px(x),p.py(y),r,0,7);
+    ctx.fillStyle=open?'#0d1424':color;ctx.fill();
+    ctx.strokeStyle=color;ctx.lineWidth=2;ctx.stroke();ctx.restore();
+  };
+  p.vline=(x,color,dash=[6,5])=>{ctx.save();ctx.strokeStyle=color;ctx.lineWidth=1.8;ctx.setLineDash(dash);
+    ctx.beginPath();ctx.moveTo(p.px(x),0);ctx.lineTo(p.px(x),p.H);ctx.stroke();ctx.restore();};
+  p.hline=(y,color,dash=[6,5])=>{ctx.save();ctx.strokeStyle=color;ctx.lineWidth=1.8;ctx.setLineDash(dash);
+    ctx.beginPath();ctx.moveTo(0,p.py(y));ctx.lineTo(p.W,p.py(y));ctx.stroke();ctx.restore();};
+  p.xband=(x1,x2,color)=>{ctx.save();ctx.globalAlpha=.5;ctx.strokeStyle=color;ctx.lineWidth=7;ctx.lineCap='butt';
+    ctx.beginPath();ctx.moveTo(p.px(Math.max(x1,p.xmin)),p.py(0));ctx.lineTo(p.px(Math.min(x2,p.xmax)),p.py(0));ctx.stroke();ctx.restore();};
+  p.yband=(y1,y2,color)=>{ctx.save();ctx.globalAlpha=.5;ctx.strokeStyle=color;ctx.lineWidth=7;ctx.lineCap='butt';
+    ctx.beginPath();ctx.moveTo(p.px(0),p.py(Math.max(y1,p.ymin)));ctx.lineTo(p.px(0),p.py(Math.min(y2,p.ymax)));ctx.stroke();ctx.restore();};
+  p.seg=(x1,y1,x2,y2,color,w=3,dash=null)=>{ctx.save();ctx.strokeStyle=color;ctx.lineWidth=w;if(dash)ctx.setLineDash(dash);
+    ctx.beginPath();ctx.moveTo(p.px(x1),p.py(y1));ctx.lineTo(p.px(x2),p.py(y2));ctx.stroke();ctx.restore();};
+  p.text=(x,y,t,color='#a9b7d0',align='left')=>{ctx.save();ctx.fillStyle=color;ctx.font='bold 12px Segoe UI';
+    ctx.textAlign=align;ctx.textBaseline='bottom';ctx.fillText(t,p.px(x),p.py(y)-4);ctx.restore();};
+  return p;
+}
+const C={a:'#818cf8',r:'#f87171',g:'#34d399',o:'#fb923c',c:'#22d3ee',gray:'#414e69'};
+const fmt=v=>Math.abs(v-Math.round(v))<1e-9?String(Math.round(v)):v.toFixed(2);
+
+/* ---------- navegación por pestañas ---------- */
+document.querySelectorAll('#topnav button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('#topnav button').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('section.panel').forEach(s=>s.classList.remove('show'));
+    b.classList.add('active');
+    document.getElementById(b.dataset.t).classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+/* ---------- ejemplos paso a paso ---------- */
+function nextStep(id,btn){
+  const steps=[...document.querySelectorAll('#'+id+' .step')];
+  const hidden=steps.filter(s=>!s.classList.contains('visible'));
+  if(hidden.length===0){steps.forEach(s=>s.classList.remove('visible'));btn.textContent='Siguiente paso →';return;}
+  hidden[0].classList.add('visible');
+  if(hidden.length===1)btn.textContent='↺ Reiniciar';
+}
+
+/* ========== S1: triángulo A(h) ========== */
+(function(){
+  const cv=document.getElementById('cvTri');if(!cv)return;
+  const ctx=ctx2d(cv), sl=document.getElementById('triH');
+  function draw(){
+    const h=+sl.value, b=2*h/Math.sqrt(3), A=Math.sqrt(3)/3*h*h;
+    ctx.clearRect(0,0,ctx._W,ctx._H);
+    // triángulo (izquierda)
+    const s=52, cx=155, gy=265;
+    ctx.strokeStyle='#66738c';ctx.beginPath();ctx.moveTo(20,gy);ctx.lineTo(295,gy);ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(cx-b*s/2,gy);ctx.lineTo(cx+b*s/2,gy);ctx.lineTo(cx,gy-h*s);ctx.closePath();
+    ctx.fillStyle='rgba(129,140,248,.18)';ctx.fill();ctx.strokeStyle=C.a;ctx.lineWidth=2.5;ctx.stroke();
+    ctx.setLineDash([5,4]);ctx.strokeStyle=C.r;ctx.lineWidth=1.8;
+    ctx.beginPath();ctx.moveTo(cx,gy);ctx.lineTo(cx,gy-h*s);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=C.r;ctx.font='bold 13px Segoe UI';ctx.fillText('h',cx+6,gy-h*s/2);
+    ctx.fillStyle=C.a;ctx.fillText('b',cx+b*s/4,gy+16);
+    // gráfica A(h) (derecha)
+    const gx=x=>360+x/4.2*250, gyy=v=>272-v/10*245;
+    ctx.strokeStyle='#66738c';ctx.lineWidth=1.2;
+    ctx.beginPath();ctx.moveTo(360,272);ctx.lineTo(620,272);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(360,272);ctx.lineTo(360,20);ctx.stroke();
+    ctx.fillStyle='#7e8ba3';ctx.font='11px Segoe UI';
+    ctx.fillText('h',612,288);ctx.fillText('A(h) = (√3/3)h²',380,32);
+    for(let i=1;i<=4;i++){ctx.fillText(i,gx(i)-3,286);}
+    ctx.strokeStyle=C.g;ctx.lineWidth=2.5;ctx.beginPath();
+    for(let i=0;i<=120;i++){const x=i/120*4.2;const Y=gyy(Math.sqrt(3)/3*x*x);
+      i===0?ctx.moveTo(gx(x),Y):ctx.lineTo(gx(x),Y);}
+    ctx.stroke();
+    ctx.beginPath();ctx.arc(gx(h),gyy(A),5,0,7);ctx.fillStyle=C.o;ctx.fill();
+    ctx.setLineDash([4,4]);ctx.strokeStyle=C.o;ctx.lineWidth=1.4;
+    ctx.beginPath();ctx.moveTo(gx(h),272);ctx.lineTo(gx(h),gyy(A));ctx.lineTo(360,gyy(A));ctx.stroke();ctx.setLineDash([]);
+    document.getElementById('triHval').textContent=h.toFixed(2);
+    document.getElementById('triOut').textContent=`h = ${h.toFixed(2)}  →  b = 2h/√3 = ${b.toFixed(2)}  →  A(h) = (√3/3)h² = ${A.toFixed(3)}`;
+  }
+  sl.addEventListener('input',draw);draw();
+})();
+
+/* ========== S2: prueba de la recta vertical ========== */
+(function(){
+  const p=makePlot('cvVLT',{xmin:-5,xmax:5,ymin:-4,ymax:4});if(!p)return;
+  const slX=document.getElementById('vltX'), sel=document.getElementById('vltCurve');
+  function draw(){
+    const x0=+slX.value, curve=sel.value;
+    p.clear();p.axes();
+    let pts=[];
+    if(curve==='par'){
+      p.fn(x=>x*x/3-2,C.a);
+      pts=[x0*x0/3-2];
+    }else{
+      p.fn(x=>Math.sqrt(Math.max(0,9-x*x)),C.a,{a:-3,b:3});
+      p.fn(x=>-Math.sqrt(Math.max(0,9-x*x)),C.a,{a:-3,b:3});
+      if(Math.abs(x0)<3){const y=Math.sqrt(9-x0*x0);pts=[y,-y];}
+      else if(Math.abs(x0)===3)pts=[0];
+    }
+    const bad=pts.length>1;
+    p.vline(x0,bad?C.r:C.g,[]);
+    pts.forEach(y=>p.dot(x0,y,bad?C.r:C.g));
+    document.getElementById('vltOut').textContent=
+      `La recta x = ${x0.toFixed(2)} corta la curva en ${pts.length} punto(s) → ` +
+      (bad?'✗ hay un x con dos valores de y: NO es función':'✓ compatible con ser función');
+  }
+  slX.addEventListener('input',draw);sel.addEventListener('change',draw);draw();
+})();
+
+/* ========== S2: casos dominio/rango ========== */
+(function(){
+  const p=makePlot('cvRac',{xmin:-2,xmax:2,ymin:-4,ymax:4});if(!p)return;
+  p.clear();p.axes(1,1);
+  p.vline(2/3,C.r);p.vline(-2/3,C.r);
+  p.xband(-2,-2/3-.03,C.g);p.xband(-2/3+.03,2/3-.03,C.g);p.xband(2/3+.03,2,C.g);
+  p.dot(-2/3,0,C.g,true,3.5);p.dot(2/3,0,C.g,true,3.5);
+  p.yband(-4,-0.25,C.o);p.yband(0.02,4,C.o);
+  p.dot(0,-0.25,C.o,false,3.5);
+  p.fn(x=>1/(9*x*x-4),C.a);
+  p.text(0.72,3.2,'x = 2/3',C.r);p.text(-1.95,3.2,'x = −2/3',C.r);
+})();
+(function(){
+  const p=makePlot('cvRaiz',{xmin:-3,xmax:3,ymin:-1,ymax:5});if(!p)return;
+  p.clear();p.axes();
+  p.xband(-2,2,C.g);p.dot(-2,0,C.g,false,3.5);p.dot(2,0,C.g,false,3.5);
+  p.yband(0,4,C.o);p.dot(0,4,C.o,false,3.5);
+  p.fn(x=>Math.sqrt(Math.max(0,16-4*x*x)),C.a,{a:-2,b:2});
+})();
+(function(){
+  const p=makePlot('cvLog',{xmin:-3,xmax:3,ymin:-4,ymax:2.5});if(!p)return;
+  p.clear();p.axes();
+  p.vline(-2,C.r);p.vline(2,C.r);
+  p.xband(-2+.03,2-.03,C.g);p.dot(-2,0,C.g,true,3.5);p.dot(2,0,C.g,true,3.5);
+  p.yband(-4,Math.log(4),C.o);p.dot(0,Math.log(4),C.o,false,3.5);
+  p.fn(x=>Math.log(4-x*x),C.a,{a:-1.9999,b:1.9999});
+  p.text(0.15,Math.log(4)+0.35,'ln 4 ≈ 1.386',C.o);
+})();
+
+/* ========== S3: función a trozos ========== */
+(function(){
+  const p=makePlot('cvPW',{xmin:-5,xmax:5,ymin:-3,ymax:6});if(!p)return;
+  const sl=document.getElementById('pwX');
+  const piece=x=>{
+    if(x<=-2)return{y:-x-3,i:0,t:'x ≤ −2  →  f(x) = −x − 3'};
+    if(x<1)return{y:3,i:1,t:'−2 < x < 1  →  f(x) = 3'};
+    if(Math.abs(x-1)<1e-9)return{y:2,i:2,t:'x = 1  →  f(x) = 2 (¡el punto lleno!)'};
+    return{y:x/2+.5,i:3,t:'x > 1  →  f(x) = ½x + ½'};
+  };
+  function draw(){
+    const x=Math.round(+sl.value*100)/100, pc=piece(x);
+    p.clear();p.axes();
+    p.fn(t=>-t-3,C.a,{a:-5,b:-2});p.dot(-2,-1,C.a);
+    p.fn(()=>3,C.a,{a:-2,b:1});p.dot(-2,3,C.a,true);p.dot(1,3,C.a,true);
+    p.dot(1,2,C.a);
+    p.fn(t=>t/2+.5,C.a,{a:1,b:5});p.dot(1,1,C.a,true);
+    p.vline(x,C.gray,[4,4]);
+    p.dot(x,pc.y,C.o,false,6);
+    p.seg(p.xmin,pc.y,x,pc.y,C.o,1.4,[4,4]);
+    document.getElementById('pwXval').textContent='x = '+fmt(x);
+    document.getElementById('pwOut').textContent=`tramo activo:  ${pc.t}   →   f(${fmt(x)}) = ${fmt(pc.y)}`;
+  }
+  sl.addEventListener('input',draw);draw();
+})();
+
+/* ========== S4: animación |g(x)| ========== */
+(function(){
+  const p=makePlot('cvAbs',{xmin:-4,xmax:4,ymin:-6,ymax:6});if(!p)return;
+  const fns={q:x=>x*x-4, l:x=>x/2-1, c:x=>x*x*x-3*x};
+  const sel=document.getElementById('absFn');
+  let t=0, anim=null;
+  function draw(){
+    const g=fns[sel.value];
+    p.clear();p.axes();
+    p.fn(g,C.r,{dash:[6,5],w:1.8});
+    p.fn(x=>{const y=g(x);return (1-t)*y+t*Math.abs(y);},C.a,{w:3});
+  }
+  document.getElementById('absPlay').addEventListener('click',()=>{
+    cancelAnimationFrame(anim);const t0=performance.now();
+    const tick=n=>{t=Math.min(1,(n-t0)/1100);draw();if(t<1)anim=requestAnimationFrame(tick);};
+    anim=requestAnimationFrame(tick);
+  });
+  document.getElementById('absReset').addEventListener('click',()=>{cancelAnimationFrame(anim);t=0;draw();});
+  sel.addEventListener('change',()=>{t=0;draw();});
+  draw();
+})();
+
+/* ========== S4: construcción de ||x|−3| ========== */
+(function(){
+  const p=makePlot('cvW',{xmin:-6,xmax:6,ymin:-4,ymax:5});if(!p)return;
+  let u=0, anim=null;
+  const out=document.getElementById('wOut');
+  function cur(x){
+    if(u<=1)return Math.abs(x)-3*u;
+    const t=u-1, y=Math.abs(x)-3;
+    return (1-t)*y+t*Math.abs(y);
+  }
+  function draw(){
+    p.clear();p.axes();
+    p.fn(x=>Math.abs(x),C.gray,{dash:[5,5],w:1.6});
+    p.fn(cur,C.a,{w:3});
+    out.textContent = u<=1 ? `y = |x| − ${(3*u).toFixed(1)}   (trasladando hacia abajo)` :
+      `y = | |x| − 3 |   (reflejando la parte negativa: ${Math.round((u-1)*100)}%)`;
+  }
+  document.getElementById('wPlay').addEventListener('click',()=>{
+    cancelAnimationFrame(anim);u=0;const t0=performance.now();
+    const tick=n=>{u=Math.min(2,(n-t0)/1300);draw();if(u<2)anim=requestAnimationFrame(tick);};
+    anim=requestAnimationFrame(tick);
+  });
+  draw();
+})();
+
+/* ========== S5: potencias y raíces ========== */
+(function(){
+  const p=makePlot('cvPow',{xmin:-2.2,xmax:2.2,ymin:-3.2,ymax:3.2});if(!p)return;
+  const sl=document.getElementById('powN');
+  function draw(){
+    const n=+sl.value;
+    p.clear();p.axes();
+    p.fn(x=>Math.pow(x,n%2?3:2),C.gray,{dash:[5,5],w:1.6});
+    p.fn(x=>Math.pow(x,n),C.a,{w:3});
+    p.dot(1,1,C.o);p.dot(0,0,C.o);p.dot(-1,n%2?-1:1,C.o);
+    document.getElementById('powNval').textContent='n = '+n;
+    document.getElementById('powOut').textContent = n%2 ?
+      `n = ${n} impar · simétrica respecto al origen (impar) · D = ℝ · R = ℝ` :
+      `n = ${n} par · simétrica respecto al eje y (par) · D = ℝ · R = [0, ∞)`;
+  }
+  sl.addEventListener('input',draw);draw();
+})();
+(function(){
+  const p=makePlot('cvRoot',{xmin:-4,xmax:4,ymin:-2.4,ymax:2.4});if(!p)return;
+  const sl=document.getElementById('rootN');
+  function draw(){
+    const n=+sl.value, odd=n%2===1;
+    p.clear();p.axes();
+    p.fn(x=>x<0?NaN:Math.pow(x,0.5),C.gray,{dash:[5,5],w:1.6});
+    const f=odd? x=>Math.sign(x)*Math.pow(Math.abs(x),1/n) : x=>x<0?NaN:Math.pow(x,1/n);
+    if(odd){p.xband(-4,4,C.g);}else{p.xband(0,4,C.g);p.dot(0,0,C.g,false,3.5);}
+    p.fn(f,C.a,{w:3});
+    p.dot(1,1,C.o);p.dot(0,0,C.o);if(odd)p.dot(-1,-1,C.o);
+    document.getElementById('rootNval').textContent='n = '+n;
+    document.getElementById('rootOut').textContent = odd ?
+      `n = ${n} impar · D = ℝ · R = ℝ (raíz impar de negativos: OK)` :
+      `n = ${n} par · D = [0, ∞) · R = [0, ∞) (no hay raíz par real de negativos)`;
+  }
+  sl.addEventListener('input',draw);draw();
+})();
+
+/* ========== S6: laboratorio de transformaciones ========== */
+(function(){
+  const p=makePlot('cvTr',{xmin:-6,xmax:6,ymin:-5,ymax:5});if(!p)return;
+  const bases={
+    sq :{f:x=>x*x,        name:'x²',  dom:'R', rng:'pos'},
+    abs:{f:x=>Math.abs(x),name:'|x|', dom:'R', rng:'pos'},
+    sqrt:{f:x=>x<0?NaN:Math.sqrt(x), name:'√x', dom:'half', rng:'pos'},
+    inv:{f:x=>1/x,        name:'1/x', dom:'punct', rng:'punct'},
+    cub:{f:x=>x*x*x,      name:'x³',  dom:'R', rng:'R'}
+  };
+  const el=i=>document.getElementById(i);
+  const sel=el('trFn'),sa=el('trA'),sb=el('trB'),rx=el('trRX'),ry=el('trRY');
+  function inner(a,neg){
+    const core = a===0 ? 'x' : `(x ${a>0?'−':'+'} ${fmt(Math.abs(a))})`;
+    return neg ? (a===0?'−x':`−${core}`) : (a===0?'x':core);
+  }
+  function wrap(base,inn){
+    return {sq:`(${inn})²`, abs:`|${inn}|`, sqrt:`√(${inn})`, inv:`1/(${inn})`, cub:`(${inn})³`}[base];
+  }
+  function draw(){
+    const b=bases[sel.value], a=+sa.value, bb=+sb.value, RX=rx.checked, RY=ry.checked;
+    p.clear();p.axes();
+    p.fn(b.f,C.gray,{dash:[6,5],w:1.8});
+    const T=x=>{const y=b.f((RY?-1:1)*(x-a));return (RX?-1:1)*y+bb;};
+    p.fn(T,C.a,{w:3});
+    el('trAval').textContent='a = '+fmt(a);
+    el('trBval').textContent='b = '+fmt(bb);
+    const eq=(RX?'−':'')+wrap(sel.value,inner(a,RY))+(bb?(bb>0?` + ${fmt(bb)}`:` − ${fmt(-bb)}`):'');
+    el('trOut').textContent='y = '+eq+'      (base: f(x) = '+b.name+')';
+    let dom,rng;
+    if(b.dom==='R')dom='ℝ';
+    else if(b.dom==='half')dom = RY?`(−∞, ${fmt(a)}]`:`[${fmt(a)}, ∞)`;
+    else dom=`ℝ − {${fmt(a)}}`;
+    if(b.rng==='R')rng='ℝ';
+    else if(b.rng==='pos')rng = RX?`(−∞, ${fmt(bb)}]`:`[${fmt(bb)}, ∞)`;
+    else rng=`ℝ − {${fmt(bb)}}`;
+    el('trDom').textContent=`Dominio: ${dom}     Rango: ${rng}`;
+  }
+  [sel,sa,sb,rx,ry].forEach(e=>e.addEventListener('input',draw));
+  el('trReset').addEventListener('click',()=>{sa.value=0;sb.value=0;rx.checked=false;ry.checked=false;draw();});
+  draw();
+})();
+
+/* ========== S7: recta numérica de dominios ========== */
+(function(){
+  const cv=document.getElementById('cvNL');if(!cv)return;
+  const ctx=ctx2d(cv);
+  const X=x=>60+(x+4)/10*540;
+  function row(y,label,color,segs,dots){
+    ctx.strokeStyle='#2a3550';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.moveTo(X(-4),y);ctx.lineTo(X(6),y);ctx.stroke();
+    [-2,1,2].forEach(v=>{ctx.fillStyle='#7e8ba3';ctx.font='10px Segoe UI';ctx.textAlign='center';
+      ctx.fillText(v,X(v),y+16);ctx.beginPath();ctx.moveTo(X(v),y-3);ctx.lineTo(X(v),y+3);ctx.stroke();});
+    ctx.strokeStyle=color;ctx.lineWidth=6;ctx.globalAlpha=.55;ctx.lineCap='butt';
+    segs.forEach(([a,b])=>{ctx.beginPath();ctx.moveTo(X(a),y);ctx.lineTo(X(b),y);ctx.stroke();});
+    ctx.globalAlpha=1;
+    dots.forEach(([v,open])=>{ctx.beginPath();ctx.arc(X(v),y,4.5,0,7);
+      ctx.fillStyle=open?'#0d1424':color;ctx.fill();ctx.strokeStyle=color;ctx.lineWidth=2;ctx.stroke();});
+    ctx.fillStyle=color;ctx.font='bold 12px Segoe UI';ctx.textAlign='left';ctx.fillText(label,X(6)+8,y+4);
+    ctx.fillStyle='#a9b7d0';ctx.textAlign='right';
+  }
+  ctx.clearRect(0,0,ctx._W,ctx._H);
+  row(35,'D_f',   '#60a5fa',[[-4,-2.035],[-1.965,1.965],[2.035,6]],[[-2,true],[2,true]]);
+  row(75,'D_g',   C.g,      [[1,6]],[[1,false]]);
+  row(115,'D_f ∩ D_g','#a78bfa',[[1,1.965],[2.035,6]],[[1,false],[2,true]]);
+  row(155,'D_f/g',C.r,      [[1.035,1.965],[2.035,6]],[[1,true],[2,true]]);
+})();
+
+/* ========== S7: suma punto a punto ========== */
+(function(){
+  const p=makePlot('cvSum',{xmin:-0.5,xmax:8,ymin:-3.5,ymax:6});if(!p)return;
+  const sl=document.getElementById('sumX');
+  const f=x=>x<0?NaN:Math.sqrt(x), g=x=>4/x-2, s=x=>f(x)+g(x);
+  function draw(){
+    const x=+sl.value;
+    p.clear();p.axes();
+    p.fn(f,C.a,{a:0,b:8,w:2.2});
+    p.fn(g,C.g,{a:0.05,b:8,w:2.2});
+    p.fn(s,C.r,{a:0.05,b:8,w:3});
+    p.vline(x,C.gray,[4,4]);
+    p.seg(x,0,x,f(x),C.a,4.5);
+    p.seg(x,f(x),x,s(x),C.g,4.5);
+    p.dot(x,f(x),C.a);p.dot(x,g(x),C.g);p.dot(x,s(x),C.r,false,6);
+    document.getElementById('sumOut').textContent=
+      `f(${x.toFixed(2)}) = ${f(x).toFixed(2)}   +   g(${x.toFixed(2)}) = ${g(x).toFixed(2)}   →   (f+g)(${x.toFixed(2)}) = ${s(x).toFixed(2)}`;
+  }
+  sl.addEventListener('input',draw);draw();
+})();
+
+/* ========== S8: reto |x²−2x−3| = k ========== */
+(function(){
+  const p=makePlot('cvReto',{xmin:-3,xmax:5,ymin:-1.5,ymax:7.5});if(!p)return;
+  const sl=document.getElementById('retoK');
+  const g=x=>Math.abs(x*x-2*x-3);
+  function draw(){
+    const k=Math.round(+sl.value*10)/10;
+    p.clear();p.axes();
+    p.fn(x=>x*x-2*x-3,C.gray,{dash:[5,5],w:1.5});
+    p.fn(g,C.a,{w:3});
+    p.hline(k,C.r,[]);
+    let sols=[];
+    if(k>=0){
+      sols.push(1+Math.sqrt(4+k),1-Math.sqrt(4+k));
+      if(k>0&&k<4)sols.push(1+Math.sqrt(4-k),1-Math.sqrt(4-k));
+      if(k===4)sols.push(1);
+    }
+    sols.forEach(x=>p.dot(x,k,C.r,false,5.5));
+    document.getElementById('retoKval').textContent='k = '+k.toFixed(1);
+    document.getElementById('retoOut').textContent=
+      `|x² − 2x − 3| = ${k.toFixed(1)}  tiene  ${sols.length}  solución(es)` +
+      (sols.length?':  x ≈ '+sols.sort((a,b)=>a-b).map(v=>v.toFixed(2)).join(',  '):'');
+  }
+  sl.addEventListener('input',draw);draw();
+})();
+
+/* ========== S9: prueba de la recta horizontal ========== */
+(function(){
+  const p=makePlot('cvHLT',{xmin:-5,xmax:5,ymin:-3.5,ymax:3.5});if(!p)return;
+  const fns={
+    ncub:{f:x=>x*x*x-3*x, inj:false}, sq:{f:x=>x*x-2, inj:false},
+    abs:{f:x=>Math.abs(x-1)-2, inj:false}, lin:{f:x=>x/2+1, inj:true},
+    cub:{f:x=>x*x*x/4+1, inj:true}
+  };
+  const sel=document.getElementById('hltFn'), sl=document.getElementById('hltY');
+  function roots(f,k){
+    const R=[],N=2400;let px=p.xmin,pv=f(px)-k;
+    for(let i=1;i<=N;i++){
+      const x=p.xmin+(p.xmax-p.xmin)*i/N, v=f(x)-k;
+      if(pv===0)R.push(px);
+      else if(pv*v<0){let a=px,b=x;for(let j=0;j<40;j++){const m=(a+b)/2;(f(a)-k)*(f(m)-k)<=0?b=m:a=m;}R.push((a+b)/2);}
+      px=x;pv=v;
+    }
+    return R;
+  }
+  function draw(){
+    const o=fns[sel.value], k=+sl.value;
+    p.clear();p.axes();
+    p.fn(o.f,C.a,{w:3});
+    const R=roots(o.f,k), bad=R.length>1;
+    p.hline(k,bad?C.r:C.g,[]);
+    R.forEach(x=>p.dot(x,k,bad?C.r:C.g));
+    document.getElementById('hltOut').textContent=
+      `y = ${k.toFixed(2)} corta la gráfica en ${R.length} punto(s) → `+
+      (bad?'✗ dos entradas con la misma imagen: NO es 1-1'
+          :(o.inj?'✓ y ninguna horizontal corta dos veces: es 1-1':'✓ esta recta corta ≤1 vez… pero explora otras alturas'));
+  }
+  sel.addEventListener('change',draw);sl.addEventListener('input',draw);draw();
+})();
+
+/* ========== S9: reflexión sobre y = x (inversa) ========== */
+(function(){
+  const p=makePlot('cvInv',{xmin:-6,xmax:6,ymin:-5,ymax:5});if(!p)return;
+  const fns={
+    cub:{f:x=>x*x*x/4+1, a:-2.6, b:2.6},
+    sqrt:{f:x=>x<-3?NaN:Math.sqrt(x+3), a:-3, b:6},
+    lin:{f:x=>2*x-1, a:-3, b:3}
+  };
+  const sel=document.getElementById('invFn');
+  let t=0, anim=null;
+  function draw(){
+    const o=fns[sel.value];
+    p.clear();p.axes();
+    p.fn(x=>x,C.g,{dash:[7,6],w:1.8});
+    p.fn(o.f,C.r,{w:2,dash:[3,4]});
+    // curva en morfo (x,y) -> ((1-t)x+ty, (1-t)y+tx)
+    const ctx=p.ctx;ctx.save();ctx.strokeStyle=C.a;ctx.lineWidth=3;ctx.beginPath();
+    let pen=false;
+    for(let i=0;i<=700;i++){
+      const x=o.a+(o.b-o.a)*i/700, y=o.f(x);
+      if(!isFinite(y)){pen=false;continue;}
+      const X=(1-t)*x+t*y, Y=(1-t)*y+t*x;
+      if(X<p.xmin-1||X>p.xmax+1||Y<p.ymin-3||Y>p.ymax+3){pen=false;continue;}
+      if(!pen){ctx.moveTo(p.px(X),p.py(Y));pen=true;}else ctx.lineTo(p.px(X),p.py(Y));
+    }
+    ctx.stroke();ctx.restore();
+    // pareja de puntos de control
+    const x0=sel.value==='sqrt'?1:2, y0=o.f(x0);
+    p.dot(x0,y0,C.r);
+    p.dot((1-t)*x0+t*y0,(1-t)*y0+t*x0,C.o,false,5.5);
+    p.text(x0+0.15,y0,'(a, b)',C.r);
+    if(t===1)p.text((1-t)*x0+t*y0+0.15,(1-t)*y0+t*x0,'(b, a)',C.o);
+  }
+  document.getElementById('invPlay').addEventListener('click',()=>{
+    cancelAnimationFrame(anim);const t0=performance.now();
+    const tick=n=>{t=Math.min(1,(n-t0)/1400);draw();if(t<1)anim=requestAnimationFrame(tick);};
+    anim=requestAnimationFrame(tick);
+  });
+  document.getElementById('invReset').addEventListener('click',()=>{cancelAnimationFrame(anim);t=0;draw();});
+  sel.addEventListener('change',()=>{cancelAnimationFrame(anim);t=0;draw();});
+  draw();
+})();
+
+/* ========== S10: familia exponencial ========== */
+(function(){
+  const p=makePlot('cvExp',{xmin:-4,xmax:4,ymin:-1,ymax:8});if(!p)return;
+  const sl=document.getElementById('expA');
+  function draw(){
+    const a=Math.round(+sl.value*100)/100;
+    p.clear();p.axes();
+    p.hline(0,C.r,[6,5]);
+    p.fn(x=>Math.exp(x),C.gray,{dash:[5,5],w:1.5});
+    if(Math.abs(a-1)<1e-9){
+      p.fn(()=>1,C.a,{w:3});
+      document.getElementById('expOut').textContent='a = 1 queda excluido: 1ˣ = 1 es constante, no exponencial';
+    }else{
+      p.fn(x=>Math.pow(a,x),C.a,{w:3});
+      p.dot(0,1,C.o);p.dot(1,a,C.o);
+      p.text(0.15,1.05,'(0, 1)',C.o);p.text(1.15,a,'(1, a)',C.o);
+      document.getElementById('expOut').textContent=
+        `a = ${a.toFixed(2)} → ${a>1?'creciente':'decreciente'} · D = ℝ · R = (0, ∞) · asíntota y = 0 · guía punteada: eˣ`;
+    }
+    document.getElementById('expAval').textContent='a = '+a.toFixed(2);
+  }
+  sl.addEventListener('input',draw);draw();
+})();
+
+/* ========== S11: espejo exponencial-logaritmo ========== */
+(function(){
+  const p=makePlot('cvLogM',{xmin:-5,xmax:7,ymin:-4.5,ymax:5.5});if(!p)return;
+  const sl=document.getElementById('logA');
+  function draw(){
+    const a=Math.round(+sl.value*100)/100;
+    p.clear();p.axes();
+    p.fn(x=>x,C.g,{dash:[7,6],w:1.8});
+    document.getElementById('logAval').textContent='a = '+a.toFixed(2);
+    if(Math.abs(a-1)<1e-9){
+      document.getElementById('logOut').textContent='a = 1 no es base válida (1ˣ no es 1-1: no tiene inversa)';
+      return;
+    }
+    p.fn(x=>Math.pow(a,x),C.r,{w:2.4});
+    p.fn(x=>x<=0?NaN:Math.log(x)/Math.log(a),C.a,{w:3,a:0.001});
+    p.dot(0,1,C.r);p.dot(1,a,C.r,true,3.5);
+    p.dot(1,0,C.a);p.dot(a,1,C.a,true,3.5);
+    document.getElementById('logOut').textContent=
+      `log_${a.toFixed(2)}: D = (0, ∞), R = ℝ, asíntota x = 0 · ${a>1?'creciente':'decreciente'} (igual que su exponencial)`;
+  }
+  sl.addEventListener('input',draw);draw();
+})();
+
+/* ========== S11: dominio de log3(2x-5) ========== */
+(function(){
+  const p=makePlot('cvLogD',{xmin:-1,xmax:8,ymin:-4,ymax:4});if(!p)return;
+  p.clear();p.axes();
+  p.vline(2.5,C.r);
+  p.xband(2.53,8,C.g);p.dot(2.5,0,C.g,true,3.5);
+  p.fn(x=>x<=2.5?NaN:Math.log(2*x-5)/Math.log(3),C.a,{a:2.5001,N:1200});
+  p.dot(3,0,C.o);p.text(3.15,0.15,'(3, 0)',C.o);
+  p.text(2.65,3.2,'x = 5/2',C.r);
+})();
+
+/* ========== S12: circunferencia unitaria ========== */
+(function(){
+  const cv=document.getElementById('cvUC');if(!cv)return;
+  const ctx=ctx2d(cv), sl=document.getElementById('ucT');
+  const cx=150,cy=165,R=110, X0=320,X1=625;
+  const tx=t=>X0+(X1-X0)*t/(2*Math.PI);
+  let anim=null;
+  function draw(){
+    const t=+sl.value, s=Math.sin(t), c=Math.cos(t);
+    ctx.clearRect(0,0,ctx._W,ctx._H);
+    // ejes del círculo
+    ctx.strokeStyle='#2b3247';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(cx-R-20,cy);ctx.lineTo(cx+R+20,cy);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(cx,cy-R-20);ctx.lineTo(cx,cy+R+20);ctx.stroke();
+    ctx.strokeStyle='#414e69';ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(cx,cy,R,0,7);ctx.stroke();
+    // arco del ángulo
+    ctx.strokeStyle=C.o;ctx.lineWidth=2.5;
+    ctx.beginPath();ctx.arc(cx,cy,26,0,-t,true);ctx.stroke();
+    // radio y punto
+    const Px=cx+R*c, Py=cy-R*s;
+    ctx.strokeStyle='#8fa0b8';ctx.lineWidth=1.8;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(Px,Py);ctx.stroke();
+    // cos (verde, horizontal) y sen (rojo, vertical)
+    ctx.strokeStyle=C.g;ctx.lineWidth=5;ctx.globalAlpha=.85;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(Px,cy);ctx.stroke();
+    ctx.strokeStyle=C.r;
+    ctx.beginPath();ctx.moveTo(Px,cy);ctx.lineTo(Px,Py);ctx.stroke();
+    ctx.globalAlpha=1;
+    ctx.fillStyle='#e2e8f4';ctx.beginPath();ctx.arc(Px,Py,6,0,7);ctx.fill();
+    // panel de ondas: ejes
+    ctx.strokeStyle='#2b3247';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(X0,cy);ctx.lineTo(X1,cy);ctx.stroke();
+    ctx.fillStyle='#8fa0b8';ctx.font='11px Segoe UI';
+    [['π',Math.PI],['2π',2*Math.PI]].forEach(([lb,v])=>{ctx.fillText(lb,tx(v)-6,cy+16);
+      ctx.beginPath();ctx.moveTo(tx(v),cy-3);ctx.lineTo(tx(v),cy+3);ctx.stroke();});
+    // curvas completas tenues + trazadas hasta t
+    const wave=(fn,color,upTo,alpha,w)=>{ctx.save();ctx.globalAlpha=alpha;ctx.strokeStyle=color;ctx.lineWidth=w;
+      ctx.beginPath();
+      for(let i=0;i<=400;i++){const u=upTo*i/400;const Y=cy-R*fn(u);
+        i===0?ctx.moveTo(tx(u),Y):ctx.lineTo(tx(u),Y);}
+      ctx.stroke();ctx.restore();};
+    wave(Math.sin,C.r,2*Math.PI,.22,1.5);wave(Math.cos,C.g,2*Math.PI,.22,1.5);
+    wave(Math.sin,C.r,t,1,2.6);wave(Math.cos,C.g,t,1,2.6);
+    // conector y puntos actuales
+    ctx.setLineDash([4,4]);ctx.strokeStyle='#8fa0b8';ctx.lineWidth=1.2;
+    ctx.beginPath();ctx.moveTo(Px,Py);ctx.lineTo(tx(t),cy-R*s);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=C.r;ctx.beginPath();ctx.arc(tx(t),cy-R*s,5,0,7);ctx.fill();
+    ctx.fillStyle=C.g;ctx.beginPath();ctx.arc(tx(t),cy-R*c,5,0,7);ctx.fill();
+    ctx.font='bold 12px Segoe UI';
+    ctx.fillStyle=C.r;ctx.fillText('sen t',X0+6,22);
+    ctx.fillStyle=C.g;ctx.fillText('cos t',X0+52,22);
+    const tan=Math.abs(c)<1e-3?'—':(s/c).toFixed(3);
+    document.getElementById('ucOut').textContent=
+      `t = ${t.toFixed(2)} · sen t = ${s.toFixed(3)} · cos t = ${c.toFixed(3)} · tan t = ${tan} · sen²t + cos²t = ${(s*s+c*c).toFixed(3)}`;
+  }
+  document.getElementById('ucPlay').addEventListener('click',()=>{
+    cancelAnimationFrame(anim);
+    const tick=()=>{let v=+sl.value+0.02;if(v>6.283)v=0;sl.value=v;draw();anim=requestAnimationFrame(tick);};
+    anim=requestAnimationFrame(tick);
+  });
+  document.getElementById('ucStop').addEventListener('click',()=>cancelAnimationFrame(anim));
+  sl.addEventListener('input',()=>{cancelAnimationFrame(anim);draw();});
+  draw();
+})();
+
+/* ========== S12: laboratorio de sinusoides ========== */
+(function(){
+  const p=makePlot('cvSin',{xmin:-7,xmax:7,ymin:-5,ymax:5});if(!p)return;
+  const el=i=>document.getElementById(i);
+  const sa=el('sinA'),sb=el('sinB'),sd=el('sinD');
+  function per(B){ // 2π/B con B múltiplo de 0.5 → fracción de π
+    const n=Math.round(2*B); // período = 4π/n
+    const g=(a,b)=>b?g(b,a%b):a, d=g(4,n);
+    const num=4/d, den=n/d;
+    const s=(num===1?'π':num+'π')+(den===1?'':'/'+den);
+    return `${s} ≈ ${(2*Math.PI/B).toFixed(2)}`;
+  }
+  function draw(){
+    const A=+sa.value,B=+sb.value,D=+sd.value;
+    p.clear();p.axes();
+    p.fn(Math.sin,C.gray,{dash:[5,5],w:1.5});
+    p.hline(D,'#414e69',[3,5]);
+    p.hline(D+Math.abs(A),C.o,[2,6]);p.hline(D-Math.abs(A),C.o,[2,6]);
+    p.fn(x=>A*Math.sin(B*x)+D,C.a,{w:3});
+    el('sinAval').textContent='A = '+fmt(A);el('sinBval').textContent='B = '+fmt(B);el('sinDval').textContent='D = '+fmt(D);
+    el('sinOut').textContent=
+      `y = ${fmt(A)}·sen(${fmt(B)}x) ${D>=0?'+':'−'} ${fmt(Math.abs(D))}   ·   amplitud = ${fmt(Math.abs(A))} · período = ${per(B)} · rango = [${fmt(D-Math.abs(A))}, ${fmt(D+Math.abs(A))}]`;
+  }
+  [sa,sb,sd].forEach(e=>e.addEventListener('input',draw));draw();
+})();
+
+/* ========== S12: resolver sen x = k ========== */
+(function(){
+  const p=makePlot('cvTrigEq',{xmin:-0.4,xmax:6.7,ymin:-1.6,ymax:1.6});if(!p)return;
+  const sl=document.getElementById('teqK');
+  function draw(){
+    const k=Math.round(+sl.value*100)/100;
+    p.clear();
+    // ejes con marcas en múltiplos de π/2
+    const ctx=p.ctx;p.axes(10,10);
+    ctx.save();ctx.fillStyle='#8fa0b8';ctx.font='11px Segoe UI';ctx.textAlign='center';
+    [['π/2',Math.PI/2],['π',Math.PI],['3π/2',3*Math.PI/2],['2π',2*Math.PI]].forEach(([lb,v])=>{
+      ctx.fillText(lb,p.px(v),p.py(0)+16);
+      ctx.strokeStyle='#2b3247';ctx.beginPath();ctx.moveTo(p.px(v),p.py(-0.05));ctx.lineTo(p.px(v),p.py(0.05));ctx.stroke();});
+    ctx.restore();
+    p.fn(Math.sin,C.a,{a:0,b:2*Math.PI,w:3});
+    p.hline(k,C.r,[]);
+    let sols=[];
+    if(Math.abs(k)<=1){
+      const r=Math.asin(k);
+      if(k===1)sols=[Math.PI/2];
+      else if(k===-1)sols=[3*Math.PI/2];
+      else if(k>=0)sols=[r,Math.PI-r];
+      else sols=[Math.PI-r,2*Math.PI+r];
+    }
+    sols.forEach(x=>p.dot(x,k,C.o,false,5.5));
+    document.getElementById('teqKval').textContent='k = '+k.toFixed(2);
+    document.getElementById('teqOut').textContent = Math.abs(k)>1 ?
+      `sen x = ${k.toFixed(2)} no tiene solución: el rango del seno es [−1, 1]` :
+      `sen x = ${k.toFixed(2)} en [0, 2π]: ${sols.length} solución(es) → x ≈ ${sols.map(v=>v.toFixed(3)).join(',  ')}`;
+  }
+  sl.addEventListener('input',draw);draw();
+})();
+
+/* ---------- KaTeX ---------- */
+window.addEventListener('load',()=>{
+  if(window.renderMathInElement)renderMathInElement(document.body,{
+    delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],
+    throwOnError:false
+  });
+});
+
+</script>
+</body>
+</html>

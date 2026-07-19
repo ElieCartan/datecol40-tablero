@@ -1,9 +1,16 @@
 [
-  {
-    "fecha": "2026-07-06",
-    "actividad_id": "R1",
-    "titulo": "Arranque del sistema de seguimiento",
-    "archivo": "informes/2026-07_R1_arranque_seguimiento.md",
-    "resumen": "Se genera el cronograma jul-2026–jun-2027 (26 actividades en 5 frentes), se integra el plan de capacitación (15 cursos, 4 congresos) y se publica el tablero web del proyecto."
-  }
+ {
+  "fecha": "2026-03-31",
+  "actividad_id": "SGR-01",
+  "titulo": "Informe de Avance Técnico y Administrativo No. 01 (feb–mar 2026)",
+  "archivo": "informes/Informe No1. SGR Convenio UdeA - Uniminuto.docx",
+  "resumen": "Reconfiguración del equipo investigador (Aida X. Velasco asume como IP desde el 26-mar-2026; C. Villegas ingresa en Gestión y Producción; J. A. Barragán pasa a coinvestigador). Obj. 1: inteligencia de datos IPSE y mapeo de variables críticas (radiación, nubosidad/precipitación, térmicas), analítica descriptiva de línea base, diseño de protocolos experimentales y alistamiento instrumental (Of. 500, Bloque 5). POAI 2026 ajustado con delimitación de responsabilidades (Act. 1.3–1.6 T1; Obj. 3: 3.1, 3.2 T1 y 3.4 T2). Entregables: documento de caracterización y analítica preliminar, actas de febrero (12, 17 y 19) y POAI ajustado. Primera mesa técnica de la Alianza el 19-mar-2026."
+ },
+ {
+  "fecha": "2026-07-06",
+  "actividad_id": "R1",
+  "titulo": "Arranque del sistema de seguimiento",
+  "archivo": "informes/2026-07_R1_arranque_seguimiento.md",
+  "resumen": "Se genera el cronograma jul-2026–jun-2027 (26 actividades en 5 frentes), se integra el plan de capacitación (15 cursos, 4 congresos) y se publica el tablero web del proyecto."
+ }
 ]
