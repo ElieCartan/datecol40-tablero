@@ -39,13 +39,6 @@
    ]
   },
   {
-   "nombre": "José Alirio Barragán Sánchez",
-   "rol": "Co-investigador",
-   "labores": [
-    "Transita de Investigador Principal a Coinvestigador; asegura la memoria técnica y administrativa del proceso."
-   ]
-  },
-  {
    "nombre": "Alejandro Arenas Tirado",
    "rol": "Co-investigador · Líder de análisis estadístico y datos telemétricos",
    "labores": [
@@ -77,14 +70,17 @@
    "rol": "Co-investigador · Enlace con comunidades y territorio",
    "labores": [
     "Articulación territorial con la sede UNIMINUTO Chocó (vínculo con el Ing. Bayron Perea Mena, experto en sistemas no interconectados).",
-    "Identificación de actores comunitarios custodios de la base telemétrica para su sostenibilidad y apropiación social."
+    "Identificación de actores comunitarios custodios de la base telemétrica para su sostenibilidad y apropiación social.",
+    "Articulación territorial para la identificación de la comunidad objeto de intervención (Acandí / Nuquí)."
    ]
   },
   {
    "nombre": "Alexis López Figueroa",
-   "rol": "Co-investigador",
+   "rol": "Co-investigador · Diseño tecnológico, prototipado y validación física",
    "labores": [
-    "(No aparece en la tabla oficial del Informe No. 1 — confirmar rol y tareas.)"
+    "Ingresa el 15-jul-2026 en reemplazo de José Alirio Barragán Sánchez (quien asume funciones de internacionalización en la Escuela de Ingeniería).",
+    "Ingeniero Mecatrónico (U. Santo Tomás, Bucaramanga) y M.Sc. en Ingeniería Mecánica (PUC-Río de Janeiro).",
+    "Amplía la capacidad del equipo en diseño tecnológico, prototipado y validación física de la base telemétrica."
    ]
   }
  ],
@@ -175,13 +171,19 @@
    "estado": "Documento base entregado",
    "detalle": "Hoja de ruta Fase 1/Fase 2, Modelo 1 (Acandí): demanda latente × disponibilidad, escenarios por bootstrap de bloques + k-medoids con teorema de consistencia, y programa SAA→MILP con teoremas de existencia. Sigue: implementación computacional y experimentos.",
    "ubicacion": "Claude-Datecol/track_c_modelos"
+  },
+  {
+   "track": "Track D — Base telemétrica",
+   "estado": "Diseño conceptual",
+   "detalle": "Primer esbozo conceptual de la estación autónoma para la costa chocoana: RTU/datalogger en gabinete IP65-IP66, subsistema FV con MPPT/PWM y baterías de ciclo profundo, sensores meteorológicos e hidrológicos, enlace de telemetría por antena y elementos estructurales (torre, puesta a tierra, pararrayos, cerramiento). Prospección con Tektronix vía I+D Electrónica para el datalogger. Instalación física reprogramada al primer trimestre de 2027 por efecto de la Ley de Garantías.",
+   "ubicacion": "Informe trimestral may–jul 2026 (Anexo 5)"
   }
  ],
  "seleccion_cabecera": {
-  "elegida": "Acandí",
+  "elegida": "San Francisco, municipio de Acandí",
   "codigo_dane": "27006000",
-  "justificacion_resumen": "Mayor energía anual (7,41 GWh) y demanda pico (1.437 kW); disponibilidad 85,4% con 420 interrupciones/año (SAIDI 1.279,8 h) — el caso con mayor margen de mejora para el retrofit FV+almacenamiento y sin huecos de registro (0 marcas faltantes). El informe completo de selección (estadístico, estratégico, demográfico, sociocultural) está en curso (actividad D4).",
-  "fuente": "resumen_comparativo.csv (Track B)"
+  "justificacion_resumen": "Ratificada en el informe trimestral may–jul 2026 con tres criterios técnicos: (i) completitud de la información — 24 de 24 variables diligenciadas en el archivo «Localidades con Fuentes No Convencionales», frente a un máximo de 22/24 en Unguía y Nuquí; (ii) seguridad y acceso al territorio — la Matriz de Riesgos identifica orden público (alto) y ambiental (medio) como determinantes del trabajo de campo, favorables en Acandí; (iii) infraestructura eléctrica existente — sistema diésel-fotovoltaico con medición telemétrica previa operado por la Empresa de Servicios Públicos de Acandí S.A. E.S.P. (314 usuarios). Nuquí se mantiene como alternativa para el componente comunitario por el relacionamiento institucional de UNIMINUTO en la zona.",
+  "fuente": "Informe de avance trimestral may–jul 2026 · resumen_comparativo.csv (Track B)"
  },
  "fuente_equipo": "Informe No. 1 SGR Convenio UdeA-UNIMINUTO (feb–mar 2026), Tabla de Investigadores"
 }

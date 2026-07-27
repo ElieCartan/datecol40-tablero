@@ -1,0 +1,73 @@
+{
+ "periodo": "1 de mayo – 31 de julio de 2026",
+ "informe": "Informe técnico de avance trimestral (Plantilla SGR CTeI)",
+ "fecha_inicio_proyecto": "4 de noviembre de 2025",
+ "fuente": "Plantilla_Informe_avance_trimestral_Datecol_Uniminuto vf._2.docx",
+ "tareas": [
+  {
+   "objetivo": "1",
+   "actividad": "Actividad 1.3. Caracterizar in situ y operando las superficies e interfases de nanomateriales con aplicación en la generación y almacenamiento de energías sostenibles",
+   "tarea": "T1. Ejecución del análisis y procesamiento de datos que permitan evaluar el consumo y la eficiencia energética, facilitando la toma de decisiones y la identificación de oportunidades de mejora de acuerdo con las necesidades de las comunidades del departamento del Chocó.",
+   "avance_periodo": 0.13,
+   "avance_acumulado": 0.13,
+   "logros": [
+    "Validación de datos oficiales: reconstrucción de la serie energética de Acandí con desviación del 0,0000 % frente a IPSE-CNM (7.405.080 kWh anuales).",
+    "Caracterización de confiabilidad y calidad: disponibilidad anual 85,39 %, SAIDI 1.279,8 h/año, 420 eventos de interrupción; calidad de potencia conforme a EN 50160.",
+    "Dimensionamiento óptimo FV+BESS: 7.431 kWp fotovoltaicos y banco de 15.221 kWh / 2.255 kW; fracción renovable 92,2 % y energía no suministrada igual a cero.",
+    "Selección del sitio: San Francisco (municipio de Acandí) como localización de mayor viabilidad para la base telemétrica; Nuquí se mantiene como alternativa para el componente comunitario.",
+    "Herramienta de seguimiento: despliegue del tablero interactivo de monitoreo técnico del proyecto.",
+    "Prospección de proveedores: Tektronix (vía I+D Electrónica) como alternativa técnica para el datalogger."
+   ],
+   "dificultades": "Reajuste del cronograma por la finalización de la Ley de Garantías, con incidencia en los procesos de contratación y adquisición: la instalación física de la base telemétrica se reprogramó para el primer trimestre de 2027. El diseño conceptual de la estación es una versión borrador sujeta a refinamiento con proveedores y caracterización en sitio. Continúa en concertación la selección definitiva de la comunidad (Acandí y Nuquí como alternativas viables).",
+   "anexos": 7
+  },
+  {
+   "objetivo": "3",
+   "actividad": "Actividad 3.1. Desarrollar programas de formación especializada y establecer redes de investigación que promuevan la transferencia y multiplicación del conocimiento adquirido",
+   "tarea": "T1. Implementación de programas de capacitación especializada en ciencias básicas aplicadas a tecnologías 4.0 (UdeA, UNIMINUTO, Guane, SCIF).",
+   "avance_periodo": 0.1,
+   "avance_acumulado": 0.1,
+   "logros": [
+    "Articulación de actores comunitarios e institucionales clave para el componente ASCyT.",
+    "Trabajo conjunto con la Dirección del Centro Universitario (Rectoría Antioquia y Chocó) y el programa de Trabajo Social para la caracterización socioeconómica del territorio.",
+    "Fortalecimiento del equipo: relevo de José Alirio Barragán Sánchez por Alexis López Figueroa (mecatrónica e ingeniería mecánica).",
+    "Gobernanza institucional: socialización del proyecto con la nueva decana Andrea Vargas Montoya e inicio de articulación con el Centro de Investigación y Proyectos.",
+    "Prospección comunitaria: identificación tentativa de Nuquí para las actividades territoriales de apropiación social.",
+    "Sinergia con posgrados: planeación con la Maestría en Educación y acercamiento para vincular estudiantes a los productos académicos.",
+    "Ejecución y seguimiento: reporte de talento humano (SGR), contrapartidas institucionales en especie y despliegue del tablero web tipo semáforo."
+   ],
+   "dificultades": "La actividad continúa en fase de estructuración metodológica: los programas de formación están en diseño y validación, dependiendo de la articulación con la Alianza. La selección definitiva de la comunidad sigue en evaluación y los contenidos formativos se ajustarán conforme a los resultados del Objetivo 1.",
+   "anexos": 8
+  }
+ ],
+ "hitos": [
+  {
+   "fecha": "2026-06-12",
+   "hito": "Segunda mesa técnica de la Alianza DATECOL 4.0 con UdeA e instituciones aliadas (12 y 13 de junio); ajuste del cronograma general por efecto de la Ley de Garantías."
+  },
+  {
+   "fecha": "2026-07-14",
+   "hito": "Instalación del primer comité técnico interno de seguimiento (Centro de Investigaciones, Dirección de Proyectos, Decanatura y Escuela de Ingenierías): seguimiento técnico y presupuestal."
+  },
+  {
+   "fecha": "2026-07-15",
+   "hito": "Reunión técnica con proveedor de la base telemétrica; se presenta el primer esbozo conceptual de la estación. Cambio de decanatura en la sede UNIMINUTO Chocó (Andrea Vargas Montoya)."
+  },
+  {
+   "fecha": "2026-07-21",
+   "hito": "Reunión de articulación con la Dirección del Centro Universitario (Adriana Palacios) y el programa de Trabajo Social para la caracterización socioeconómica."
+  }
+ ],
+ "diseno_base_telemetrica": [
+  "Adquisición y control remoto: RTU/Datalogger en gabinete IP65-IP66 (ambiente salino de zona costera).",
+  "Subsistema de energía autónomo: panel fotovoltaico, controlador de carga MPPT/PWM y banco de baterías de ciclo profundo.",
+  "Sensores meteorológicos e hidrológicos: temperatura, humedad, nivel, precipitación (pluviómetro), velocidad y dirección del viento (anemómetro y veleta).",
+  "Comunicaciones: enlace de telemetría vía antena para transmisión remota.",
+  "Elementos estructurales y de protección: torre, cimentación, puesta a tierra, pararrayos y cerramiento perimetral."
+ ],
+ "presupuesto": {
+  "estado": "Sin cifras reportadas",
+  "nota": "El informe reporta avances en talento humano financiado con recursos del SGR y contrapartidas en especie de UNIMINUTO (equipos, software y recursos institucionales), y la instalación del comité técnico interno para el seguimiento técnico y presupuestal, pero no incluye cifras. Para habilitar esta sección se requiere el POAI 2026 o el reporte financiero por rubro.",
+  "rubros": []
+ }
+}

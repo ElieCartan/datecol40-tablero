@@ -136,6 +136,7 @@ footer{position:relative;z-index:1;text-align:center;font-size:.74rem;color:var(
   <button data-s="resultados">Resultados</button>
   <button data-s="formacion">Formación</button>
   <button data-s="publicacion">Publicación</button>
+  <button data-s="poai">Semáforo POAI</button>
   <button data-s="informes">Informes</button>
 </nav>
 
@@ -200,6 +201,14 @@ footer{position:relative;z-index:1;text-align:center;font-size:.74rem;color:var(
       <p class="nota">Fuente: <code>Revistas_Publicacion_Fotovoltaica_ZNI.xlsx</code>. Los enlaces a revista y Scimago fueron añadidos de forma curada — verificar el sitio oficial antes de someter. Compromisos UNIMINUTO: 1 artículo A1/A2 y 1 artículo B/C.</p></div>
   </section>
 
+  <section id="poai">
+    <div class="card"><h2>Avance POAI por tarea <span id="poai-periodo" style="font-weight:400;font-size:.8rem;color:var(--txt3)"></span></h2>
+      <div id="poai-tareas"></div></div>
+    <div class="card"><h2>Hitos institucionales del periodo</h2><div id="poai-hitos"></div></div>
+    <div class="card"><h2>Diseño conceptual de la base telemétrica</h2><ul class="plain" id="poai-diseno"></ul></div>
+    <div class="card"><h2>Seguimiento presupuestal</h2><div id="poai-presu"></div></div>
+  </section>
+
   <section id="informes">
     <div class="card"><h2>Informes de actividad</h2><div id="i-lista"></div>
       <p class="nota">Cada actividad genera informes en <code>informes/</code> (ver <code>informes/plantilla_informe.md</code>) indexados en <code>data/informes.json</code>.</p></div>
@@ -227,11 +236,12 @@ async function j(p){const r=await fetch(p);if(!r.ok)throw new Error(p);return r.
 
 (async()=>{
 try{
-  const [P,A,R,F,I,REV]=await Promise.all([
+  const [P,A,R,F,I,POAI,REV]=await Promise.all([
     j("data/proyecto.json"),j("data/actividades.json"),
     j("data/resultados.json").catch(()=>null),
     j("data/formacion.json").catch(()=>null),
     j("data/informes.json").catch(()=>[]),
+    j("data/poai.json").catch(()=>null),
     j("data/revistas.json").catch(()=>[])
   ]);
 
@@ -362,6 +372,33 @@ try{
       pintarRev();
     });
     pintarRev();
+  }
+
+
+  /* ---- Semáforo POAI ---- */
+  if(POAI){
+    $("#poai-periodo").textContent="· "+POAI.periodo;
+    const sem=v=>v>=0.66?"e-completado":v>=0.33?"e-encurso":"e-pendiente";
+    $("#poai-tareas").innerHTML=POAI.tareas.map(t=>`
+      <div class="track">
+        <div style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;align-items:center">
+          <strong>Objetivo ${esc(t.objetivo)} · ${esc(t.actividad.split(".")[0])}.${esc(t.actividad.split(".")[1]||"")}</strong>
+          <span class="estado ${sem(t.avance_acumulado)}">Avance acumulado ${pct(t.avance_acumulado)}</span>
+        </div>
+        <p style="font-size:.84rem;margin:.35rem 0;color:var(--txt2)">${esc(t.tarea)}</p>
+        <div class="barra" style="max-width:340px"><div style="width:${t.avance_acumulado*100}%"></div></div>
+        <div class="nota">Avance del periodo: ${pct(t.avance_periodo)} · ${t.anexos} anexos</div>
+        <h3 style="font-size:.85rem">Principales logros</h3>
+        <ul class="plain">${t.logros.map(l=>`<li>${esc(l)}</li>`).join("")}</ul>
+        <h3 style="font-size:.85rem">Dificultades y observaciones</h3>
+        <p style="font-size:.84rem;color:var(--txt2)">${esc(t.dificultades)}</p>
+      </div>`).join("");
+    $("#poai-hitos").innerHTML=POAI.hitos.map(x=>`<div class="track"><strong>${x.fecha}</strong><p style="font-size:.84rem;margin-top:.2rem;color:var(--txt2)">${esc(x.hito)}</p></div>`).join("");
+    $("#poai-diseno").innerHTML=POAI.diseno_base_telemetrica.map(d=>`<li>${esc(d)}</li>`).join("");
+    const B=POAI.presupuesto;
+    $("#poai-presu").innerHTML=(B.rubros&&B.rubros.length)
+      ? `<div class="tabla-scroll"><table><tr><th>Rubro</th><th>Apropiado</th><th>Ejecutado</th><th>%</th></tr>${B.rubros.map(r=>`<tr><td>${esc(r.rubro)}</td><td>${esc(r.apropiado)}</td><td>${esc(r.ejecutado)}</td><td>${esc(r.porcentaje)}</td></tr>`).join("")}</table></div>`
+      : `<p><span class="estado e-pendiente">${esc(B.estado)}</span></p><p style="font-size:.85rem;margin-top:.5rem;color:var(--txt2)">${esc(B.nota)}</p>`;
   }
 
   /* ---- Informes ---- */
